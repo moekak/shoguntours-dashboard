@@ -1,0 +1,6 @@
+// settings.json
+{
+      "editor.tabSize": 6,
+      "editor.insertSpaces": true,
+      "editor.detectIndentation": false
+}

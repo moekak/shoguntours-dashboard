@@ -19,6 +19,7 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import TourCreate from "./components/tour/TourCreate";
 
 
 const queryClient = new QueryClient();
@@ -55,6 +56,10 @@ export default function App() {
                                           {/* Charts */}
                                           <Route path="/line-chart" element={<LineChart />} />
                                           <Route path="/bar-chart" element={<BarChart />} />
+
+                                          {/* Tour */}
+                                          <Route path="/tour/create" element={<TourCreate />} />
+
                                     </Route>
 
                                     {/* Auth Layout */}
