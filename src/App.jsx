@@ -19,7 +19,9 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import TourCreate from "./components/tour/TourCreate";
+import TourCreate from "./components/tour/create/TourCreate";
+import { TourCreateProvider } from "./components/tour/context/TourCreateContext";
+
 
 
 const queryClient = new QueryClient();
@@ -27,6 +29,7 @@ export default function App() {
       return (
             <>
                   <QueryClientProvider client={queryClient}>
+                  <TourCreateProvider>
                         <Router>
                               <ScrollToTop />
                               <Routes>
@@ -70,6 +73,7 @@ export default function App() {
                                     <Route path="*" element={<NotFound />} />
                               </Routes>
                         </Router>
+                  </TourCreateProvider>
                   </QueryClientProvider>
             </>
       );
