@@ -34,7 +34,10 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Tour",
-    subItems: [{ name: "New tour", path: "/tour/create", pro: false }],
+    subItems: [
+      { name: "New tour", path: "/tour/create", pro: false },
+      { name: "Tours", path: "/tours", pro: false },
+    ],
   },
 
   {

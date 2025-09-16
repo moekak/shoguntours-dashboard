@@ -3,7 +3,7 @@ import { Link } from "react-router";
 interface AlertProps {
   variant: "success" | "error" | "warning" | "info"; // Alert type
   title: string; // Title of the alert
-  message: string; // Message of the alert
+  message: string | string[]; // Message of the alert - now supports arrays
   showLink?: boolean; // Whether to show the "Learn More" link
   linkHref?: string; // Link URL
   linkText?: string; // Link text
@@ -111,6 +111,20 @@ const Alert: React.FC<AlertProps> = ({
     ),
   };
 
+  // Render message content based on type
+  const renderMessage = () => {
+    if (Array.isArray(message)) {
+      return (
+        <ul className="list-disc list-inside space-y-1 text-sm text-gray-500 dark:text-gray-400">
+          {message.map((msg, index) => (
+            <li key={index} className={`${variant === "error" && "text-red-600"}`}>{msg}</li>
+          ))}
+        </ul>
+      );
+    }
+    return <p className="text-sm text-gray-500 dark:text-gray-400">{message}</p>;
+  };
+
   return (
     <div
       className={`rounded-xl border p-4 ${variantClasses[variant].container}`}
@@ -121,11 +135,11 @@ const Alert: React.FC<AlertProps> = ({
         </div>
 
         <div>
-          <h4 className="mb-1 text-sm font-semibold text-gray-800 dark:text-white/90">
+          <h4 className={`mb-1 text-sm font-semibold  dark:text-white/90 ${variant === "error" ?"text-red-600" : "text-[#039855]" }`}>
             {title}
           </h4>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400">{message}</p>
+          {renderMessage()}
 
           {showLink && (
             <Link

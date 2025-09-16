@@ -19,8 +19,13 @@ import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import TourCreate from "./components/tour/create/TourCreate";
-import { TourCreateProvider } from "./components/tour/context/TourCreateContext";
+
+
+import { TourOPeratorProvider } from "./components/tour/context/TourOperatorContext";
+import { ToursProvider } from "./components/tour/context/ToursContext";
+import TourOperator from "./components/tour/operator/TourOperator";
+import Tours from "./components/tour/list/Tours";
+import TourEdit from "./components/tour/edit/TourEdit";
 
 
 
@@ -29,7 +34,8 @@ export default function App() {
       return (
             <>
                   <QueryClientProvider client={queryClient}>
-                  <TourCreateProvider>
+                  <TourOPeratorProvider>
+                  <ToursProvider>
                         <Router>
                               <ScrollToTop />
                               <Routes>
@@ -61,7 +67,9 @@ export default function App() {
                                           <Route path="/bar-chart" element={<BarChart />} />
 
                                           {/* Tour */}
-                                          <Route path="/tour/create" element={<TourCreate />} />
+                                          <Route path="/tour/create" element={<TourOperator/>} />
+                                          <Route path="/tours" element={<Tours />} />
+                                          <Route path="/tour/:tourId" element={<TourEdit />} />
 
                                     </Route>
 
@@ -73,7 +81,8 @@ export default function App() {
                                     <Route path="*" element={<NotFound />} />
                               </Routes>
                         </Router>
-                  </TourCreateProvider>
+                  </ToursProvider>
+                  </TourOPeratorProvider>
                   </QueryClientProvider>
             </>
       );

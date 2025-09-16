@@ -14,8 +14,17 @@ export const API_ENDPOINTS = {
       // },
       URL: {
             DASHBOARD: `${BASE_URL}/dashboard`,
-
       },
+      IMAGE: {
+            URL: "https://shoguntoursjapan.com/storage"
+      },
+      API: {
+            FETCH_CREATE_DATA: `${BASE_URL}/get/create/info`,
+            CREATE_TOUR: `${BASE_URL}/tour/store`,
+            GET_TOUR: `${BASE_URL}/get/tours`,
+            GET_SPECIFIC_TOUR: `${BASE_URL}/get/tour`,
+      },
+
       // IMAGE: {
       //       URL: "https://shoguntoursjapan.com/storage"
       // },
@@ -25,4 +34,12 @@ export const API_ENDPOINTS = {
       //       FIRST_NAME: "First name is required.",
       //       LAST_NAME: "Last name is required.",
       // }
+}
+
+export const MESSAGES = {
+      ERROR : {
+            SYSTEM_ERROR : "We're experiencing technical difficulties. Please try again in a few moments.",
+            SYSTEM_ERROR_TITLE : "System Errors",
+            VALIDATION_ERROR_TITLE : "Validation Errors"
+      }
 }

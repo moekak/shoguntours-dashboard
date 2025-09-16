@@ -7,6 +7,7 @@ interface RadioProps {
   onChange: (value: string) => void; // Handler for value change
   className?: string; // Optional additional classes
   disabled?: boolean; // Optional disabled state for the radio button
+  error : boolean;
 }
 
 const Radio: React.FC<RadioProps> = ({
