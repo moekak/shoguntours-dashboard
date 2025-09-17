@@ -17,14 +17,16 @@ export default function AuthLayout({
             {/* <!-- ===== Common Grid Shape Start ===== --> */}
             <GridShape />
             <div className="flex flex-col items-center max-w-xs">
-              <Link to="/" className="block mb-4">
-                <img
-                  width={231}
-                  height={48}
-                  src="/images/logo/auth-logo.svg"
-                  alt="Logo"
-                />
-              </Link>
+                <div className="flex gap-3  items-center">
+                  <img
+                    src="/images/logo/logo.png"
+                    alt="Logo"
+                    width={80}
+                  />
+                  <p className="text-white text-4xl">ShogunTours</p>
+                </div>
+
+  
               <p className="text-center text-gray-400 dark:text-white/60">
                 Free and Open-Source Tailwind CSS Admin Dashboard Template
               </p>
