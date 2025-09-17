@@ -1,33 +1,44 @@
-import  { useEffect} from 'react';
-import { useFetchCreateData } from '../hooks/useFetchCreateData.js';
-import { useCreateTour } from '../hooks/useCreateTour.js';
+import  { useEffect, useState} from 'react';
 import TourOperator from '../operator/TourOperator.jsx';
 import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
 import { useFetchSpecificTour } from '../hooks/useFetchSpecificTour.js';
 import { useParams } from 'react-router';
+import TourOperatorSkelton from '../../skelton/TourOperatorSkelton.jsx';
+
+import { useEditTour } from '../hooks/useEditTour.js';
 
 const TourEdit = () => {
       
-      const {tour, setTour,errorTitle, regions, setLanguages,isSuccess, setRegions, setCategories, categories, errors, errorFields} = useTourOperatorContext()
+      const {tour, setTour, setLanguages, setRegions, setCategories} = useTourOperatorContext()
       const {tourId} = useParams()
+      const [isInitialized, setIsInitialized] = useState(false);
 
-      const {data} = useFetchSpecificTour(tourId)
-      const {mutate, isPending} = useCreateTour()
+      const {data, isLoading} = useFetchSpecificTour(tourId)
+      const {mutate, isPending} = useEditTour()
+
 
       useEffect(()=>{
-            console.log(data);
+            if (!data?.tour) return 
             const tour = data?.tour
             
             setLanguages(data?.languages)
             setRegions([]);
             setCategories([]);
-            data?.regions.forEach((region) => {
-                  setRegions(prev => [...prev, { value: region.id, label: region.region }]);
-            });
-            data?.categories.forEach((category) => {
-                  setCategories(prev => [...prev, { value: category.id, label: category.category }]);
-            });
-
+            if (data?.regions) {
+                  const regionOptions = data.regions.map((region) => ({
+                        value: region.id,
+                        label: region.region
+                  }));
+                  setRegions(regionOptions);
+            }
+            if (data?.categories) {
+                  const categoryOptions = data.categories.map((category) => ({
+                        value: category.id,
+                        label: category.category
+                  }));
+                  setCategories(categoryOptions);
+            }
+            
             setTour(
                   {
                         title: tour?.title,
@@ -36,6 +47,7 @@ const TourEdit = () => {
                         region_id: tour?.region_id,
                         category_id: tour?.category_id,
                         is_featured: "0",
+                        is_published: tour?.is_published == 0 ? "0" : "1",
                         hero_image: tour?.hero_image,
                         overview_title: tour?.overview_title,
                         overview_description: tour?.overview_description,
@@ -69,7 +81,7 @@ const TourEdit = () => {
                                           return highlight?.itinerary_highlight
                                     }),
                                     languages: itinerary?.itinerary_languages.map((language)=>{
-                                          return language.id
+                                          return language.language.id
                                     }),
                                     image: itinerary?.image
                               }
@@ -79,21 +91,21 @@ const TourEdit = () => {
                         })
                   }
             )
+            setTimeout(() => setIsInitialized(true), 0);
             
       },[data])
-      useEffect(()=>{
-            console.log(tour);
-            
-      },[tour])
-
 
       const handleSubmit = () =>{
             mutate(tour)
       }
 
+      if(isLoading || tour.region_id == undefined || !isInitialized){
+            return <TourOperatorSkelton/>
+      }
 
+      
       return (
-            <TourOperator isPending={isPending} handleSubmit={handleSubmit}/>
+            <TourOperator isPending={isPending} handleSubmit={handleSubmit} type="edit"/>
       );
 };
 

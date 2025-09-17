@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Table,TableBody, TableCell,TableHeader, TableRow,} from "../../ui/table";
 import { useFetchTour } from '../hooks/useFetchTour';
 import { API_ENDPOINTS } from '../../../config/config';
@@ -7,13 +7,17 @@ import { useToursContext } from '../context/ToursContext';
 import SearchTour from './SearchTour';
 import TourTableSkeleton from '../../skelton/TourTableSkeleton';
 import { useNavigate } from 'react-router';
+import DeletionModal from '../../ui/modal/DeletionModal';
+import { useTourOperatorContext } from '../context/TourOperatorContext';
 
 
 export default function TourTable() {
       
       const {data, isLoading} = useFetchTour()
       const {setTours, setOriginalTours, tours} = useToursContext()
+      const {isModalOpen, setIsModalOpen} = useTourOperatorContext()
       const navigate = useNavigate()
+      const [selectedTour, setSelectedTour] = useState(null)
 
 
       const handleAction = (action, tourId) => {
@@ -25,20 +29,18 @@ export default function TourTable() {
                         navigate(`/tour/${tourId}`)
                         break;
                   case 'delete':
-                        if (confirm(`Are you sure you want to delete tour ${tourId}?`)) {
-                              alert(`Tour ${tourId} deleted`);
-                        }
+                        setIsModalOpen(true)
+                        setSelectedTour(tourId)
                         break;
                   default:
                   break;
             }
       };
 
+
       useEffect(()=>{
 
             if(data !== undefined){
-                  console.log(data);
-                  
                   setOriginalTours(data?.tours)
                   setTours(data?.tours)
             }
@@ -50,7 +52,9 @@ export default function TourTable() {
       }
 
       return (
+            
             <div className="space-y-6">
+                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedTour={selectedTour}/>}
                   {/* Filter Section */}
                   <SearchTour categories={data?.categories} regions={data?.regions}/>
                   {/* Table Section */}
@@ -76,6 +80,12 @@ export default function TourTable() {
                                                       isHeader
                                                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
+                                                      Status
+                                                </TableCell>
+                                                <TableCell
+                                                      isHeader
+                                                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
                                                       Price
                                                 </TableCell>
                                                 <TableCell
@@ -88,12 +98,6 @@ export default function TourTable() {
                                                       isHeader
                                                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                      Bookings
-                                                </TableCell>
-                                                <TableCell
-                                                      isHeader
-                                                      className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
                                                       Actions
                                                 </TableCell>
                                           </TableRow>
@@ -101,7 +105,7 @@ export default function TourTable() {
 
                                     {/* Table Body */}
                                     <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                                          {data?.tours.map((tour) => (
+                                          {tours?.map((tour) => (
                                                       <TableRow key={tour.id}>
                                                             <TableCell className="px-5 py-4 sm:px-6 text-start">
                                                                   <div className="flex items-center gap-3">
@@ -129,15 +133,17 @@ export default function TourTable() {
                                                                   </span>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                                                                  <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${tour?.is_published == 0 ? "bg-gray-100 text-gray-800" : "bg-green-100 text-green-800"}`}>
+                                                                  {tour?.is_published == 0 ? "inactive" : "active"}
+                                                                  </span>
+                                                            </TableCell>
+                                                            <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                                                   {`￥${tour?.minimum_price.toLocaleString()}~`}
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                                                   <div className="flex -space-x-2">
                                                                         {tour?.itineraries?.length}
                                                                   </div>
-                                                            </TableCell>
-                                                            <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                                                  dd
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                                                                   <ActionDropdown tourId={tour?.id} onAction={handleAction} />

@@ -17,25 +17,25 @@ function GalleryImage() {
                         {/* Column 1 */}
                         <div className="space-y-4">
                               {/* Image 1 - Large */}
-                              <GalleryImageComponent index={0} height={500} />
+                              <GalleryImageComponent index={0} height={500}  />
                               {/* Image 2 - Medium */}
-                              <GalleryImageComponent index={1} height={300}/>
+                              <GalleryImageComponent index={1} height={300} />
                         </div>
 
                         {/* Column 2 */}
                         <div className="space-y-4">
                               {/* Image 3 - Medium */}
-                              <GalleryImageComponent index={2} height={300}/>
+                              <GalleryImageComponent index={2} height={300} />
                               {/* Image 4 - Large */}
-                              <GalleryImageComponent index={3} height={500}/>
+                              <GalleryImageComponent index={3} height={500} />
                         </div>
 
                         {/* Column 3 */}
                         <div className="space-y-4">
                               {/* Image 5 - Square */}
-                              <GalleryImageComponent index={4} height={400}/>
+                              <GalleryImageComponent index={4} height={400} />
                               {/* <!-- Image 6 - Square --> */}
-                              <GalleryImageComponent index={5} height={400}/>
+                              <GalleryImageComponent index={5} height={400} />
                         </div>
                   </div>
             </div>

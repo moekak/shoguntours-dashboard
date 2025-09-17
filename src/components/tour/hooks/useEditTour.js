@@ -2,16 +2,17 @@ import { useMutation } from "@tanstack/react-query"
 import { API_ENDPOINTS, MESSAGES } from "../../../config/config";
 import axios from "axios";
 import { useTourOperatorContext } from "../context/TourOperatorContext";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 
-
-export function useCreateTour(){
-      const {setErrors, setErrorFields, setErrorTitle, resetError, setIsSuccess, setErrorsMessages} = useTourOperatorContext()
+export function useEditTour(){
+      const {setErrors, setErrorFields, setErrorTitle, setSuccessMessage, resetError, setIsSuccess, setErrorsMessages} = useTourOperatorContext()
+      const {tourId} = useParams()
       const navigate = useNavigate()
-      const createTour= async(data) =>{
+
+      const EditTour= async(data) =>{
             resetError()
-            const response = await axios.post(API_ENDPOINTS.API.CREATE_TOUR, data, {
+            const response = await axios.post(`${API_ENDPOINTS.API.UPDATE_TOUR}/${tourId}`, data, {
                   headers: {
                         'Content-Type': 'multipart/form-data',
                   },
@@ -20,7 +21,7 @@ export function useCreateTour(){
       }
 
       const {isPending, mutate, error} = useMutation({
-            mutationFn: createTour,
+            mutationFn: EditTour,
 
             onError: (error)=>{
                   console.log(error);
@@ -66,6 +67,16 @@ export function useCreateTour(){
                         setIsSuccess(false)
                         setSuccessMessage({})
                   }, 5000)
+                  
+                  // resetTour()
+                  // resetError()
+                  // setIsSuccess(true)
+                  // console.log(data);
+
+                  // window.scrollTo({
+                  //       top: 0,
+                  //       behavior: 'smooth'
+                  // });
 
             }
       })

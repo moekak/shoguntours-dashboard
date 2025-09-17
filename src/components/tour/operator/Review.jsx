@@ -10,7 +10,7 @@ import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
 
 function Review() {
-      const {ratingOptions, tour, setTour, errorFields} = useTourOperatorContext()
+      const {setTour, ratingOptions, tour,  errorFields} = useTourOperatorContext()
 
       const addReview = () => {
             setTour({
@@ -98,6 +98,7 @@ function Review() {
 
                                     <div>
                                           <DatePicker
+                                                defaultDate={tour.reviews?.[index].date}
                                                 id="date-picker"
                                                 label="Review Date"
                                                 placeholder="Select a date"

@@ -1,11 +1,12 @@
-import { Breadcrumbs, Typography } from '@mui/material'
+import {Breadcrumbs, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router'
-import ComponentCard from '../../common/ComponentCard'
-import BasicTableOne from '../../tables/BasicTables/BasicTableOne'
 import TourTable from './TourTable'
+import { useTourOperatorContext } from '../context/TourOperatorContext'
+import Alert from '../../ui/alert/Alert'
 
 function Tours() {
+      const {isSuccess, successMessage} = useTourOperatorContext(9)
       return (
             <div className="bg-gray-50 min-h-screen">
                   {/* Main Content */}
@@ -22,6 +23,19 @@ function Tours() {
                                     </Breadcrumbs>
                               
                               </div>
+                              {isSuccess  && (
+                                    <div className='mb-4'>
+                                          <Alert
+                                                variant="success"
+                                                title={successMessage?.title}
+                                                message={successMessage?.message}
+                                                // showLink={true}
+                                                // linkHref="/tours"
+                                                // linkText="View all tours"
+                                          />
+                                    </div>
+                                    
+                              )}
                               <TourTable/>
                               
                         </div>

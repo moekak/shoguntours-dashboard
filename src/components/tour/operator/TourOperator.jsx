@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import  { useEffect} from 'react';
 import { Breadcrumbs, Link, Typography } from '@mui/material';
 import Label from "../../form/Label.tsx";
@@ -22,8 +22,11 @@ import Alert from '../../ui/alert/Alert.tsx';
 import Loading from '../../ui/loading/Loading.jsx';
 import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
 
-function TourOperator({isPending, handleSubmit}) {
-      const {tour, setTour,errorTitle, regions, setLanguages,isSuccess, setRegions, setCategories, categories, errors, errorFields, errorsMessages} = useTourOperatorContext()
+function TourOperator({isPending, handleSubmit, type}) {
+
+
+      
+      const {tour, setTour,errorTitle, regions, setLanguages,isSuccess, setRegions, setCategories, categories, errors, errorFields, errorsMessages, set} = useTourOperatorContext()
       const handleInput = (e)=>{
             setTour({...tour, [e.target.name] : e.target.value})
       }
@@ -31,6 +34,8 @@ function TourOperator({isPending, handleSubmit}) {
       const handleSelect = (selectedOption, actionName) =>{
             setTour({...tour, [actionName]: selectedOption})
       }
+
+
       return (
             <div className="bg-gray-50 min-h-screen">
                   {/* Main Content */}
@@ -44,10 +49,10 @@ function TourOperator({isPending, handleSubmit}) {
                                                 Tour
                                           </Link>
 
-                                          <Typography sx={{ color: 'text.primary', fontSize: '0.8rem' }}>Create tour</Typography>
+                                          <Typography sx={{ color: 'text.primary', fontSize: '0.8rem' }}>{type == "create" ? "Create tour" : "Edit tour"}</Typography>
                                     </Breadcrumbs>
-                                    <h1 className="text-2xl font-bold text-gray-800 mt-3">Create New Tour</h1>
-                                    <p className="text-gray-600 my-2">Fill in the details below to create a new tour experience</p>
+                                    <h1 className="text-2xl font-bold text-gray-800 mt-3">{type == "create" ? "Create New Tour" : "Edit a tour"}</h1>
+                                    <p className="text-gray-600 my-2">{type == "create" ? "Fill in the details below to create a new tour experience" : "Edit and update your tour experience details below"}</p>
                                     {errors?.length > 0 && (
                                           <Alert
                                                 variant="error"
@@ -101,20 +106,20 @@ function TourOperator({isPending, handleSubmit}) {
                                                       <div className="flex-1">
                                                             <Label required={true} error={errorFields?.has("region_id")}>Region</Label>
                                                             <Select
+                                                                  defaultValue={tour?.region_id ? tour.region_id.toString() : ""}
                                                                   name="region_id"
-                                                                  value={tour?.region_id}
                                                                   options={regions}
                                                                   placeholder="Choose a region"
                                                                   className="dark:bg-dark-900"
                                                                   onChange={(selectedOption) => handleSelect(selectedOption, "region_id")}
                                                                   error={errorFields?.has("region_id")}
-                                                            /> 
+                                                            />  
                                                             <ErrorMessage type="region_id"/>
                                                       </div>
                                                       <div className="flex-1">
                                                             <Label error={errorFields?.has("category_id")} required={true}>Category</Label>
                                                             <Select
-                                                                  defaultValue={tour?.category_id ?? ""} 
+                                                                  defaultValue={tour?.category_id ? tour.category_id.toString() : ""}
                                                                   name="category_id"
                                                                   options={categories}
                                                                   placeholder="Choose a category"
@@ -126,7 +131,7 @@ function TourOperator({isPending, handleSubmit}) {
                                                             
                                                       </div>
 
-                                                      <div className='flex-1 flex flex-col justify-around'>
+                                                      <div className='flex flex flex-col justify-around'>
                                                             <Label required={true}>Feature</Label>
                                                             <div className="flex flex-wrap items-center gap-8"> 
                                                                   <Radio
@@ -144,6 +149,27 @@ function TourOperator({isPending, handleSubmit}) {
                                                                         checked={tour.is_featured === "0"}
                                                                         onChange={(selectedOption) => handleSelect(selectedOption, "is_featured")}
                                                                         label="No"
+                                                                  />
+                                                            </div>
+                                                      </div>
+                                                      <div className='flex flex flex-col justify-around'>
+                                                            <Label required={true}>Status</Label>
+                                                            <div className="flex flex-wrap items-center gap-8"> 
+                                                                  <Radio
+                                                                        id="radio3"
+                                                                        name="is_published"
+                                                                        value="1"
+                                                                        checked={tour.is_published === "1"}
+                                                                        onChange={(selectedOption) => handleSelect(selectedOption, "is_published")}
+                                                                        label="Publish"
+                                                                  />
+                                                                  <Radio
+                                                                        id="radio4"
+                                                                        name="is_published"
+                                                                        value="0"
+                                                                        checked={tour.is_published === "0"}
+                                                                        onChange={(selectedOption) => handleSelect(selectedOption, "is_published")}
+                                                                        label="Draft"
                                                                   />
                                                             </div>
                                                       </div>
@@ -195,19 +221,19 @@ function TourOperator({isPending, handleSubmit}) {
                                     </div>
 
                                     {/* QA Section */}
-                                    <Qa/>
+                                    <Qa />
 
                                     {/* Highlights Section */}
-                                    <TourHighlight/>
+                                    <TourHighlight />
 
                                     {/* Reviews Section */}
-                                    <Review/>
+                                    <Review />
 
                                     {/* Tour Itinerary Section */}
-                                    <TourItinerarySection/>
+                                    <TourItinerarySection />
 
                                     {/* gallery */}
-                                    <GalleryImage/>
+                                    <GalleryImage />
 
 
                               </div>

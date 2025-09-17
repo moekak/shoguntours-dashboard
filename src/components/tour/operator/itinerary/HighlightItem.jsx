@@ -5,7 +5,7 @@ import { useTourOperatorContext } from '../../context/TourOperatorContext';
 import ErrorMessage from '../../../ui/error/ErrorMessage';
 
 function HighlightItem({ itineraryIndex, highlightIndex}) {
-      const {tour, setTour, errorFields} = useTourOperatorContext()
+      const {setTour, tour, errorFields} = useTourOperatorContext()
       const removeHighlight = (itineraryIndex, highlightIndex) => {
             setTour({
                   ...tour,

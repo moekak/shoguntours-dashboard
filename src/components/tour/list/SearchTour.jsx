@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { useToursContext } from '../context/ToursContext'
 
 function SearchTour({categories, regions}) {
-      const {searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, filter, selectedRegions, setSelectedRegions} = useToursContext()
+      const {searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, filter, selectedRegions, setSelectedRegions, setSelectedStatus, selectedStatus} = useToursContext()
 
       useEffect(()=>{
             filter()
 
-      },[searchTerm, selectedCategory, selectedRegions])
+      },[searchTerm, selectedCategory, selectedRegions, selectedStatus])
 
       return (
             <div className="bg-white rounded-xl border border-gray-200 p-6 dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -63,6 +63,22 @@ function SearchTour({categories, regions}) {
                                           {regions?.map(region => (
                                                 <option key={region.id} value={region.id}>{region.region}</option>
                                           ))}
+                                    </select>
+                              </div>
+
+                              {/* status */}
+                              <div className="flex flex-col sm:flex-row gap-2">
+                                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap self-center">
+                                          Status:
+                                    </label>
+                                    <select
+                                          value={selectedStatus}
+                                          onChange={(e) => setSelectedStatus(e.target.value)}
+                                          className="h-10 px-3 rounded-lg border border-gray-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-white min-w-[120px]"
+                                    >
+                                          <option value="all">All Status</option>
+                                          <option value="1">Active</option>
+                                          <option value="0">Inactive</option>
                                     </select>
                               </div>
 

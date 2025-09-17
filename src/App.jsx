@@ -26,6 +26,7 @@ import { ToursProvider } from "./components/tour/context/ToursContext";
 import TourOperator from "./components/tour/operator/TourOperator";
 import Tours from "./components/tour/list/Tours";
 import TourEdit from "./components/tour/edit/TourEdit";
+import TourCreate from "./components/tour/create/TourCreate";
 
 
 
@@ -67,8 +68,8 @@ export default function App() {
                                           <Route path="/bar-chart" element={<BarChart />} />
 
                                           {/* Tour */}
-                                          <Route path="/tour/create" element={<TourOperator/>} />
                                           <Route path="/tours" element={<Tours />} />
+                                          <Route path="/tour/create" element={<TourCreate />} />
                                           <Route path="/tour/:tourId" element={<TourEdit />} />
 
                                     </Route>

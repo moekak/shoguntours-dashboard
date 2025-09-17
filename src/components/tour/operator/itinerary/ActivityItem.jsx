@@ -53,6 +53,7 @@ function ActivityItem({ activityIndex, itineraryIndex}) {
                                     selectedIcon={tour.itinerary[itineraryIndex].activity[activityIndex].activity_icon}
                                     itineraryIndex={itineraryIndex}
                                     activityIndex={activityIndex}
+                                    
                               />
 
                               <div className="flex-1 space-y-3">

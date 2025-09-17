@@ -15,6 +15,8 @@ export const TourOPeratorProvider  = ({children}) =>{
       const [errorTitle, setErrorTitle] = useState("")
       const [errorFields, setErrorFields] = useState(new Set())
       const [isSuccess, setIsSuccess] = useState(false)
+      const [isModalOpen, setIsModalOpen] = useState(false)
+      const [successMessage, setSuccessMessage] = useState({})
       const iconOptions = [
             { icon: 'fa-solid fa-location-dot', title: '場所' },
             { icon: 'fa-camera', title: '写真撮影' },
@@ -62,6 +64,7 @@ export const TourOPeratorProvider  = ({children}) =>{
                   region_id: "",
                   category_id: "",
                   is_featured: "0",
+                  is_published: "1",
                   overview_title: "",
                   overview_description: "",
                   questions: [
@@ -88,7 +91,7 @@ export const TourOPeratorProvider  = ({children}) =>{
                         {
                               duration: "",
                               max_participants: "",
-                              tour_type: "",
+                              tour_type: "private",
                               meeting_point: "",
                               adult_price: "",
                               child_price: "",
@@ -110,6 +113,10 @@ export const TourOPeratorProvider  = ({children}) =>{
             }
       )
 
+
+
+
+
       const formatTourData = (tourData)=>{
             const formData = new FormData()
             formData.append("title", tourData.badge)
@@ -118,6 +125,7 @@ export const TourOPeratorProvider  = ({children}) =>{
             formData.append("region_id", tourData.region_id)
             formData.append("category_id", tourData.category_id)
             formData.append("is_featured", tourData.is_featured)
+            formData.append("is_published", tourData.is_published)
             formData.append("overview_title", tourData.overview_title)
             formData.append("overview_description", tourData.overview_description)
             formData.append('questions', JSON.stringify(tourData.questions));
@@ -150,8 +158,10 @@ export const TourOPeratorProvider  = ({children}) =>{
                   region_id: "",
                   category_id: "",
                   is_featured: "0",
+                  is_published: "1",
                   overview_title: "",
                   overview_description: "",
+                  hero_image: "",
                   questions: [
                         {
                               question: "",
@@ -176,7 +186,7 @@ export const TourOPeratorProvider  = ({children}) =>{
                         {
                               duration: "",
                               max_participants: "",
-                              tour_type: "",
+                              tour_type: "private",
                               meeting_point: "",
                               adult_price: "",
                               child_price: "",
@@ -189,7 +199,7 @@ export const TourOPeratorProvider  = ({children}) =>{
                                           activity_icon: 'fa-solid fa-location-dot'
                                     }
                               ],
-                              itinerary_highlight: [],
+                              itinerary_highlight: [""],
                               languages: [],
                               image: ""
                         }
@@ -230,6 +240,10 @@ export const TourOPeratorProvider  = ({children}) =>{
             setIsSuccess,
             errorsMessages,
             setErrorsMessages,
+            successMessage,
+            setSuccessMessage,
+            isModalOpen,
+            setIsModalOpen
       }
 
 

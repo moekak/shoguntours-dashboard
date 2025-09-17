@@ -7,7 +7,7 @@ import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
 
 
 function TourHighlight() {
-      const {tour, setTour,errorFields} = useTourOperatorContext()
+      const {setTour, tour, errorFields} = useTourOperatorContext()
       
       const addHighlight = () => {
             setTour({

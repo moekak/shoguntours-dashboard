@@ -23,6 +23,8 @@ export const API_ENDPOINTS = {
             CREATE_TOUR: `${BASE_URL}/tour/store`,
             GET_TOUR: `${BASE_URL}/get/tours`,
             GET_SPECIFIC_TOUR: `${BASE_URL}/get/tour`,
+            UPDATE_TOUR: `${BASE_URL}/tour/update`,
+            DELETE_TOUR: `${BASE_URL}/tour/destroy`,
       },
 
       // IMAGE: {

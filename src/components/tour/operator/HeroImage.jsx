@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTourOperatorContext } from '../context/TourOperatorContext';
 import { API_ENDPOINTS } from '../../../config/config';
+import { FILE } from 'react-dnd-html5-backend/dist/NativeTypes';
 
 function HeroImage() {
       const {setTour, tour,errorFields} = useTourOperatorContext()
@@ -11,9 +12,14 @@ function HeroImage() {
             setTour({...tour, hero_image: file})
             setPreview(previewUrl)
       };
+
+      useEffect(()=>{
+            console.log(tour);
+            
+      },[tour])
       return (
             <>
-                  <div className={` ${errorFields?.has("hero_image") ? "border-[#e7000b] hover:border-[#e7000b]" :"border-gray-300 hover:border-[#465fff]"} border-2 border-dashed  rounded-lg p-8 text-center flex items-center flex-col justify-center  transition-colors cursor-pointer h-[350px]  ${preview == "" && tour?.hero_image == "" ? "block" : "hidden"}`}>
+                  <div className={` ${errorFields?.has("hero_image") ? "border-[#e7000b] hover:border-[#e7000b]" :"border-gray-300 hover:border-[#465fff]"} border-2 border-dashed  rounded-lg p-8 text-center flex items-center flex-col justify-center  transition-colors cursor-pointer h-[350px]  ${preview == "" && (tour?.hero_image == "") ? "block" : "hidden"}`}>
                         <i className="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
                         <p className="text-gray-600 font-medium mb-2">Upload main tour image</p>
                         <p className="text-sm text-gray-500">This will be displayed as the main banner image</p>
@@ -36,7 +42,7 @@ function HeroImage() {
 
                   <div className={`preview_container border-2 border-dashed border-gray-300 rounded-lg p-5 text-center hover:border-[#465fff] transition-colors cursor-pointer h-[350px] ${preview !== "" || tour?.hero_image !== "" ? "block" : "hidden"}`}>
                         <label htmlFor="hero_image_input" className="h-full block cursor-pointer">
-                              {tour?.hero_image && (
+                              {!(tour.hero_image instanceof File) && tour.hero_image  && (
                                     <img src={`${API_ENDPOINTS.IMAGE.URL}/${tour?.hero_image}`} alt="" className="preview_src h-full w-full object-cover"/>
                               )}
                               {preview && (

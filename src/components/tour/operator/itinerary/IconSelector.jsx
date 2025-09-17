@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useTourOperatorContext } from '../../context/TourOperatorContext';
 
 function IconSelector({selectedIcon,itineraryIndex, activityIndex}) {
-      const {iconOptions, setTour, tour} = useTourOperatorContext()
+      const {setTour, iconOptions, tour} = useTourOperatorContext()
       const [isOpen, setIsOpen] = useState(false);
       const handleInput = (value, itineraryIndex, activityIndex, field) => {
             setTour({

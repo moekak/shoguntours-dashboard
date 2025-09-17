@@ -9,11 +9,11 @@ import { ThemeProvider } from "./context/ThemeContext.tsx";
 import { BrowserRouter } from "react-router";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <ThemeProvider>
       <AppWrapper>
         <App />
       </AppWrapper>
     </ThemeProvider>
-  </StrictMode>
+  // </StrictMode>
 );

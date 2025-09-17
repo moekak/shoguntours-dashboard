@@ -6,7 +6,7 @@ import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
 
 function Qa() {
-      const {tour, setTour,errorFields} = useTourOperatorContext()
+      const {setTour, tour, errorFields} = useTourOperatorContext()
 
       const addQA = () => {
             setTour({

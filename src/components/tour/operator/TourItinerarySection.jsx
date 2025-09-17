@@ -20,7 +20,7 @@ import ErrorMessage from '../../ui/error/ErrorMessage';
 // メインコンポーネント
 const TourItinerarySection = () => {
 
-      const {tourTypes,tour, setTour, languages, errorFields} = useTourOperatorContext()
+      const {setTour, tourTypes,tour,  languages, errorFields} = useTourOperatorContext()
 
       const addItinerary = () => {
             setTour({
@@ -28,7 +28,7 @@ const TourItinerarySection = () => {
                   itinerary: [...tour.itinerary,  {
                         duration: "",
                         max_participants: "",
-                        tour_type: "",
+                        tour_type: "private",
                         meeting_point: "",
                         adult_price: "",
                         child_price: "",
@@ -168,7 +168,7 @@ const TourItinerarySection = () => {
                                                       <div>
                                                             <Label required={true}  error={errorFields?.has(`itinerary.${itineraryIndex}.tour_type`)}>Tour Type</Label>
                                                             <Select
-
+                                                                  defaultValue={`itinerary.${itineraryIndex}.tour_type`}
                                                                   options={tourTypes}
                                                                   placeholder="Select tour type"
                                                                   className="dark:bg-dark-900"
@@ -198,6 +198,7 @@ const TourItinerarySection = () => {
                                                                   {languages?.map((language, index)=>(
                                                                         <div className="flex items-center gap-3" key={`language-${itineraryIndex}-${index}`}>
                                                                               <Checkbox 
+                                                                                    checked={tour?.itinerary[itineraryIndex]?.languages?.includes(language.id)}
                                                                                     label={language.language} 
                                                                                     onChange={(value) =>handleLanguageChange(itineraryIndex, language.id, value)}
                                                                               />
@@ -253,6 +254,7 @@ const TourItinerarySection = () => {
                                                                                     key={`activity-${itineraryIndex}-${activityIndex}`}
                                                                                     activityIndex={activityIndex}
                                                                                     itineraryIndex={itineraryIndex}
+                                                                                    
                                                                               />
                                                                         ))}
                                                                   </div>
@@ -274,7 +276,7 @@ const TourItinerarySection = () => {
                                                 <div className="bg-gray-50 p-4 border-b border-gray-200">
                                                       <h5 className="font-semibold text-gray-800">Main Image for this Itinerary</h5>
                                                 </div>
-                                                <ItineraryImage itineraryIndex={itineraryIndex}/>
+                                                <ItineraryImage itineraryIndex={itineraryIndex} />
                                           </div>
 
                                           {/* Highlights Section */}
@@ -288,6 +290,7 @@ const TourItinerarySection = () => {
                                                                   key={`highlight-${itineraryIndex}-${highlightIndex}`}
                                                                   itineraryIndex={itineraryIndex}
                                                                   highlightIndex={highlightIndex}
+                                                                  
                                                             />
                                                       ))}
                                                       <button
