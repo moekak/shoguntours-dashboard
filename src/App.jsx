@@ -21,12 +21,19 @@ import Home from "./pages/Dashboard/Home";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 
-import { TourOPeratorProvider } from "./components/tour/context/TourOperatorContext";
+import { TourOperatorProvider } from "./components/tour/context/TourOperatorContext";
 import { ToursProvider } from "./components/tour/context/ToursContext";
 import TourOperator from "./components/tour/operator/TourOperator";
 import Tours from "./components/tour/list/Tours";
 import TourEdit from "./components/tour/edit/TourEdit";
 import TourCreate from "./components/tour/create/TourCreate";
+import { BlogCreateProvider } from "./components/blog/context/BlogOperatorContext";
+import BlogCreate from "./components/blog/create/BlogCreate";
+import { CommonProvider } from "./context/CommonContext";
+import Blogs from "./components/blog/list/Blogs";
+import { BlogsProvider } from "./components/blog/context/BlogsContext";
+import BlogEdit from "./components/blog/edit/BlogEdit";
+
 
 
 
@@ -35,8 +42,11 @@ export default function App() {
       return (
             <>
                   <QueryClientProvider client={queryClient}>
-                  <TourOPeratorProvider>
+                  <CommonProvider>
+                  <TourOperatorProvider>
                   <ToursProvider>
+                  <BlogCreateProvider>
+                  <BlogsProvider>
                         <Router>
                               <ScrollToTop />
                               <Routes>
@@ -68,10 +78,14 @@ export default function App() {
                                           <Route path="/bar-chart" element={<BarChart />} />
 
                                           {/* Tour */}
-                                          <Route path="/tours" element={<Tours />} />
-                                          <Route path="/tour/create" element={<TourCreate />} />
-                                          <Route path="/tour/:tourId" element={<TourEdit />} />
+                                          <Route path="/tours/550e8400-e29b-41d4-a716-446655440000" element={<Tours />} />
+                                          <Route path="/tour/create/550e8400-e29b-41d4-a716-446655440000" element={<TourCreate />} />
+                                          <Route path="/tour/:tourId/550e8400-e29b-41d4-a716-446655440000" element={<TourEdit />} />
 
+                                          {/* Blog */}
+                                          <Route path="/blog/create/550e8400-e29b-41d4-a716-446655440000" element={<BlogCreate />} />
+                                          <Route path="/blogs/550e8400-e29b-41d4-a716-446655440000" element={<Blogs />} />
+                                          <Route path="/blog/:blogId/550e8400-e29b-41d4-a716-446655440000" element={<BlogEdit />} />
                                     </Route>
 
                                     {/* Auth Layout */}
@@ -82,8 +96,11 @@ export default function App() {
                                     <Route path="*" element={<NotFound />} />
                               </Routes>
                         </Router>
+                  </BlogsProvider>
+                  </BlogCreateProvider>
                   </ToursProvider>
-                  </TourOPeratorProvider>
+                  </TourOperatorProvider>
+                  </CommonProvider>
                   </QueryClientProvider>
             </>
       );

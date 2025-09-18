@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useTourOperatorContext } from '../context/TourOperatorContext';
 import { API_ENDPOINTS } from '../../../config/config';
 import { FILE } from 'react-dnd-html5-backend/dist/NativeTypes';
+import { useCommonContext } from '../../../context/CommonContext';
 
 function HeroImage() {
-      const {setTour, tour,errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tour} = useTourOperatorContext()
       const [preview, setPreview] = useState("")
       const handleImageChange = (e) => {
             const file = e.target.files[0];

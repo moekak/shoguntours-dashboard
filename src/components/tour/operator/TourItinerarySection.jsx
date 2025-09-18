@@ -14,13 +14,15 @@ import Checkbox from '../../form/input/Checkbox';
 import TextArea from '../../form/input/TextArea';
 import ItineraryImage from './itinerary/ItineraryImage';
 import ErrorMessage from '../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../context/CommonContext';
 
 
 
 // メインコンポーネント
 const TourItinerarySection = () => {
 
-      const {setTour, tourTypes,tour,  languages, errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tourTypes,tour,  languages} = useTourOperatorContext()
 
       const addItinerary = () => {
             setTour({

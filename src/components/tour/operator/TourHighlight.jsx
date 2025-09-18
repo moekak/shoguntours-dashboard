@@ -4,10 +4,12 @@ import TextArea from "../../form/input/TextArea.tsx";
 import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
 import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
+import { useCommonContext } from "../../../context/CommonContext.jsx";
 
 
 function TourHighlight() {
-      const {setTour, tour, errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tour} = useTourOperatorContext()
       
       const addHighlight = () => {
             setTour({

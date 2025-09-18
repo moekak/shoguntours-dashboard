@@ -1,18 +1,17 @@
 import { useMutation } from "@tanstack/react-query"
 import { API_ENDPOINTS, MESSAGES } from "../../../config/config";
 import axios from "axios";
-import { useTourOperatorContext } from "../context/TourOperatorContext";
 import { useNavigate } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 
 
 
-export function useCreateTour(){
-      const {setErrorTitle,setErrorFields, setErrors, setSuccessMessage, setErrorsMessages, setIsSuccess, resetError} = useCommonContext()
+export function useCreateBlog(){
+      const {setErrorTitle,setErrorFields, setErrors, setErrorsMessages,setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
       const navigate = useNavigate()
-      const createTour= async(data) =>{
+      const createBlog= async(data) =>{
             resetError()
-            const response = await axios.post(API_ENDPOINTS.API.CREATE_TOUR, data, {
+            const response = await axios.post(API_ENDPOINTS.API.CREATE_BLOG, data, {
                   headers: {
                         'Content-Type': 'multipart/form-data',
                   },
@@ -21,7 +20,7 @@ export function useCreateTour(){
       }
 
       const {isPending, mutate, error} = useMutation({
-            mutationFn: createTour,
+            mutationFn: createBlog,
 
             onError: (error)=>{
                   console.log(error);
@@ -62,7 +61,7 @@ export function useCreateTour(){
                   
                   setIsSuccess(true)
                   setSuccessMessage({title: message?.title, message: message?.message})
-                  navigate("/tours/550e8400-e29b-41d4-a716-446655440000")
+                  navigate("/blogs/550e8400-e29b-41d4-a716-446655440000")
                   setTimeout(()=>{
                         setIsSuccess(false)
                         setSuccessMessage({})

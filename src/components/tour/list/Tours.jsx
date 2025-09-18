@@ -4,9 +4,10 @@ import { Link } from 'react-router'
 import TourTable from './TourTable'
 import { useTourOperatorContext } from '../context/TourOperatorContext'
 import Alert from '../../ui/alert/Alert'
+import { useCommonContext } from '../../../context/CommonContext'
 
 function Tours() {
-      const {isSuccess, successMessage} = useTourOperatorContext(9)
+      const {successMessage, isSuccess} = useCommonContext()
       return (
             <div className="bg-gray-50 min-h-screen">
                   {/* Main Content */}

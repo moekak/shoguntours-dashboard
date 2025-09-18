@@ -1,4 +1,4 @@
-const BASE_URL = "https://kido-portfolio.tokyo/api";
+const BASE_URL = "https://shoguntoursjapan.com/api";
 
 export const API_ENDPOINTS = {
       // TOUR: {
@@ -25,6 +25,12 @@ export const API_ENDPOINTS = {
             GET_SPECIFIC_TOUR: `${BASE_URL}/get/tour`,
             UPDATE_TOUR: `${BASE_URL}/tour/update`,
             DELETE_TOUR: `${BASE_URL}/tour/destroy`,
+            // BLOG
+            FETCH_CREATE_BLOG: `${BASE_URL}/dashboard/blog`,
+            CREATE_BLOG: `${BASE_URL}/blog/store`,
+            GET_BLOG: `${BASE_URL}/dashboard/get/blogs`,
+            GET_SPECIFIC_BLOG: `${BASE_URL}/dashboard/get/blog`,
+            UPDATE_BLOG: `${BASE_URL}/dashboard/blog/update`,
       },
 
       // IMAGE: {

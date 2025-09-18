@@ -3,10 +3,11 @@ import { API_ENDPOINTS, MESSAGES } from "../../../config/config";
 import axios from "axios";
 import { useTourOperatorContext } from "../context/TourOperatorContext";
 import { useNavigate, useParams } from "react-router";
+import { useCommonContext } from "../../../context/CommonContext";
 
 
 export function useEditTour(){
-      const {setErrors, setErrorFields, setErrorTitle, setSuccessMessage, resetError, setIsSuccess, setErrorsMessages} = useTourOperatorContext()
+      const {setSuccessMessage,setErrorTitle, setErrorFields, setErrors, setErrorsMessages, setIsSuccess, resetError} = useCommonContext()
       const {tourId} = useParams()
       const navigate = useNavigate()
 
@@ -62,7 +63,7 @@ export function useEditTour(){
                   
                   setIsSuccess(true)
                   setSuccessMessage({title: message?.title, message: message?.message})
-                  navigate("/tours")
+                  navigate("/tours/550e8400-e29b-41d4-a716-446655440000")
                   setTimeout(()=>{
                         setIsSuccess(false)
                         setSuccessMessage({})

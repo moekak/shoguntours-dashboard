@@ -3,10 +3,12 @@ import { API_ENDPOINTS} from "../../../config/config";
 import axios from "axios";
 import { useTourOperatorContext } from "../context/TourOperatorContext";
 import { useNavigate } from "react-router";
+import { useCommonContext } from "../../../context/CommonContext";
 
 
 export function UseDeleteTour(){
-      const {setErrors, setErrorFields, setErrorTitle, setIsModalOpen, resetError, setIsSuccess,setSuccessMessage} = useTourOperatorContext()
+      const {setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
+      const { setIsModalOpen} = useTourOperatorContext()
       const navigate = useNavigate()
       const deleteTour= async(tourId) =>{
             resetError()
@@ -61,7 +63,7 @@ export function UseDeleteTour(){
                   setIsModalOpen(false)
                   setIsSuccess(true)
                   setSuccessMessage({title: message?.title, message: message?.message})
-                  navigate("/tours")
+                  navigate("/tours/550e8400-e29b-41d4-a716-446655440000")
                   setTimeout(()=>{
                         setIsSuccess(false)
                         setSuccessMessage({})

@@ -3,7 +3,7 @@ import TourOperator from '../operator/TourOperator.jsx';
 import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
 import { useFetchSpecificTour } from '../hooks/useFetchSpecificTour.js';
 import { useParams } from 'react-router';
-import TourOperatorSkelton from '../../skelton/TourOperatorSkelton.jsx';
+import TableSkelton from '../../skelton/TableSkelton.jsx';
 
 import { useEditTour } from '../hooks/useEditTour.js';
 
@@ -100,7 +100,7 @@ const TourEdit = () => {
       }
 
       if(isLoading || tour.region_id == undefined || !isInitialized){
-            return <TourOperatorSkelton/>
+            return <TableSkelton/>
       }
 
       

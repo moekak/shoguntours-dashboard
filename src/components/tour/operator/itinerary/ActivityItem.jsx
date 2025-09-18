@@ -6,9 +6,11 @@ import Input from '../../../form/input/InputField';
 import TextArea from '../../../form/input/TextArea';
 import { useTourOperatorContext } from '../../context/TourOperatorContext';
 import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function ActivityItem({ activityIndex, itineraryIndex}) {
-      const {setTour, tour, errorFields} = useTourOperatorContext()
+      const {setTour, tour} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
 
       const removeActivity = (itineraryIndex, activityIndex) => {
             console.log(tour.itinerary[itineraryIndex].activity);

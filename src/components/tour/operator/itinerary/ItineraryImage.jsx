@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { useTourOperatorContext } from '../../context/TourOperatorContext';
 import ErrorMessage from '../../../ui/error/ErrorMessage';
 import { API_ENDPOINTS } from '../../../../config/config';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function ItineraryImage({itineraryIndex}) {
-      const {setTour, tour,errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tour} = useTourOperatorContext()
       const [preview, setPreview] = useState([])
       const handleImageChange = (e) => {
             const file = e.target.files[0];

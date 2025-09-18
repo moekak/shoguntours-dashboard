@@ -3,7 +3,7 @@ import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
 import { useFetchCreateData } from '../hooks/useFetchCreateData.js';
 import { useCreateTour } from '../hooks/useCreateTour.js';
 import TourOperator from '../operator/TourOperator.jsx';
-import TourOperatorSkelton from '../../skelton/TourOperatorSkelton.jsx';
+import TableSkelton from '../../skelton/TableSkelton.jsx';
 
 const TourCreate = () => {
       const {tour, setTour, setLanguages,setRegions, setCategories, resetTour} = useTourOperatorContext()
@@ -49,7 +49,7 @@ const TourCreate = () => {
 
 
       if(isLoading || !isInitialized){
-            return <TourOperatorSkelton/>
+            return <TableSkelton/>
       }
 
       return (

@@ -1,36 +1,45 @@
 import { useEffect, useState } from 'react';
 import { Table,TableBody, TableCell,TableHeader, TableRow,} from "../../ui/table";
-import { useFetchTour } from '../hooks/useFetchTour';
+
 import { API_ENDPOINTS } from '../../../config/config';
-import ActionDropdown from './ActionDropDown';
-import { useToursContext } from '../context/ToursContext';
-import SearchTour from './SearchTour';
-import TourTableSkeleton from '../../skelton/TourTableSkeleton';
+
+
 import { useNavigate } from 'react-router';
+
 import DeletionModal from '../../ui/modal/DeletionModal';
-import { useTourOperatorContext } from '../context/TourOperatorContext';
+
+import ActionDropdown from '../../tour/list/ActionDropDown';
+import { useFetchBlogs } from '../hooks/useFetchBlogs';
+import { useBlogsContext } from '../context/BlogsContext';
+import { useBlogOperatorContext } from '../context/BlogOperatorContext';
+import TourTableSkeleton from '../../skelton/TourTableSkeleton';
+import SearchTour from '../../tour/list/SearchTour';
+import SearchBlog from './SearchBlog';
+import TableSkelton from '../../skelton/TableSkelton';
 
 
-export default function TourTable() {
-      
-      const {data, isLoading} = useFetchTour()
-      const {setTours, setOriginalTours, tours} = useToursContext()
-      const {isModalOpen, setIsModalOpen} = useTourOperatorContext()
+function BlogTable() {
+
+      const {setBlogs, setOriginalBlogs, blogs} = useBlogsContext()
+      const {isModalOpen, setIsModalOpen} = useBlogOperatorContext()
       const navigate = useNavigate()
-      const [selectedTour, setSelectedTour] = useState(null)
+      const [selectedblog, setSelectedblog] = useState(null)
+      const {data, isLoading} = useFetchBlogs()
 
 
-      const handleAction = (action, tourId) => {
+      const handleAction = (action, id) => {
+            console.log(id);
+            
             switch(action) {
                   case 'view':
-                        alert(`View details for tour ${tourId}`);
+                        alert(`View details for blog ${id}`);
                         break;
                   case 'edit':
-                        navigate(`/tour/${tourId}/550e8400-e29b-41d4-a716-446655440000`)
+                        navigate(`/blog/${id}/550e8400-e29b-41d4-a716-446655440000`)
                         break;
                   case 'delete':
                         setIsModalOpen(true)
-                        setSelectedTour(tourId)
+                        setSelectedblog(bloidgId)
                         break;
                   default:
                   break;
@@ -39,24 +48,21 @@ export default function TourTable() {
 
 
       useEffect(()=>{
-
-            if(data !== undefined){
-                  setOriginalTours(data?.tours)
-                  setTours(data?.tours)
-            }
-            
+            if(!data) return
+            setOriginalBlogs(data?.blogs)
+            setBlogs(data?.blogs)
       },[data])
 
       if(isLoading){
-            return <TourTableSkeleton/>
+            return <TableSkelton/>
       }
 
       return (
             
             <div className="space-y-6">
-                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedTour={selectedTour}/>}
+                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedblog={selectedblog}/>}
                   {/* Filter Section */}
-                  <SearchTour categories={data?.categories} regions={data?.regions}/>
+                  <SearchBlog blogCategories={data?.categories} />
                   {/* Table Section */}
                   <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
                         <div className="max-w-full overflow-x-auto">
@@ -68,7 +74,7 @@ export default function TourTable() {
                                                       isHeader
                                                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                      Tour
+                                                      Article
                                                 </TableCell>
                                                 <TableCell
                                                       isHeader
@@ -86,13 +92,13 @@ export default function TourTable() {
                                                       isHeader
                                                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                      Price
+                                                      Views
                                                 </TableCell>
                                                 <TableCell
                                                       isHeader
                                                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                      Itinerary
+                                                      Last Modified
                                                 </TableCell>
                                                 <TableCell
                                                       isHeader
@@ -105,45 +111,49 @@ export default function TourTable() {
 
                                     {/* Table Body */}
                                     <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                                          {tours?.map((tour) => (
-                                                      <TableRow key={tour.id}>
+                                          {blogs?.map((blog) => (
+                                                      <TableRow key={blog.id}>
                                                             <TableCell className="px-5 py-4 sm:px-6 text-start">
                                                                   <div className="flex items-center gap-3">
                                                                         <img
-                                                                              src={`${API_ENDPOINTS.IMAGE.URL}/${tour?.hero_image}`}
-                                                                              alt={tour?.title}
-                                                                              className="h-10 w-10 rounded-lg object-cover"
+                                                                              className='h-10 w-10 rounded-lg object-cover'
+                                                                              src={`${API_ENDPOINTS.IMAGE.URL}/${blog?.featured_image}`}
+                                                                              alt={blog?.title}
                                                                         />
                                                                         <div>
-                                                                              <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                                                                                    {tour?.title}
+                                                                              <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90 line-clamp-1">
+                                                                                    {blog?.title}
                                                                               </span>
-                                                                              <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                                                                                    {tour?.subtitle}
+                                                                              <span className="block text-gray-500 text-theme-xs dark:text-gray-400 line-clamp-1">
+                                                                                    {blog?.subtitle}
                                                                               </span>
                                                                         </div>
                                                                   </div>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                                                   <span className='inline-flex px-2 py-1 text-xs font-medium rounded-full bg-[#e92929]/10 text-[#e92929]'>
-                                                                  {tour?.category?.category}
+                                                                  {blog?.blog_category?.category_name}
                                                                   </span>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                                                  <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${tour?.is_published == 0 ? "bg-gray-100 text-gray-800" : "bg-green-100 text-green-800"}`}>
-                                                                  {tour?.is_published == 0 ? "inactive" : "active"}
+                                                                  <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${blog?.is_published == 0 ? "bg-gray-100 text-gray-800" : "bg-green-100 text-green-800"}`}>
+                                                                  {blog?.is_published == 0 ? "inactive" : "active"}
                                                                   </span>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                                                                  {`￥${tour?.minimum_price.toLocaleString()}~`}
+                                                                  {blog?.views}
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                                                                   <div className="flex -space-x-2">
-                                                                        {tour?.itineraries?.length}
+                                                                        {blog?.updated_at && new Date(blog.updated_at).toLocaleDateString('en-US', {
+                                                                              year: 'numeric',
+                                                                              month: 'long',
+                                                                              day: 'numeric'
+                                                                        })}
                                                                   </div>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                                                  <ActionDropdown id={tour?.id} onAction={handleAction} />
+                                                                  <ActionDropdown id={blog?.id} onAction={handleAction} />
                                                             </TableCell>
                                                       </TableRow>
                                                 ))}
@@ -154,3 +164,5 @@ export default function TourTable() {
             </div>
       );
 }
+
+export default BlogTable

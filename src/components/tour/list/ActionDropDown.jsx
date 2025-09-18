@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const ActionDropdown = ({ tourId, onAction }) => {
+const ActionDropdown = ({ id, onAction }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -18,7 +18,7 @@ const ActionDropdown = ({ tourId, onAction }) => {
 
   const handleActionClick = (action) => {
     setIsOpen(false);
-    onAction(action, tourId);
+    onAction(action, id);
   };
 
   return (

@@ -4,9 +4,11 @@ import TextArea from "../../form/input/TextArea.tsx";
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
+import { useCommonContext } from "../../../context/CommonContext.jsx";
 
 function Qa() {
-      const {setTour, tour, errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tour} = useTourOperatorContext()
 
       const addQA = () => {
             setTour({

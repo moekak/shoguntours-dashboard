@@ -8,9 +8,11 @@ import DatePicker from "../../form/date-picker.tsx";
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
+import { useCommonContext } from "../../../context/CommonContext.jsx";
 
 function Review() {
-      const {setTour, ratingOptions, tour,  errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, ratingOptions, tour} = useTourOperatorContext()
 
       const addReview = () => {
             setTour({

@@ -1,5 +1,4 @@
-import React, { useRef } from 'react'
-import  { useEffect} from 'react';
+
 import { Breadcrumbs, Link, Typography } from '@mui/material';
 import Label from "../../form/Label.tsx";
 import Select from "../../form/Select.tsx";
@@ -15,18 +14,17 @@ import Qa from './QA.jsx';
 import TourHighlight from './TourHighlight.jsx';
 import Review from './Review.jsx';
 import HeroImage from './HeroImage.jsx';
-import { useFetchCreateData } from '../hooks/useFetchCreateData.js';
 import GalleryImage from './galleryImage/GalleryImage.jsx';
-import { useCreateTour } from '../hooks/useCreateTour.js';
 import Alert from '../../ui/alert/Alert.tsx';
 import Loading from '../../ui/loading/Loading.jsx';
 import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
+import { useCommonContext } from '../../../context/CommonContext.jsx';
 
 function TourOperator({isPending, handleSubmit, type}) {
 
 
-      
-      const {tour, setTour,errorTitle, regions, setLanguages,isSuccess, setRegions, setCategories, categories, errors, errorFields, errorsMessages, set} = useTourOperatorContext()
+      const {errorTitle,errors,errorFields, isSuccess} = useCommonContext()
+      const {tour, setTour, regions, categories} = useTourOperatorContext()
       const handleInput = (e)=>{
             setTour({...tour, [e.target.name] : e.target.value})
       }
@@ -67,7 +65,7 @@ function TourOperator({isPending, handleSubmit, type}) {
                                                 title="Tour Created Successfully"
                                                 message="Your tour has been created and is now available for booking."
                                                 showLink={true}
-                                                linkHref="/tours"
+                                                linkHref="/tours/550e8400-e29b-41d4-a716-446655440000"
                                                 linkText="View all tours"
 
                                           />
@@ -131,7 +129,7 @@ function TourOperator({isPending, handleSubmit, type}) {
                                                             
                                                       </div>
 
-                                                      <div className='flex flex flex-col justify-around'>
+                                                      <div className='flex  flex-col justify-around'>
                                                             <Label required={true}>Feature</Label>
                                                             <div className="flex flex-wrap items-center gap-8"> 
                                                                   <Radio

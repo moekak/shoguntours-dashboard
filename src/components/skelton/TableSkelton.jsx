@@ -1,7 +1,7 @@
 import React from 'react';
 import { Skeleton } from '@mui/material';
 
-function TourOperatorSkelton() {
+function TableSkelton() {
       return (
             <div className="bg-gray-50 min-h-screen">
                   <main className="pb-10">
@@ -228,4 +228,4 @@ function TourOperatorSkelton() {
       );
 }
 
-export default TourOperatorSkelton
+export default TableSkelton

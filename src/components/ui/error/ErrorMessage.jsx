@@ -1,8 +1,9 @@
 import React from 'react'
 import { useTourOperatorContext } from '../../tour/context/TourOperatorContext'
+import { useCommonContext } from '../../../context/CommonContext'
 
 function ErrorMessage({type}) {
-      const {errorsMessages} = useTourOperatorContext()
+      const {errorsMessages} = useCommonContext()
       const errorMsgs = errorsMessages[type]
 
       return (

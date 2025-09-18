@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useCommonContext } from "../../../context/CommonContext";
 
 export const TourOperatorContext = createContext()
 export const useTourOperatorContext = () =>{
@@ -9,14 +10,8 @@ export const useTourOperatorContext = () =>{
       return context;
 }
 
-export const TourOPeratorProvider  = ({children}) =>{
-      const [errors, setErrors] = useState([])
-      const [errorsMessages, setErrorsMessages] = useState([])
-      const [errorTitle, setErrorTitle] = useState("")
-      const [errorFields, setErrorFields] = useState(new Set())
-      const [isSuccess, setIsSuccess] = useState(false)
+export const TourOperatorProvider  = ({children}) =>{
       const [isModalOpen, setIsModalOpen] = useState(false)
-      const [successMessage, setSuccessMessage] = useState({})
       const iconOptions = [
             { icon: 'fa-solid fa-location-dot', title: '場所' },
             { icon: 'fa-camera', title: '写真撮影' },
@@ -210,11 +205,6 @@ export const TourOPeratorProvider  = ({children}) =>{
       }
 
 
-      const resetError = () =>{
-            setErrors([])
-            setErrorFields(new Set())
-            setErrorTitle("")
-      }
       const value = {
             iconOptions,
             languages,
@@ -228,20 +218,7 @@ export const TourOPeratorProvider  = ({children}) =>{
             categories,
             setCategories,
             formatTourData,
-            errors,
-            setErrors,
-            errorFields,
-            setErrorFields,
-            errorTitle,
-            setErrorTitle,
             resetTour,
-            resetError,
-            isSuccess,
-            setIsSuccess,
-            errorsMessages,
-            setErrorsMessages,
-            successMessage,
-            setSuccessMessage,
             isModalOpen,
             setIsModalOpen
       }

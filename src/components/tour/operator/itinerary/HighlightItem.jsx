@@ -3,9 +3,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import Input from '../../../form/input/InputField';
 import { useTourOperatorContext } from '../../context/TourOperatorContext';
 import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function HighlightItem({ itineraryIndex, highlightIndex}) {
-      const {setTour, tour, errorFields} = useTourOperatorContext()
+      const {errorFields} = useCommonContext()
+      const {setTour, tour} = useTourOperatorContext()
       const removeHighlight = (itineraryIndex, highlightIndex) => {
             setTour({
                   ...tour,
