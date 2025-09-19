@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
-import SignIn from "./pages/AuthPages/SignIn";
+
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
 import UserProfiles from "./pages/UserProfiles";
@@ -33,6 +33,10 @@ import { CommonProvider } from "./context/CommonContext";
 import Blogs from "./components/blog/list/Blogs";
 import { BlogsProvider } from "./components/blog/context/BlogsContext";
 import BlogEdit from "./components/blog/edit/BlogEdit";
+import SignIn from "./pages/AuthPages/SignIn";
+import axios from "axios";
+import PrivateRoute from "./components/services/PrivateRoute";
+import Reset from "./components/common/Reset";
 
 
 
@@ -49,10 +53,17 @@ export default function App() {
                   <BlogsProvider>
                         <Router>
                               <ScrollToTop />
+                              {/* <Reset/> */}
                               <Routes>
                                     {/* Dashboard Layout */}
                                     <Route element={<AppLayout />}>
-                                          <Route index path="/" element={<Home />} />
+                                          <Route index path="/"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <Home />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
 
                                           {/* Others Page */}
                                           <Route path="/profile" element={<UserProfiles />} />
@@ -78,19 +89,57 @@ export default function App() {
                                           <Route path="/bar-chart" element={<BarChart />} />
 
                                           {/* Tour */}
-                                          <Route path="/tours/550e8400-e29b-41d4-a716-446655440000" element={<Tours />} />
-                                          <Route path="/tour/create/550e8400-e29b-41d4-a716-446655440000" element={<TourCreate />} />
-                                          <Route path="/tour/:tourId/550e8400-e29b-41d4-a716-446655440000" element={<TourEdit />} />
+                                          <Route path="/tours"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <Tours />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
+                                          <Route path="/tour/create" 
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <TourCreate />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
+                                          <Route path="/tour/:tourId"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <TourEdit />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
 
                                           {/* Blog */}
-                                          <Route path="/blog/create/550e8400-e29b-41d4-a716-446655440000" element={<BlogCreate />} />
-                                          <Route path="/blogs/550e8400-e29b-41d4-a716-446655440000" element={<Blogs />} />
-                                          <Route path="/blog/:blogId/550e8400-e29b-41d4-a716-446655440000" element={<BlogEdit />} />
+                                          <Route path="/blog/create"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <BlogCreate />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
+
+                                          <Route path="/blogs"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <Blogs />
+                                                      </PrivateRoute>
+                                                } 
+                                          />
+                                          <Route path="/blog/:blogId"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <BlogEdit />
+                                                      </PrivateRoute>
+                                                } 
+                                          
+                                          />
                                     </Route>
 
                                     {/* Auth Layout */}
                                     <Route path="/signin" element={<SignIn />} />
-                                    <Route path="/signup" element={<SignUp />} />
+                                    <Route path="/signup/39ed0du0h0chs0u0023bbd93bmd03" element={<SignUp />} />
 
                                     {/* Fallback Route */}
                                     <Route path="*" element={<NotFound />} />

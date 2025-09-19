@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { MESSAGES } from "../config/config";
 
 export const CommonContext = createContext()
 export const useCommonContext = () =>{
@@ -16,11 +17,56 @@ export const CommonProvider  = ({children}) =>{
       const [successMessage, setSuccessMessage] = useState({})
       const [isSuccess, setIsSuccess] = useState(false)
       const [errorTitle, setErrorTitle] = useState("")
+      const [account, setAccount] = useState(null)
 
       const resetError = () =>{
             setErrors([])
             setErrorFields(new Set())
             setErrorTitle("")
+            setErrorsMessages([])
+      }
+      const resetAll = () =>{
+            setErrors([])
+            setErrorFields(new Set())
+            setErrorTitle("")
+            setErrorsMessages([])
+            setIsSuccess(false)
+            setSuccessMessage({})
+      }
+
+      const setErrorFieldsFn = (errorMsgs) =>{
+            setErrorFields(()=>{
+                  return Object.entries(errorMsgs).reduce((acc, [title, _])=>{
+                        acc.add(title)
+                        return acc
+                  },new Set())
+            })
+      }
+
+      const fetchPostError = (error) =>{
+            const errorCode = error?.response?.data?.error?.code
+            const errorMsgs = error?.response?.data?.error?.details
+            if(errorCode === "INTERNAL_SERVER_ERROR"){
+                  setErrors(MESSAGES.ERROR.SYSTEM_ERROR)
+                  setErrorTitle(MESSAGES.ERROR.SYSTEM_ERROR_TITLE)
+
+            }else if(errorCode === "VALIDATION_ERROR"){
+                  setErrorTitle(MESSAGES.ERROR.VALIDATION_ERROR_TITLE)
+                  setErrorsMessages(errorMsgs)
+                  setErrors(()=>{
+                        return Object.entries(errorMsgs).reduce((acc, [title, messages])=>{
+                              acc.push(...messages)
+                              return acc
+                        },[])
+                  })
+                  setErrorFieldsFn(errorMsgs)
+            }
+            
+
+            window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+            });
       }
 
       const value = {
@@ -36,7 +82,12 @@ export const CommonProvider  = ({children}) =>{
             setIsSuccess,
             resetError,
             errorTitle,
-            setErrorTitle
+            setErrorTitle,
+            setErrorFieldsFn,
+            fetchPostError,
+            account,
+            setAccount,
+            resetAll
       }
 
 

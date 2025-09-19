@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "../../../config/config";
-import axios from "axios";
-import { useToursContext } from "../context/ToursContext";
+import { apiClient } from "../../services/ApiClient";
 
 
 export function useFetchTour(){
+      const {fetchGet} = apiClient()
       const {data, isLoading, error} = useQuery({
             queryKey: ["create"], 
-            queryFn: () => axios.get(API_ENDPOINTS.API.GET_TOUR),
+            queryFn: async() => fetchGet(API_ENDPOINTS.API.GET_TOUR),
             keepPreviousData: false, 
       })
 
-      const tours = data?.data?.data
+      const tours = data?.data
 
       return {
             data: tours,

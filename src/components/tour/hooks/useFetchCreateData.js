@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_ENDPOINTS } from "../../../config/config";
-import axios from "axios";
+import { apiClient } from "../../services/ApiClient";
 
 
-export function useFetchCreateData(category){
+export function useFetchCreateData(){
+      const {fetchGet} = apiClient()
       const {data, isLoading, error} = useQuery({
             queryKey: ["create"], 
-            queryFn: () => axios.get(API_ENDPOINTS.API.FETCH_CREATE_DATA),
+            queryFn: () => fetchGet(API_ENDPOINTS.API.FETCH_CREATE_DATA),
       })
 
-      const info = data?.data?.data
+      const info = data?.data
 
 
       return {

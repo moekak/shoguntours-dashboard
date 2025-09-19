@@ -4,13 +4,13 @@ import { useFetchCreateData } from '../hooks/useFetchCreateData.js';
 import { useCreateTour } from '../hooks/useCreateTour.js';
 import TourOperator from '../operator/TourOperator.jsx';
 import TableSkelton from '../../skelton/TableSkelton.jsx';
+import { useNavigate } from 'react-router';
 
 const TourCreate = () => {
-      const {tour, setTour, setLanguages,setRegions, setCategories, resetTour} = useTourOperatorContext()
+      const {tour, setLanguages,setRegions, setCategories, resetTour} = useTourOperatorContext()
       const {data, isLoading} = useFetchCreateData()
       const [isInitialized, setIsInitialized] = useState(false);
       const {mutate, isPending} = useCreateTour()
-
       useEffect(() => {
             // マウント時に即座にリセット
             resetTour()
@@ -19,6 +19,7 @@ const TourCreate = () => {
                   console.log('TourCreate アンマウントされました！');
             };
       }, [])
+
 
 
       useEffect(()=>{
@@ -43,7 +44,8 @@ const TourCreate = () => {
             }
       },[data])
 
-      const handleSubmit = () =>{
+      const handleSubmit = (e) =>{
+            e.preventDefault()
             mutate(tour)
       }
 

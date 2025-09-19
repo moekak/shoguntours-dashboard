@@ -13,7 +13,7 @@ import { useTourOperatorContext } from '../context/TourOperatorContext';
 
 export default function TourTable() {
       
-      const {data, isLoading} = useFetchTour()
+      const {data, isLoading, error} = useFetchTour()
       const {setTours, setOriginalTours, tours} = useToursContext()
       const {isModalOpen, setIsModalOpen} = useTourOperatorContext()
       const navigate = useNavigate()
@@ -26,7 +26,7 @@ export default function TourTable() {
                         alert(`View details for tour ${tourId}`);
                         break;
                   case 'edit':
-                        navigate(`/tour/${tourId}/550e8400-e29b-41d4-a716-446655440000`)
+                        navigate(`/tour/${tourId}`)
                         break;
                   case 'delete':
                         setIsModalOpen(true)
@@ -39,7 +39,8 @@ export default function TourTable() {
 
 
       useEffect(()=>{
-
+            console.log(data);
+            
             if(data !== undefined){
                   setOriginalTours(data?.tours)
                   setTours(data?.tours)

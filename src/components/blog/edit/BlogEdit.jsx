@@ -13,7 +13,7 @@ function BlogEdit() {
       const {mutate, isPending} = useEditBlog()
       
       
-      const {data, isLoading} = useFetchSpecificBlog(blogId)
+      const {data, isLoading, error} = useFetchSpecificBlog(blogId)
 
       useEffect(()=>{
             setBlog({})

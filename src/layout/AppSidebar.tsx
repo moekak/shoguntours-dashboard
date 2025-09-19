@@ -35,16 +35,16 @@ const navItems: NavItem[] = [
     icon: <GridIcon />,
     name: "Tour",
     subItems: [
-      { name: "New tour", path: "/tour/create/550e8400-e29b-41d4-a716-446655440000", pro: false },
-      { name: "Tours", path: "/tours/550e8400-e29b-41d4-a716-446655440000", pro: false },
+      { name: "New tour", path: "/tour/create", pro: false },
+      { name: "Tours", path: "/tours", pro: false },
     ],
   },
   {
     icon: <GridIcon />,
     name: "Blog",
     subItems: [
-      { name: "New blog", path: "/blog/create/550e8400-e29b-41d4-a716-446655440000", pro: false },
-      { name: "blogs", path: "/blogs/550e8400-e29b-41d4-a716-446655440000", pro: false },
+      { name: "New blog", path: "/blog/create", pro: false },
+      { name: "blogs", path: "/blogs", pro: false },
     ],
   },
 

@@ -13,7 +13,7 @@ const TourEdit = () => {
       const {tourId} = useParams()
       const [isInitialized, setIsInitialized] = useState(false);
 
-      const {data, isLoading} = useFetchSpecificTour(tourId)
+      const {data, isLoading, error} = useFetchSpecificTour(tourId)
       const {mutate, isPending} = useEditTour()
 
 
@@ -96,6 +96,8 @@ const TourEdit = () => {
       },[data])
 
       const handleSubmit = () =>{
+            console.log(tour);
+            
             mutate(tour)
       }
 

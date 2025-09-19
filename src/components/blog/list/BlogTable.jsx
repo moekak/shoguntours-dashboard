@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Table,TableBody, TableCell,TableHeader, TableRow,} from "../../ui/table";
-
 import { API_ENDPOINTS } from '../../../config/config';
-
-
 import { useNavigate } from 'react-router';
-
 import DeletionModal from '../../ui/modal/DeletionModal';
-
 import ActionDropdown from '../../tour/list/ActionDropDown';
 import { useFetchBlogs } from '../hooks/useFetchBlogs';
 import { useBlogsContext } from '../context/BlogsContext';
 import { useBlogOperatorContext } from '../context/BlogOperatorContext';
-import TourTableSkeleton from '../../skelton/TourTableSkeleton';
-import SearchTour from '../../tour/list/SearchTour';
 import SearchBlog from './SearchBlog';
 import TableSkelton from '../../skelton/TableSkelton';
 
@@ -24,7 +17,7 @@ function BlogTable() {
       const {isModalOpen, setIsModalOpen} = useBlogOperatorContext()
       const navigate = useNavigate()
       const [selectedblog, setSelectedblog] = useState(null)
-      const {data, isLoading} = useFetchBlogs()
+      const {data, isLoading, error} = useFetchBlogs()
 
 
       const handleAction = (action, id) => {
@@ -35,7 +28,7 @@ function BlogTable() {
                         alert(`View details for blog ${id}`);
                         break;
                   case 'edit':
-                        navigate(`/blog/${id}/550e8400-e29b-41d4-a716-446655440000`)
+                        navigate(`/blog/${id}`)
                         break;
                   case 'delete':
                         setIsModalOpen(true)

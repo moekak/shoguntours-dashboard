@@ -31,6 +31,9 @@ export const API_ENDPOINTS = {
             GET_BLOG: `${BASE_URL}/dashboard/get/blogs`,
             GET_SPECIFIC_BLOG: `${BASE_URL}/dashboard/get/blog`,
             UPDATE_BLOG: `${BASE_URL}/dashboard/blog/update`,
+            LOGIN: `${BASE_URL}/login`,
+            SIGNUP: `${BASE_URL}/signup`,
+            AUTH_USER: `${BASE_URL}/user`,
       },
 
       // IMAGE: {

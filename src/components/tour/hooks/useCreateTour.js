@@ -1,68 +1,38 @@
 import { useMutation } from "@tanstack/react-query"
 import { API_ENDPOINTS, MESSAGES } from "../../../config/config";
-import axios from "axios";
-import { useTourOperatorContext } from "../context/TourOperatorContext";
 import { useNavigate } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
+import { apiClient } from "../../services/ApiClient";
 
 
 
 export function useCreateTour(){
-      const {setErrorTitle,setErrorFields, setErrors, setSuccessMessage, setErrorsMessages, setIsSuccess, resetError} = useCommonContext()
+      const {fetchPostError, setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
       const navigate = useNavigate()
+      const {fetchPost} = apiClient()
       const createTour= async(data) =>{
             resetError()
-            const response = await axios.post(API_ENDPOINTS.API.CREATE_TOUR, data, {
-                  headers: {
-                        'Content-Type': 'multipart/form-data',
-                  },
-            });
-            return response.data
+            return await fetchPost(API_ENDPOINTS.API.CREATE_TOUR, data)
       }
 
       const {isPending, mutate, error} = useMutation({
             mutationFn: createTour,
 
             onError: (error)=>{
-                  console.log(error);
-                  const errorCode = error?.response?.data?.error?.code
-                  const errorMsgs = error?.response?.data?.error?.details
-                  if(errorCode === "INTERNAL_SERVER_ERROR"){
-                        setErrors(MESSAGES.ERROR.SYSTEM_ERROR)
-                        setErrorTitle(MESSAGES.ERROR.SYSTEM_ERROR_TITLE)
-
-                  }else if(errorCode === "VALIDATION_ERROR"){
-                        setErrorTitle(MESSAGES.ERROR.VALIDATION_ERROR_TITLE)
-                        setErrorsMessages(errorMsgs)
-                        setErrors(()=>{
-                              return Object.entries(errorMsgs).reduce((acc, [title, messages])=>{
-                                    acc.push(...messages)
-                                    return acc
-                              },[])
-                        })
-                        setErrorFields(()=>{
-                              return Object.entries(errorMsgs).reduce((acc, [title, _])=>{
-                                    acc.add(title)
-                                    return acc
-                              },new Set())
-                        })
-                  }
+                  console.log("エラーだよ");
                   
-      
-                  window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                  });
-
-
+                  console.log(error);
+                  fetchPostError(error)
             },
             onSuccess: (data)=>{
+                  console.log("成功");
+                  
                   console.log(data);
                   const message = data?.message
                   
                   setIsSuccess(true)
                   setSuccessMessage({title: message?.title, message: message?.message})
-                  navigate("/tours/550e8400-e29b-41d4-a716-446655440000")
+                  navigate("/tours")
                   setTimeout(()=>{
                         setIsSuccess(false)
                         setSuccessMessage({})

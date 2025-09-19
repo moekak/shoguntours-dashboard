@@ -65,7 +65,7 @@ function TourOperator({isPending, handleSubmit, type}) {
                                                 title="Tour Created Successfully"
                                                 message="Your tour has been created and is now available for booking."
                                                 showLink={true}
-                                                linkHref="/tours/550e8400-e29b-41d4-a716-446655440000"
+                                                linkHref="/tours"
                                                 linkText="View all tours"
 
                                           />
