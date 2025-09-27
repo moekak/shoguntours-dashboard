@@ -12,6 +12,14 @@ export const useTourOperatorContext = () =>{
 
 export const TourOperatorProvider  = ({children}) =>{
       const [isModalOpen, setIsModalOpen] = useState(false)
+      const [isTourOperationSuccess, setIsTourOperationSuccess] = useState(false)
+      const [tourSuccessMessage, setTourSuccessMessage] = useState({})
+
+
+      const resetTourOperationMessage = ()=> {
+            setIsTourOperationSuccess(false)
+            setTourSuccessMessage({})
+      }
       const iconOptions = [
             { icon: 'fa-solid fa-location-dot', title: '場所' },
             { icon: 'fa-camera', title: '写真撮影' },
@@ -110,40 +118,6 @@ export const TourOperatorProvider  = ({children}) =>{
 
 
 
-
-
-      const formatTourData = (tourData)=>{
-            const formData = new FormData()
-            formData.append("title", tourData.badge)
-            formData.append("subtitle", tourData.subtitle)
-            formData.append("badge", tourData.badge)
-            formData.append("region_id", tourData.region_id)
-            formData.append("category_id", tourData.category_id)
-            formData.append("is_featured", tourData.is_featured)
-            formData.append("is_published", tourData.is_published)
-            formData.append("overview_title", tourData.overview_title)
-            formData.append("overview_description", tourData.overview_description)
-            formData.append('questions', JSON.stringify(tourData.questions));
-            formData.append('highlights', JSON.stringify(tourData.highlights));
-            formData.append('reviews', JSON.stringify(tourData.reviews));
-            formData.append('itinerary', JSON.stringify(tourData.itinerary));
-            formData.append('itinerary', JSON.stringify(tourData.itinerary));
-            if (tourData.hero_image instanceof File) {
-                  formData.append('hero_image', tourData.hero_image);
-            }
-            // gallery_imageが配列の場合
-            if (tourData.gallery_image && Array.isArray(tourData.gallery_image)) {
-                  tourData.gallery_image.forEach((image, index) => {
-                        if (image instanceof File) {
-                              formData.append(`gallery_image[${index}]`, image);
-                        }
-                  });
-            }
-            
-            return formData
-      }
-
-
       const resetTour = () =>{
             setTour(
                   {
@@ -217,10 +191,14 @@ export const TourOperatorProvider  = ({children}) =>{
             setRegions,
             categories,
             setCategories,
-            formatTourData,
             resetTour,
             isModalOpen,
-            setIsModalOpen
+            setIsModalOpen,
+            isTourOperationSuccess,
+            setIsTourOperationSuccess,
+            tourSuccessMessage,
+            setTourSuccessMessage,
+            resetTourOperationMessage
       }
 
 

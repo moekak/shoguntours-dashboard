@@ -1,14 +1,10 @@
-import React from 'react'
-import { UseDeleteTour } from '../../tour/hooks/UseDeleteTour';
-import { useTourOperatorContext } from '../../tour/context/TourOperatorContext';
 
-function DeletionModal({selectedTour}) {
-      console.log(selectedTour);
-      const {setIsModalOpen} = useTourOperatorContext()
-      const {mutate, isPending} = UseDeleteTour(selectedTour)
+function DeletionModal({selectedData, setIsModalOpen, type, mutate, isPending}) {
+      console.log(selectedData);
+      
 
       return (
-            <div className="fixed inset-0 bg-[#0000008c]  flex items-center justify-center p-4 z-50">
+            <div className="fixed w-full h-full inset-0 bg-[#0000008c]  flex items-center justify-center p-4 z-50">
                   <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
                         {/* Header */}
                         <div className="px-6 py-4 border-b border-gray-200">
@@ -39,10 +35,12 @@ function DeletionModal({selectedTour}) {
                                     {/* Message */}
                                     <div className="flex-1">
                                           <h3 className="text-base font-medium text-gray-900 mb-2">
-                                                Are you sure you want to delete this tour?
+                                                {type === "tour" ? "Are you sure you want to delete this tour?" : "Are you sure you want to delete this blog?"}
+                                                
                                           </h3>
                                           <p className="text-sm text-gray-600">
-                                                This action cannot be undone. The tour will be permanently deleted.
+                                                {type === "create" ? "This action cannot be undone. The tour will be permanently deleted." : "This action cannot be undone. The blog will be permanently deleted."}
+                                                
                                           </p>
                                     </div>
                               </div>
@@ -55,7 +53,7 @@ function DeletionModal({selectedTour}) {
                                           Cancel
                                     </button>
                                     <button 
-                                          onClick={() => mutate(selectedTour)} 
+                                          onClick={() => mutate(selectedData)} 
                                           disabled={isPending}
                                           className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                     >

@@ -4,11 +4,13 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
+import { useBlogOperatorContext } from "../context/BlogOperatorContext";
 
 
 
 export function useEditBlog(){
-      const {fetchPostError, setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
+      const {fetchPostError,resetError} = useCommonContext()
+      const {setIsBlogOperationSuccess, setBlogSuccessMessage, resetBlogOperationMessage} = useBlogOperatorContext()
       const navigate = useNavigate()
       const {fetchPost} = apiClient()
       const {blogId} = useParams()
@@ -22,28 +24,17 @@ export function useEditBlog(){
 
             onError: (error)=>{
                   console.log(error);
-                  fetchPostError(error)
-                  
-      
-                  window.scrollTo({
-                        top: 0,
-                        behavior: 'smooth'
-                  });
-
-
+                  fetchPostError(error)     
             },
             onSuccess: (data)=>{
                   console.log(data);
                   const message = data?.message
-                  
-                  setIsSuccess(true)
-                  setSuccessMessage({title: message?.title, message: message?.message})
                   navigate("/blogs")
+                  setIsBlogOperationSuccess(true)
+                  setBlogSuccessMessage({title: message?.title, message: message?.message})
                   setTimeout(()=>{
-                        setIsSuccess(false)
-                        setSuccessMessage({})
+                        resetBlogOperationMessage()
                   }, 5000)
-
             }
       })
 

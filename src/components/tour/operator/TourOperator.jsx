@@ -23,7 +23,7 @@ import { useCommonContext } from '../../../context/CommonContext.jsx';
 function TourOperator({isPending, handleSubmit, type}) {
 
 
-      const {errorTitle,errors,errorFields, isSuccess} = useCommonContext()
+      const {errorTitle,errors,errorFields} = useCommonContext()
       const {tour, setTour, regions, categories} = useTourOperatorContext()
       const handleInput = (e)=>{
             setTour({...tour, [e.target.name] : e.target.value})
@@ -37,7 +37,7 @@ function TourOperator({isPending, handleSubmit, type}) {
       return (
             <div className="bg-gray-50 min-h-screen">
                   {/* Main Content */}
-                  {isPending && <Loading/>}
+                  {isPending && <Loading type={type}/>}
                   <main className="pb-10">
                         <div className="container">
                               {/* Page Header */}
@@ -59,19 +59,6 @@ function TourOperator({isPending, handleSubmit, type}) {
                                                 showLink={false}
                                           />
                                     )}
-                                    {isSuccess  && (
-                                          <Alert
-                                                variant="success"
-                                                title="Tour Created Successfully"
-                                                message="Your tour has been created and is now available for booking."
-                                                showLink={true}
-                                                linkHref="/tours"
-                                                linkText="View all tours"
-
-                                          />
-                                    )}
-                                    
-
                               </div>
 
                               {/* Form Sections */}

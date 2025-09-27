@@ -24,7 +24,7 @@ export function apiClient() {
                   const response = await axios.post(url, data, {
                         headers: {
                         Authorization: token ? `Bearer ${token}` : "",
-                              "Content-Type": "application/json",
+                              "Content-Type": 'multipart/form-data',
                         },
                   });
 

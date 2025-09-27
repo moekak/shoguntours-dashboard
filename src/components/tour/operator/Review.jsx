@@ -9,6 +9,7 @@ import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
 import ErrorMessage from "../../ui/error/ErrorMessage.jsx";
 import { useCommonContext } from "../../../context/CommonContext.jsx";
+import { useEffect } from "react";
 
 function Review() {
       const {errorFields} = useCommonContext()
@@ -37,6 +38,10 @@ function Review() {
                   reviews: updatedReviews
             });
       }
+      useEffect(()=>{
+            console.log(tour);
+            
+      },[tour])
 
       return (
             <div className="bg-white rounded-xl shadow-sm p-6">
@@ -100,7 +105,7 @@ function Review() {
 
                                     <div>
                                           <DatePicker
-                                                defaultDate={tour.reviews?.[index].date}
+                                                value={tour.reviews?.[index].date}
                                                 id="date-picker"
                                                 label="Review Date"
                                                 placeholder="Select a date"

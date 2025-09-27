@@ -9,6 +9,7 @@ import { useBlogsContext } from '../context/BlogsContext';
 import { useBlogOperatorContext } from '../context/BlogOperatorContext';
 import SearchBlog from './SearchBlog';
 import TableSkelton from '../../skelton/TableSkelton';
+import { useDeleteBlog } from '../hooks/useDeleteBlog';
 
 
 function BlogTable() {
@@ -18,6 +19,7 @@ function BlogTable() {
       const navigate = useNavigate()
       const [selectedblog, setSelectedblog] = useState(null)
       const {data, isLoading, error} = useFetchBlogs()
+      const {mutate, isPending} = useDeleteBlog()
 
 
       const handleAction = (action, id) => {
@@ -32,7 +34,7 @@ function BlogTable() {
                         break;
                   case 'delete':
                         setIsModalOpen(true)
-                        setSelectedblog(bloidgId)
+                        setSelectedblog(id)
                         break;
                   default:
                   break;
@@ -53,7 +55,7 @@ function BlogTable() {
       return (
             
             <div className="space-y-6">
-                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedblog={selectedblog}/>}
+                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedData={selectedblog} type="blog" mutate={mutate} isPending={isPending}/>}
                   {/* Filter Section */}
                   <SearchBlog blogCategories={data?.categories} />
                   {/* Table Section */}
@@ -146,7 +148,7 @@ function BlogTable() {
                                                                   </div>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                                                  <ActionDropdown id={blog?.id} onAction={handleAction} />
+                                                                  <ActionDropdown id={blog?.id} onAction={handleAction} type="blog" />
                                                             </TableCell>
                                                       </TableRow>
                                                 ))}

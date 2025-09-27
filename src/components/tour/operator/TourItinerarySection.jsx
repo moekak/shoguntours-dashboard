@@ -192,7 +192,6 @@ const TourItinerarySection = () => {
                                                       <div>
                                                             <Label   htmlFor="child_price">Child Price (¥)</Label>
                                                             <Input  onChange={(e)=> handleInput(e.target.value, itineraryIndex, "child_price")} value={tour.itinerary[itineraryIndex].child_price} type="number" id="child_price" placeholder="e.g., 6000"/>
-                                                            <ErrorMessage type={`itinerary.${itineraryIndex}.languages`}/>
                                                       </div>
                                                       <div>
                                                             <Label htmlFor="language" error={errorFields?.has(`itinerary.${itineraryIndex}.languages`)} required={true}>Languages Available</Label>

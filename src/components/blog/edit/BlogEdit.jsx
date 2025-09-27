@@ -5,6 +5,7 @@ import { useBlogOperatorContext } from '../context/BlogOperatorContext'
 import BlogOperator from '../operator/BlogOperator';
 import BlogOperatorSkelton from '../../skelton/BlogOperatorSkelton';
 import { useEditBlog } from '../hooks/useEditBlog';
+import Loading from '../../ui/loading/Loading';
 
 function BlogEdit() {
       const {blogId} = useParams()
@@ -56,7 +57,11 @@ function BlogEdit() {
       }
 
       return (
-            <BlogOperator handleSubmit={handleSubmit} type="edit"/>
+            <>
+                  {isPending &&<Loading type="edit"/>}
+                  <BlogOperator handleSubmit={handleSubmit} type="edit"/>
+            </>
+            
       )
 }
 

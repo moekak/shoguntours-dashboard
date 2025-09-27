@@ -95,9 +95,9 @@ const TourEdit = () => {
             
       },[data])
 
-      const handleSubmit = () =>{
-            console.log(tour);
-            
+      const handleSubmit = (e) =>{
+
+            e.preventDefault()
             mutate(tour)
       }
 

@@ -4,15 +4,17 @@ import { useTourOperatorContext } from "../context/TourOperatorContext";
 import { useNavigate } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
+import { useToursContext } from "../context/ToursContext";
 
 
-export function UseDeleteTour(){
-      const {fetchPostError, setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
-      const { setIsModalOpen} = useTourOperatorContext()
+export function useDeleteTour(){
+      const {fetchPostError} = useCommonContext()
+      const { setIsModalOpen,setIsTourOperationSuccess,setTourSuccessMessage, resetTourOperationMessage} = useTourOperatorContext()
+      const {setTours, setOriginalTours} = useToursContext()
       const navigate = useNavigate()
       const {fetchGet} = apiClient()
       const deleteTour= async(tourId) =>{
-            resetError()
+            resetTourOperationMessage()
             return await fetchGet(`${API_ENDPOINTS.API.DELETE_TOUR}/${tourId}`)
       }
 
@@ -24,18 +26,22 @@ export function UseDeleteTour(){
                   fetchPostError(error)
             },
             onSuccess: (data)=>{
-                  console.log(data);
+
                   const message = data?.message
-                  
+                  setOriginalTours(data?.data?.tours)
+                  setTours(data?.data?.tours)
                   setIsModalOpen(false)
-                  setIsSuccess(true)
-                  setSuccessMessage({title: message?.title, message: message?.message})
-                  navigate("/tours")
+                  setIsTourOperationSuccess(true)
+                  setTourSuccessMessage({title: message?.title, message: message?.message})
                   setTimeout(()=>{
-                        setIsSuccess(false)
-                        setSuccessMessage({})
+                        setIsTourOperationSuccess(false)
+                        setTourSuccessMessage({})
                   }, 5000)
 
+                  window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                  })
             }
       })
 

@@ -37,6 +37,7 @@ import SignIn from "./pages/AuthPages/SignIn";
 import axios from "axios";
 import PrivateRoute from "./components/services/PrivateRoute";
 import Reset from "./components/common/Reset";
+import Chat from "./components/chat/Chat";
 
 
 
@@ -53,7 +54,7 @@ export default function App() {
                   <BlogsProvider>
                         <Router>
                               <ScrollToTop />
-                              {/* <Reset/> */}
+                              <Reset/>
                               <Routes>
                                     {/* Dashboard Layout */}
                                     <Route element={<AppLayout />}>
@@ -131,6 +132,16 @@ export default function App() {
                                                 element={  
                                                       <PrivateRoute redirectTo="/signin">
                                                             <BlogEdit />
+                                                      </PrivateRoute>
+                                                } 
+                                          
+                                          />
+
+                                          {/* chat */}
+                                          <Route path="/chat"
+                                                element={  
+                                                      <PrivateRoute redirectTo="/signin">
+                                                            <Chat/>
                                                       </PrivateRoute>
                                                 } 
                                           

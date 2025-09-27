@@ -9,6 +9,7 @@ import TourTableSkeleton from '../../skelton/TourTableSkeleton';
 import { useNavigate } from 'react-router';
 import DeletionModal from '../../ui/modal/DeletionModal';
 import { useTourOperatorContext } from '../context/TourOperatorContext';
+import { useDeleteTour } from '../hooks/useDeleteTour';
 
 
 export default function TourTable() {
@@ -18,6 +19,7 @@ export default function TourTable() {
       const {isModalOpen, setIsModalOpen} = useTourOperatorContext()
       const navigate = useNavigate()
       const [selectedTour, setSelectedTour] = useState(null)
+      const {mutate, isPending} = useDeleteTour()
 
 
       const handleAction = (action, tourId) => {
@@ -55,7 +57,7 @@ export default function TourTable() {
       return (
             
             <div className="space-y-6">
-                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedTour={selectedTour}/>}
+                  {isModalOpen && <DeletionModal setIsModalOpen={setIsModalOpen} selectedData={selectedTour} type="tour" mutate={mutate} isPending={isPending}/>}
                   {/* Filter Section */}
                   <SearchTour categories={data?.categories} regions={data?.regions}/>
                   {/* Table Section */}
@@ -144,7 +146,7 @@ export default function TourTable() {
                                                                   </div>
                                                             </TableCell>
                                                             <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                                                  <ActionDropdown id={tour?.id} onAction={handleAction} />
+                                                                  <ActionDropdown id={tour?.id} onAction={handleAction} type="tour" />
                                                             </TableCell>
                                                       </TableRow>
                                                 ))}

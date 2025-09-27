@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Loading() {
+function Loading({type}) {
       return (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[9999]">
+            <div className="fixed inset-0 bg-[#000000a1]  flex items-center justify-center z-[9999]">
                   <div className="bg-white rounded-xl shadow-2xl p-8 max-w-sm mx-4 text-center">
                         {/* アニメーション付きアイコン */}
                         <div className="w-16 h-16 mx-auto mb-4 relative">
@@ -13,10 +13,10 @@ function Loading() {
                         </div>
                         
                         {/* メッセージ */}
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">Creating Your Tour</h3>
+                        {/* <h3 className="text-lg font-semibold text-gray-800 mb-2">{type =="create" ? "Creating Your Tour": "Updating Your Tour"}</h3>
                         <p className="text-gray-600 text-sm mb-4">
                               We're processing your tour details and making it ready for travelers...
-                        </p>
+                        </p> */}
                         
                         {/* プログレスバー */}
                         <div className="w-full bg-gray-200 rounded-full h-2 mb-4">

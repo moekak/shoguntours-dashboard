@@ -7,7 +7,7 @@ import Alert from '../../ui/alert/Alert'
 import { useCommonContext } from '../../../context/CommonContext'
 
 function Tours() {
-      const {successMessage, isSuccess} = useCommonContext()
+      const {isTourOperationSuccess, tourSuccessMessage} = useTourOperatorContext()
       return (
             <div className="bg-gray-50 min-h-screen">
                   {/* Main Content */}
@@ -24,18 +24,15 @@ function Tours() {
                                     </Breadcrumbs>
                               
                               </div>
-                              {isSuccess  && (
+                              {isTourOperationSuccess  && (
                                     <div className='mb-4'>
                                           <Alert
                                                 variant="success"
-                                                title={successMessage?.title}
-                                                message={successMessage?.message}
-                                                // showLink={true}
-                                                // linkHref="/tours"
-                                                // linkText="View all tours"
+                                                title={tourSuccessMessage?.title}
+                                                message={tourSuccessMessage?.message}
                                           />
                                     </div>
-                                    
+
                               )}
                               <TourTable/>
                               

@@ -23,7 +23,7 @@ import Alert from '../../ui/alert/Alert';
 
 function BlogOperator({handleSubmit, type}) {
       const {blog, setBlog, handleInput, categories, handleSelect} = useBlogOperatorContext()
-      const {errorFields, errors, errorTitle} = useCommonContext()
+      const {errorFields, errors, errorTitle, successMessage,isSuccess} = useCommonContext()
       const [isPreview, setIsPreview] = useState(false);
 
 
@@ -89,7 +89,19 @@ function BlogOperator({handleSubmit, type}) {
                                                 variant="error"
                                                 title={errorTitle}
                                                 message={errors}
-                                                showLink={false}
+                                                showLink={true}
+                                                linkHref="/tours"
+                                                linkText="View all tours"
+                                          />
+                                    )}
+                                    {isSuccess  && (
+                                          <Alert
+                                                variant="success"
+                                                title={successMessage?.title}
+                                                message={successMessage?.message}
+                                                showLink={true}
+                                                linkHref="/blogs"
+                                                linkText="View all blogs"
                                           />
                                     )}
                               </div>

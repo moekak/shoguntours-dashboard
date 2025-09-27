@@ -38,8 +38,12 @@ export default function SignInForm() {
                   }
                   console.log(data);
             }catch(error){
+                  console.log(error)
                   const validationErrors = error?.response?.data?.error?.details
-                  if(validationErrors && validationErrors.length> 0){
+
+                  console.log(validationErrors);
+                  
+                  if(validationErrors){
                         setErrorFieldsFn(validationErrors)
                         setErrorsMessages(validationErrors)
                   }

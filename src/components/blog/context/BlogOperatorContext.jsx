@@ -4,13 +4,22 @@ export const BlogOperatorContext = createContext()
 export const useBlogOperatorContext = () =>{
       const context = useContext(BlogOperatorContext)
       if (context === undefined) {
-            throw new Error('useBlogOperatorContext must be used within an TourProvider');
+            throw new Error('useBlogOperatorContext must be used within an BlogProvider');
       }
       return context;
 }
 
 export const BlogCreateProvider  = ({children}) =>{
       const [categories, setCategories] = useState([])
+      const [isBlogOperationSuccess, setIsBlogOperationSuccess] = useState(false)
+      const [blogSuccessMessage, setBlogSuccessMessage] = useState({})
+      const [isModalOpen, setIsModalOpen] = useState(false)
+
+
+      const resetBlogOperationMessage = ()=> {
+            setIsBlogOperationSuccess(false)
+            setBlogSuccessMessage({})
+      }
       const [blog, setBlog] = useState({
             title : "",
             subtitle : "",
@@ -57,7 +66,14 @@ export const BlogCreateProvider  = ({children}) =>{
             categories,
             setCategories,
             handleSelect,
-            formatBlogData
+            formatBlogData,
+            isBlogOperationSuccess,
+            setIsBlogOperationSuccess,
+            blogSuccessMessage, 
+            setBlogSuccessMessage,
+            resetBlogOperationMessage,
+            isModalOpen,
+            setIsModalOpen
       }
 
 

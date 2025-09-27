@@ -3,15 +3,17 @@ import { API_ENDPOINTS, MESSAGES } from "../../../config/config";
 import { useNavigate } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
+import { useTourOperatorContext } from "../context/TourOperatorContext";
 
 
 
 export function useCreateTour(){
-      const {fetchPostError, setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
-      const navigate = useNavigate()
+      const {fetchPostError} = useCommonContext()
+      const {setIsTourOperationSuccess, setTourSuccessMessage, resetTourOperationMessage} = useTourOperatorContext()
       const {fetchPost} = apiClient()
+      const navigate = useNavigate()
       const createTour= async(data) =>{
-            resetError()
+            resetTourOperationMessage()
             return await fetchPost(API_ENDPOINTS.API.CREATE_TOUR, data)
       }
 
@@ -19,23 +21,15 @@ export function useCreateTour(){
             mutationFn: createTour,
 
             onError: (error)=>{
-                  console.log("エラーだよ");
-                  
-                  console.log(error);
                   fetchPostError(error)
             },
             onSuccess: (data)=>{
-                  console.log("成功");
-                  
-                  console.log(data);
                   const message = data?.message
-                  
-                  setIsSuccess(true)
-                  setSuccessMessage({title: message?.title, message: message?.message})
                   navigate("/tours")
+                  setIsTourOperationSuccess(true)
+                  setTourSuccessMessage({title: message?.title, message: message?.message})
                   setTimeout(()=>{
-                        setIsSuccess(false)
-                        setSuccessMessage({})
+                        resetTourOperationMessage()
                   }, 5000)
 
             }

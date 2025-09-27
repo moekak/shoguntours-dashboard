@@ -3,16 +3,22 @@ import { API_ENDPOINTS} from "../../../config/config";
 import { useNavigate, useParams } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
+import { useTourOperatorContext } from "../context/TourOperatorContext";
 
 
 export function useEditTour(){
-      const {setSuccessMessage,fetchPostError, setIsSuccess, resetError} = useCommonContext()
+      const {fetchPostError} = useCommonContext()
+      const {setIsTourOperationSuccess, setTourSuccessMessage,resetTourOperationMessage }=  useTourOperatorContext()
       const {tourId} = useParams()
-      const navigate = useNavigate()
       const {fetchPost} = apiClient()
+      const navigate = useNavigate()
 
       const EditTour= async(data) =>{
-            resetError()
+            console.log("222222");
+            
+
+            resetTourOperationMessage()
+            setTourSuccessMessage({})
             return await fetchPost(`${API_ENDPOINTS.API.UPDATE_TOUR}/${tourId}`, data)
       }
 
@@ -21,31 +27,18 @@ export function useEditTour(){
 
             onError: (error)=>{
                   console.log(error);
-                  
                   fetchPostError(error)
             },
             onSuccess: (data)=>{
                   console.log(data);
+                  
                   const message = data?.message
-                  
-                  setIsSuccess(true)
-                  setSuccessMessage({title: message?.title, message: message?.message})
                   navigate("/tours")
+                  setIsTourOperationSuccess(true)
+                  setTourSuccessMessage({title: message?.title, message: message?.message})
                   setTimeout(()=>{
-                        setIsSuccess(false)
-                        setSuccessMessage({})
+                        resetTourOperationMessage()
                   }, 5000)
-                  
-                  // resetTour()
-                  // resetError()
-                  // setIsSuccess(true)
-                  // console.log(data);
-
-                  // window.scrollTo({
-                  //       top: 0,
-                  //       behavior: 'smooth'
-                  // });
-
             }
       })
 

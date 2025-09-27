@@ -3,6 +3,7 @@ import { useBlogOperatorContext } from '../context/BlogOperatorContext';
 import { useFetchCreateBlogData } from '../hooks/useFetchCreateBlogData';
 import { useCreateBlog } from '../hooks/useCreateBlog';
 import BlogOperator from '../operator/BlogOperator';
+import Loading from '../../ui/loading/Loading';
 
 function BlogCreate() {
       const {blog, formatBlogData, setCategories,setBlog} = useBlogOperatorContext()
@@ -42,7 +43,11 @@ function BlogCreate() {
       }
 
       return (
-            <BlogOperator handleSubmit={handleSubmit} type="create"/>
+            <>
+                  {isPending &&<Loading type="create"/>}
+                  <BlogOperator handleSubmit={handleSubmit} type="create"/>
+            </>
+            
       );
 }
 

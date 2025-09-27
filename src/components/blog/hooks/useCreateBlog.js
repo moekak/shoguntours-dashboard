@@ -4,11 +4,13 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
+import { useBlogOperatorContext } from "../context/BlogOperatorContext";
 
 
 
 export function useCreateBlog(){
-      const {fetchPostError,setSuccessMessage, setIsSuccess, resetError} = useCommonContext()
+      const {fetchPostError,resetError} = useCommonContext()
+      const {setIsBlogOperationSuccess, setBlogSuccessMessage, resetBlogOperationMessage} = useBlogOperatorContext()
       const navigate = useNavigate()
       const {fetchPost} = apiClient()
       const createBlog= async(data) =>{
@@ -26,13 +28,11 @@ export function useCreateBlog(){
             onSuccess: (data)=>{
                   console.log(data);
                   const message = data?.message
-                  
-                  setIsSuccess(true)
-                  setSuccessMessage({title: message?.title, message: message?.message})
                   navigate("/blogs")
+                  setIsBlogOperationSuccess(true)
+                  setBlogSuccessMessage({title: message?.title, message: message?.message})
                   setTimeout(()=>{
-                        setIsSuccess(false)
-                        setSuccessMessage({})
+                        resetBlogOperationMessage()
                   }, 5000)
 
             }
