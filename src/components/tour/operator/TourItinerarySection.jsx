@@ -34,6 +34,7 @@ const TourItinerarySection = () => {
                         meeting_point: "",
                         adult_price: "",
                         child_price: "",
+                        logistics_fee: "",
                         overview_title: "",
                         overview_description: "",
                         activity: [
@@ -190,8 +191,13 @@ const TourItinerarySection = () => {
                                                             <ErrorMessage type={`itinerary.${itineraryIndex}.adult_price`}/>
                                                       </div>
                                                       <div>
-                                                            <Label   htmlFor="child_price">Child Price (¥)</Label>
-                                                            <Input  onChange={(e)=> handleInput(e.target.value, itineraryIndex, "child_price")} value={tour.itinerary[itineraryIndex].child_price} type="number" id="child_price" placeholder="e.g., 6000"/>
+                                                            <Label htmlFor="child_price">Child Price (¥)</Label>
+                                                            <Input onChange={(e)=> handleInput(e.target.value, itineraryIndex, "child_price")} value={tour.itinerary[itineraryIndex].child_price} type="number" id="child_price" placeholder="e.g., 6000"/>
+                                                      </div>
+                                                      <div>
+                                                            <Label required={true} error={errorFields?.has(`itinerary.${itineraryIndex}.logistics_fee`)} htmlFor="logistics_fee">Logistics fee (¥)</Label>
+                                                            <Input error={errorFields?.has(`itinerary.${itineraryIndex}.logistics_fee`)} onChange={(e)=> handleInput(e.target.value, itineraryIndex, "logistics_fee")} value={tour.itinerary[itineraryIndex].logistics_fee} type="number" id="logistics_fee" placeholder="e.g., 12000"/>
+                                                            <ErrorMessage type={`itinerary.${itineraryIndex}.logistics_fee`}/>
                                                       </div>
                                                       <div>
                                                             <Label htmlFor="language" error={errorFields?.has(`itinerary.${itineraryIndex}.languages`)} required={true}>Languages Available</Label>

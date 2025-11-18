@@ -11,7 +11,8 @@ interface SelectProps {
   onChange: (value: string) => void;
   className?: string;
   defaultValue?: string;
-  error : boolean,
+  error?: boolean;
+  disabled?: boolean; // ⭐ 追加
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -20,7 +21,8 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   className = "",
   defaultValue = "",
-  error = false
+  error = false,
+  disabled = false, // ⭐ 追加
 }) => {
   // Manage the selected value
   const [selectedValue, setSelectedValue] = useState<string>(defaultValue);
@@ -33,10 +35,12 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <select
-      className={`h-11 w-full appearance-none rounded-lg border px-4 py-2.5 pr-11 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 g-transparent ${
-        error
-          ? "border-red-500  focus:border-red-500 focus:ring-red-500/10 dark:border-red-400 dark:bg-red-900/20 dark:text-red-100 dark:focus:border-red-400"
-          : "border-gray-300  focus:border-brand-300 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:focus:border-brand-800"
+      className={`h-11 w-full appearance-none rounded-lg border px-4 py-2.5 pr-11 text-sm shadow-theme-xs placeholder:text-gray-400 focus:outline-hidden focus:ring-3 bg-transparent ${
+        disabled
+          ? "cursor-not-allowed opacity-50 bg-gray-50 dark:bg-gray-800" // ⭐ disabled スタイル
+          : error
+          ? "border-red-500 focus:border-red-500 focus:ring-red-500/10 dark:border-red-400 dark:bg-red-900/20 dark:text-red-100 dark:focus:border-red-400"
+          : "border-gray-300 focus:border-brand-300 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:focus:border-brand-800"
       } ${
         selectedValue
           ? "text-gray-800 dark:text-white/90"
@@ -44,6 +48,7 @@ const Select: React.FC<SelectProps> = ({
       } ${className}`}
       value={selectedValue}
       onChange={handleChange}
+      disabled={disabled} // ⭐ 追加
     >
       {/* Placeholder option */}
       <option

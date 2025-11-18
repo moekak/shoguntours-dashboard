@@ -3,7 +3,7 @@ import Label from "../../form/Label.tsx";
 import Select from "../../form/Select.tsx";
 import Input from "../../form/input/InputField.tsx";
 import TextArea from "../../form/input/TextArea.tsx";
-import DatePicker from "../../form/date-picker.tsx";
+import DatePicker from "../../form/date-picker";
 
 import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 import { useTourOperatorContext } from "../context/TourOperatorContext.jsx";
@@ -105,8 +105,8 @@ function Review() {
 
                                     <div>
                                           <DatePicker
-                                                value={tour.reviews?.[index].date}
-                                                id="date-picker"
+                                                defaultDate={tour.reviews?.[index].date}
+                                                id={`date-picker-${index}`} 
                                                 label="Review Date"
                                                 placeholder="Select a date"
                                                 onChange={(dates) => {

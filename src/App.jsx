@@ -178,13 +178,12 @@ export default function App() {
                                     {/* Auth Layout */}
                                     <Route path="/signin" element={<SignIn />} />
                                     <Route
-                                    path="/signup/39ed0du0h0chs0u0023bbd93bmd03"
-                                    element={<SignUp />}
+                                          path="/signup/39ed0du0h0chs0u0023bbd93bmd03"
+                                          element={<SignUp />}
                                     />
 
                                     {/* Fallback Route */}
-                                    <Route path="*" element={<NotFound />} />
-                                    </Routes>
+                                    <Route path="*" element={<NotFound />} /></Routes>
                               </Router>
                         </BookingProvider>
                         </BlogsProvider>

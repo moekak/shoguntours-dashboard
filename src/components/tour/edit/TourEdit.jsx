@@ -68,6 +68,7 @@ const TourEdit = () => {
                                     meeting_point: itinerary?.meeting_point,
                                     adult_price: itinerary?.adult_price,
                                     child_price: itinerary?.child_price,
+                                    logistics_fee: itinerary?.logistics_fee,
                                     overview_title: itinerary?.overview_title,
                                     overview_description: itinerary?.overview_description,
                                     activity: itinerary?.itinerary_activities.map((activity)=>{

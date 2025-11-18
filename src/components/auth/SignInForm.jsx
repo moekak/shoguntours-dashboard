@@ -14,6 +14,7 @@ import ErrorMessage from "../ui/error/ErrorMessage"
 export default function SignInForm() {
       const navigate = useNavigate()
       const [loginInfo, setLoginInfo] = useState({})
+      const [invalidError, setInvalidError] = useState(null)
       const [showPassword, setShowPassword] = useState(false);
       const [isChecked, setIsChecked] = useState(false);
       const [isLoading, setIsloading] = useState(false)
@@ -40,9 +41,14 @@ export default function SignInForm() {
             }catch(error){
                   console.log(error)
                   const validationErrors = error?.response?.data?.error?.details
+                  const code = error?.response?.data?.error?.code
 
                   console.log(validationErrors);
-                  
+                  // 認証エラー
+                  if(code === "INVALID_CREDENTIALS"){
+                        setInvalidError(validationErrors[0])
+                  }
+                  // ユーザーネームとパスワード空の時のエラー
                   if(validationErrors){
                         setErrorFieldsFn(validationErrors)
                         setErrorsMessages(validationErrors)
@@ -83,6 +89,16 @@ export default function SignInForm() {
                                                 variant="success"
                                                 title={successMessage?.title}
                                                 message={successMessage?.message}
+                                          />
+                                    </div>
+                                    
+                              )}
+                              {invalidError  && (
+                                    <div className='mb-4'>
+                                          <Alert
+                                                variant="error"
+                                                // title={successMessage?.title}
+                                                message={invalidError}
                                           />
                                     </div>
                                     

@@ -98,6 +98,7 @@ export const TourOperatorProvider  = ({children}) =>{
                               meeting_point: "",
                               adult_price: "",
                               child_price: "",
+                              logistics_fee: "",
                               overview_title: "",
                               overview_description: "",
                               activity: [
@@ -159,6 +160,7 @@ export const TourOperatorProvider  = ({children}) =>{
                               meeting_point: "",
                               adult_price: "",
                               child_price: "",
+                              logistics_fee: "",
                               overview_title: "",
                               overview_description: "",
                               activity: [
