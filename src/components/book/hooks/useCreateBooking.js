@@ -5,15 +5,10 @@ import { useCommonContext } from "../../../context/CommonContext";
 import { apiClient } from "../../services/ApiClient";
 
 
-
-
 export function useCreateBooking(){
       const {fetchPostError} = useCommonContext()
-      // const {setIsTourOperationSuccess, setTourSuccessMessage, resetTourOperationMessage} = useTourOperatorContext()
       const {fetchPost} = apiClient()
-      const navigate = useNavigate()
       const CreateBooking= async(data) =>{
-            // resetTourOperationMessage()
             return await fetchPost(API_ENDPOINTS.API.CREATE_TOUR_BOOKING, data)
       }
 
@@ -27,14 +22,7 @@ export function useCreateBooking(){
             },
             onSuccess: (data)=>{
                   console.log(data);
-                  
-                  // const message = data?.message
-                  // navigate("/tours")
-                  // setIsTourOperationSuccess(true)
-                  // setTourSuccessMessage({title: message?.title, message: message?.message})
-                  // setTimeout(()=>{
-                  //       resetTourOperationMessage()
-                  // }, 5000)
+
 
             }
       })

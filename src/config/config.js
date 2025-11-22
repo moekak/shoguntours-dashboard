@@ -39,7 +39,8 @@ export const API_ENDPOINTS = {
             // Book registration
             FETCH_REGISTRATION_DATA: `${BASE_URL}/dashboard/get/registration/info`,
             FETCH_TOUR_ITINERARY_DATA: `${BASE_URL}/dashboard/get/tourItinerary/info`,
-            CREATE_TOUR_BOOKING: `${BASE_URL}/dashboard/create/booking`
+            CREATE_TOUR_BOOKING: `${BASE_URL}/dashboard/create/booking`,
+            CREATE_EXTERNAL_TOURS: `${BASE_URL}/dashboard/create/external/tour`
       },
 
       // IMAGE: {

@@ -13,6 +13,7 @@ export const BookingProvider  = ({children}) =>{
       const [booking,setBooking] = useState({})
       const [tour, setTour] = useState([])
       const [tourItinerary, setTourItinerary] = useState([])
+      const [tourType, setTourType] = useState([])
       const serviceProviders = [
             { value: "GetYourGuide", label: "GetYourGuide" },
             { value: "ViaTor", label: "ViaTor" },
@@ -37,7 +38,9 @@ export const BookingProvider  = ({children}) =>{
             tourItinerary,
             setTourItinerary,
             serviceProviders,
-            commissionFee
+            commissionFee,
+            tourType,
+            setTourType
       }
 
 
