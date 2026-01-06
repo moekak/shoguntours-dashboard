@@ -1,5 +1,3 @@
-import React from 'react'
-
 function BookingList({ booking }) {
     return (
         <tr className="hover:bg-gray-50 transition-colors">
