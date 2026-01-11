@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react' // useEffectを追加
+import { useState, useEffect } from 'react'; // useEffectを追加
 
 interface Option {
-    value: string
-    label: string
+    value: string;
+    label: string;
 }
 
 interface SelectProps<T = Option> {
-    options: T[]
-    placeholder?: string
-    onChange: (value: string, option?: T) => void
-    className?: string
-    value?: string // ✅ value propを追加
-    defaultValue?: string
-    error?: boolean
-    disabled?: boolean
+    options: T[];
+    placeholder?: string;
+    onChange: (value: string, option?: T) => void;
+    className?: string;
+    value?: string; // ✅ value propを追加
+    defaultValue?: string;
+    error?: boolean;
+    disabled?: boolean;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -27,31 +27,31 @@ const Select: React.FC<SelectProps> = ({
     disabled = false,
 }) => {
     // value propがあればそれを使い、なければ内部状態を使う
-    const [internalValue, setInternalValue] = useState<string>(defaultValue)
-    const selectedValue = value !== undefined ? value : internalValue
+    const [internalValue, setInternalValue] = useState<string>(defaultValue);
+    const selectedValue = value !== undefined ? value : internalValue;
 
     // value propが変更されたら内部状態を更新
     useEffect(() => {
         if (value !== undefined) {
-            setInternalValue(value)
+            setInternalValue(value);
         }
-    }, [value])
+    }, [value]);
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newValue = e.target.value
+        const newValue = e.target.value;
 
         // 内部状態を更新（value propがない場合のみ）
         if (value === undefined) {
-            setInternalValue(newValue)
+            setInternalValue(newValue);
         }
 
         const selectedOption =
             newValue === ''
                 ? undefined
-                : options.find((option) => String(option.value) === newValue)
+                : options.find((option) => String(option.value) === newValue);
 
-        onChange(newValue, selectedOption)
-    }
+        onChange(newValue, selectedOption);
+    };
 
     return (
         <select
@@ -59,8 +59,8 @@ const Select: React.FC<SelectProps> = ({
                 disabled
                     ? 'cursor-not-allowed opacity-50 bg-gray-50 dark:bg-gray-800'
                     : error
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10 dark:border-red-400 dark:bg-red-900/20 dark:text-red-100 dark:focus:border-red-400'
-                    : 'border-gray-300 focus:border-brand-300 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:focus:border-brand-800'
+                      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10 dark:border-red-400 dark:bg-red-900/20 dark:text-red-100 dark:focus:border-red-400'
+                      : 'border-gray-300 focus:border-brand-300 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:focus:border-brand-800'
             } ${
                 selectedValue
                     ? 'text-gray-800 dark:text-white/90'
@@ -91,7 +91,7 @@ const Select: React.FC<SelectProps> = ({
                 </option>
             ))}
         </select>
-    )
-}
+    );
+};
 
-export default Select
+export default Select;

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useBlogsContext } from '../context/BlogsContext'
+import React, { useEffect } from 'react';
+import { useBlogsContext } from '../context/BlogsContext';
 
 function SearchBlog({ blogCategories }) {
     const {
@@ -10,14 +10,14 @@ function SearchBlog({ blogCategories }) {
         filter,
         selectedStatus,
         setSelectedStatus,
-    } = useBlogsContext()
+    } = useBlogsContext();
 
     useEffect(() => {
-        console.log(searchTerm)
-        console.log(selectedCategory)
+        console.log(searchTerm);
+        console.log(selectedCategory);
 
-        filter()
-    }, [searchTerm, selectedCategory, selectedStatus])
+        filter();
+    }, [searchTerm, selectedCategory, selectedStatus]);
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-6 dark:border-white/[0.05] dark:bg-white/[0.03]">
             <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
@@ -93,7 +93,7 @@ function SearchBlog({ blogCategories }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default SearchBlog
+export default SearchBlog;

@@ -1,12 +1,12 @@
-import BlogTable from './BlogTable'
-import { useCommonContext } from '../../../context/CommonContext'
-import Alert from '../../ui/alert/Alert'
-import { useBlogOperatorContext } from '../context/BlogOperatorContext'
+import BlogTable from './BlogTable';
+import { useCommonContext } from '../../../context/CommonContext';
+import Alert from '../../ui/alert/Alert';
+import { useBlogOperatorContext } from '../context/BlogOperatorContext';
 
 function Blogs() {
-    const { successMessage, isSuccess } = useCommonContext()
+    const { successMessage, isSuccess } = useCommonContext();
     const { isBlogOperationSuccess, blogSuccessMessage } =
-        useBlogOperatorContext()
+        useBlogOperatorContext();
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* Main Content */}
@@ -34,7 +34,7 @@ function Blogs() {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default Blogs
+export default Blogs;

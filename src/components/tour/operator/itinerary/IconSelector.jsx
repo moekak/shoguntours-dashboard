@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { useTourOperatorContext } from '../../context/TourOperatorContext'
+import React, { useState } from 'react';
+import { useTourOperatorContext } from '../../context/TourOperatorContext';
 
 function IconSelector({ selectedIcon, itineraryIndex, activityIndex }) {
-    const { setTour, iconOptions, tour } = useTourOperatorContext()
-    const [isOpen, setIsOpen] = useState(false)
+    const { setTour, iconOptions, tour } = useTourOperatorContext();
+    const [isOpen, setIsOpen] = useState(false);
     const handleInput = (value, itineraryIndex, activityIndex, field) => {
         setTour({
             ...tour,
@@ -19,8 +19,8 @@ function IconSelector({ selectedIcon, itineraryIndex, activityIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     return (
         <div className="flex-shrink-0 relative">
@@ -50,8 +50,8 @@ function IconSelector({ selectedIcon, itineraryIndex, activityIndex }) {
                                         itineraryIndex,
                                         activityIndex,
                                         'activity_icon'
-                                    )
-                                    setIsOpen(!isOpen)
+                                    );
+                                    setIsOpen(!isOpen);
                                 }}
                                 className="w-8 h-8 flex items-center justify-center rounded hover:bg-gray-100 transition-colors"
                                 title={option.title}
@@ -65,7 +65,7 @@ function IconSelector({ selectedIcon, itineraryIndex, activityIndex }) {
                 </div>
             )}
         </div>
-    )
+    );
 }
 
-export default IconSelector
+export default IconSelector;

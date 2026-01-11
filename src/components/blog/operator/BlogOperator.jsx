@@ -1,77 +1,77 @@
-import React, { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { Breadcrumbs, Link, Typography } from '@mui/material'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined'
-import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined'
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import EditIcon from '@mui/icons-material/Edit'
-import { useBlogOperatorContext } from '../context/BlogOperatorContext'
-import Label from '../../form/Label'
-import Input from '../../form/input/InputField'
-import ErrorMessage from '../../ui/error/ErrorMessage'
-import { useCommonContext } from '../../../context/CommonContext'
-import Select from '../../form/Select'
-import Radio from '../../form/input/Radio'
-import TextArea from '../../form/input/TextArea'
-import { API_ENDPOINTS } from '../../../config/config'
-import Alert from '../../ui/alert/Alert'
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
+import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import EditIcon from '@mui/icons-material/Edit';
+import { useBlogOperatorContext } from '../context/BlogOperatorContext';
+import Label from '../../form/Label';
+import Input from '../../form/input/InputField';
+import ErrorMessage from '../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../context/CommonContext';
+import Select from '../../form/Select';
+import Radio from '../../form/input/Radio';
+import TextArea from '../../form/input/TextArea';
+import { API_ENDPOINTS } from '../../../config/config';
+import Alert from '../../ui/alert/Alert';
 
 function BlogOperator({ handleSubmit, type }) {
     const { blog, setBlog, handleInput, categories, handleSelect } =
-        useBlogOperatorContext()
+        useBlogOperatorContext();
     const { errorFields, errors, errorTitle, successMessage, isSuccess } =
-        useCommonContext()
-    const [isPreview, setIsPreview] = useState(false)
+        useCommonContext();
+    const [isPreview, setIsPreview] = useState(false);
 
     const insertMarkdown = (before, after = '') => {
-        const textarea = document.getElementById('content-editor')
-        const start = textarea.selectionStart
-        const end = textarea.selectionEnd
-        const selectedText = textarea.value.substring(start, end)
-        const newText = before + selectedText + after
+        const textarea = document.getElementById('content-editor');
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = textarea.value.substring(start, end);
+        const newText = before + selectedText + after;
 
         const newValue =
             textarea.value.substring(0, start) +
             newText +
-            textarea.value.substring(end)
-        setBlog({ ...blog, content: newValue })
+            textarea.value.substring(end);
+        setBlog({ ...blog, content: newValue });
 
         // Set cursor position
         setTimeout(() => {
-            textarea.focus()
+            textarea.focus();
             textarea.setSelectionRange(
                 start + before.length,
                 start + before.length + selectedText.length
-            )
-        }, 0)
-    }
+            );
+        }, 0);
+    };
 
     const insertLink = () => {
-        const url = prompt('Enter URL:')
+        const url = prompt('Enter URL:');
         if (url) {
-            const linkText = prompt('Enter link text:') || 'Link'
-            insertMarkdown(`[${linkText}](${url})`)
+            const linkText = prompt('Enter link text:') || 'Link';
+            insertMarkdown(`[${linkText}](${url})`);
         }
-    }
+    };
 
     const insertImage = () => {
-        const url = prompt('Enter image URL:')
+        const url = prompt('Enter image URL:');
         if (url) {
-            const altText = prompt('Enter alt text:') || 'Image'
-            insertMarkdown(`![${altText}](${url})`)
+            const altText = prompt('Enter alt text:') || 'Image';
+            insertMarkdown(`![${altText}](${url})`);
         }
-    }
+    };
 
-    const [preview, setPreview] = useState('')
+    const [preview, setPreview] = useState('');
     const handleImageChange = (e) => {
-        const file = e.target.files[0]
-        const previewUrl = URL.createObjectURL(file)
-        setBlog({ ...blog, featured_image: file })
-        setPreview(previewUrl)
-    }
+        const file = e.target.files[0];
+        const previewUrl = URL.createObjectURL(file);
+        setBlog({ ...blog, featured_image: file });
+        setPreview(previewUrl);
+    };
 
     return (
         <div className="bg-gray-50 min-h-screen">
@@ -697,7 +697,7 @@ function BlogOperator({ handleSubmit, type }) {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default BlogOperator
+export default BlogOperator;

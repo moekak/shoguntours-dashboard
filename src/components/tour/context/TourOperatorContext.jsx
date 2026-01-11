@@ -1,26 +1,26 @@
-import { createContext, useContext, useState } from 'react'
-import { useCommonContext } from '../../../context/CommonContext'
+import { createContext, useContext, useState } from 'react';
+import { useCommonContext } from '../../../context/CommonContext';
 
-export const TourOperatorContext = createContext()
+export const TourOperatorContext = createContext();
 export const useTourOperatorContext = () => {
-    const context = useContext(TourOperatorContext)
+    const context = useContext(TourOperatorContext);
     if (context === undefined) {
         throw new Error(
             'TourOperatorContext must be used within an TourProvider'
-        )
+        );
     }
-    return context
-}
+    return context;
+};
 
 export const TourOperatorProvider = ({ children }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isTourOperationSuccess, setIsTourOperationSuccess] = useState(false)
-    const [tourSuccessMessage, setTourSuccessMessage] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isTourOperationSuccess, setIsTourOperationSuccess] = useState(false);
+    const [tourSuccessMessage, setTourSuccessMessage] = useState({});
 
     const resetTourOperationMessage = () => {
-        setIsTourOperationSuccess(false)
-        setTourSuccessMessage({})
-    }
+        setIsTourOperationSuccess(false);
+        setTourSuccessMessage({});
+    };
     const iconOptions = [
         { icon: 'fa-solid fa-location-dot', title: '場所' },
         { icon: 'fa-camera', title: '写真撮影' },
@@ -40,16 +40,16 @@ export const TourOperatorProvider = ({ children }) => {
         { icon: 'fa-bus', title: 'バス' },
         { icon: 'fa-ticket-alt', title: 'チケット' },
         { icon: 'fa-clock', title: '時間' },
-    ]
+    ];
 
-    const [languages, setLanguages] = useState([])
-    const [regions, setRegions] = useState([])
-    const [categories, setCategories] = useState([])
+    const [languages, setLanguages] = useState([]);
+    const [regions, setRegions] = useState([]);
+    const [categories, setCategories] = useState([]);
 
     const tourTypes = [
         { value: 'public', label: 'public' },
         { value: 'private', label: 'private' },
-    ]
+    ];
 
     const ratingOptions = [
         { value: '5', label: '⭐⭐⭐⭐⭐ (5 stars)' },
@@ -57,7 +57,7 @@ export const TourOperatorProvider = ({ children }) => {
         { value: '3', label: '⭐⭐⭐ (3 stars)' },
         { value: '2', label: '⭐⭐ (2 stars)' },
         { value: '1', label: '⭐ (1 star)' },
-    ]
+    ];
 
     const [tour, setTour] = useState({
         title: '',
@@ -113,7 +113,7 @@ export const TourOperatorProvider = ({ children }) => {
             },
         ],
         gallery_image: [],
-    })
+    });
 
     const resetTour = () => {
         setTour({
@@ -171,8 +171,8 @@ export const TourOperatorProvider = ({ children }) => {
                 },
             ],
             gallery_image: [],
-        })
-    }
+        });
+    };
 
     const value = {
         iconOptions,
@@ -194,11 +194,11 @@ export const TourOperatorProvider = ({ children }) => {
         tourSuccessMessage,
         setTourSuccessMessage,
         resetTourOperationMessage,
-    }
+    };
 
     return (
         <TourOperatorContext.Provider value={value}>
             {children}
         </TourOperatorContext.Provider>
-    )
-}
+    );
+};

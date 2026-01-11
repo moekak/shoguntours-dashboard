@@ -1,7 +1,12 @@
-import { useEffect } from 'react'
-import { useDashboard } from '../../hooks/useDashboard'
-import { ArrowDownIcon, ArrowUpIcon, BoxIconLine, GroupIcon } from '../../icons'
-import Badge from '../ui/badge/Badge'
+import { useEffect } from 'react';
+import { useDashboard } from '../../hooks/useDashboard';
+import {
+    ArrowDownIcon,
+    ArrowUpIcon,
+    BoxIconLine,
+    GroupIcon,
+} from '../../icons';
+import Badge from '../ui/badge/Badge';
 
 export default function EcommerceMetrics({ data }: { data: any }) {
     return (
@@ -57,7 +62,7 @@ export default function EcommerceMetrics({ data }: { data: any }) {
                         <h4 className="mt-2 font-bold text-gray-800 text-title-sm dark:text-white/90">
                             {data?.bookings?.currentMonthBookings
                                 .reduce((acc: number, cur: any) => {
-                                    return acc + cur['revenue']
+                                    return acc + cur['revenue'];
                                 }, 0)
                                 .toLocaleString()}
                         </h4>
@@ -86,5 +91,5 @@ export default function EcommerceMetrics({ data }: { data: any }) {
             </div>
             {/* <!-- Metric Item End --> */}
         </div>
-    )
+    );
 }

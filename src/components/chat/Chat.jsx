@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
     Send,
     Plus,
@@ -10,7 +10,7 @@ import {
     MoreHorizontal,
     Search,
     Settings,
-} from 'lucide-react'
+} from 'lucide-react';
 
 function Chat() {
     return (
@@ -328,7 +328,7 @@ function Chat() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Chat
+export default Chat;

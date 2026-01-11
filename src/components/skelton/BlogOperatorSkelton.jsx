@@ -5,7 +5,7 @@ import {
     CardContent,
     Breadcrumbs,
     Typography,
-} from '@mui/material'
+} from '@mui/material';
 
 function BlogOperatorSkelton() {
     return (
@@ -359,7 +359,7 @@ function BlogOperatorSkelton() {
                 </Box>
             </Box>
         </Box>
-    )
+    );
 }
 
-export default BlogOperatorSkelton
+export default BlogOperatorSkelton;

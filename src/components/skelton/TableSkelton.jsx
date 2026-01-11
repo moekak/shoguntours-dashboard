@@ -1,5 +1,5 @@
-import React from 'react'
-import { Skeleton } from '@mui/material'
+import React from 'react';
+import { Skeleton } from '@mui/material';
 
 function TableSkelton() {
     return (
@@ -457,7 +457,7 @@ function TableSkelton() {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default TableSkelton
+export default TableSkelton;

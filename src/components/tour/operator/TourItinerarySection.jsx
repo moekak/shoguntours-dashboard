@@ -1,25 +1,25 @@
-import React, { useState } from 'react'
-import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
-import CloudUploadIcon from '@mui/icons-material/CloudUpload'
-import ActivityItem from './itinerary/ActivityItem'
-import HighlightItem from './itinerary/HighlightItem'
-import { useTourOperatorContext } from '../context/TourOperatorContext'
-import Label from '../../form/Label'
-import Input from '../../form/input/InputField'
-import Select from '../../form/Select'
-import Checkbox from '../../form/input/Checkbox'
-import TextArea from '../../form/input/TextArea'
-import ItineraryImage from './itinerary/ItineraryImage'
-import ErrorMessage from '../../ui/error/ErrorMessage'
-import { useCommonContext } from '../../../context/CommonContext'
+import React, { useState } from 'react';
+import RouteOutlinedIcon from '@mui/icons-material/RouteOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import ActivityItem from './itinerary/ActivityItem';
+import HighlightItem from './itinerary/HighlightItem';
+import { useTourOperatorContext } from '../context/TourOperatorContext';
+import Label from '../../form/Label';
+import Input from '../../form/input/InputField';
+import Select from '../../form/Select';
+import Checkbox from '../../form/input/Checkbox';
+import TextArea from '../../form/input/TextArea';
+import ItineraryImage from './itinerary/ItineraryImage';
+import ErrorMessage from '../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../context/CommonContext';
 
 // メインコンポーネント
 const TourItinerarySection = () => {
-    const { errorFields } = useCommonContext()
-    const { setTour, tourTypes, tour, languages } = useTourOperatorContext()
+    const { errorFields } = useCommonContext();
+    const { setTour, tourTypes, tour, languages } = useTourOperatorContext();
 
     const addItinerary = () => {
         setTour({
@@ -47,25 +47,25 @@ const TourItinerarySection = () => {
                     languages: [],
                 },
             ],
-        })
-    }
+        });
+    };
 
     const removeItinerary = (index) => {
         setTour({
             ...tour,
             itinerary: tour.itinerary.filter((_, i) => i !== index),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, index, field) => {
-        const updatedItinerary = [...tour.itinerary]
-        updatedItinerary[index][field] = value
+        const updatedItinerary = [...tour.itinerary];
+        updatedItinerary[index][field] = value;
 
         setTour({
             ...tour,
             itinerary: updatedItinerary,
-        })
-    }
+        });
+    };
 
     // アクティビティ関連の関数
     const addActivity = (index) => {
@@ -85,8 +85,8 @@ const TourItinerarySection = () => {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     // ハイライト関連の関数
     const addHighlight = (itineraryIndex) => {
@@ -103,8 +103,8 @@ const TourItinerarySection = () => {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     const handleLanguageChange = (itineraryIndex, language, isChecked) => {
         setTour({
@@ -121,8 +121,8 @@ const TourItinerarySection = () => {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     return (
         <div className="space-y-6" id="itinerary-section">
@@ -612,7 +612,7 @@ const TourItinerarySection = () => {
                 <span>Add New Tour Itinerary & Details</span>
             </button>
         </div>
-    )
-}
+    );
+};
 
-export default TourItinerarySection
+export default TourItinerarySection;

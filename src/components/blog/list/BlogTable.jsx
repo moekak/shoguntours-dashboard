@@ -1,57 +1,57 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
     Table,
     TableBody,
     TableCell,
     TableHeader,
     TableRow,
-} from '../../ui/table'
-import { API_ENDPOINTS } from '../../../config/config'
-import { useNavigate } from 'react-router'
-import DeletionModal from '../../ui/modal/DeletionModal'
-import ActionDropdown from '../../tour/list/ActionDropDown'
-import { useFetchBlogs } from '../hooks/useFetchBlogs'
-import { useBlogsContext } from '../context/BlogsContext'
-import { useBlogOperatorContext } from '../context/BlogOperatorContext'
-import SearchBlog from './SearchBlog'
-import TableSkelton from '../../skelton/TableSkelton'
-import { useDeleteBlog } from '../hooks/useDeleteBlog'
+} from '../../ui/table';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useNavigate } from 'react-router';
+import DeletionModal from '../../ui/modal/DeletionModal';
+import { useFetchBlogs } from '../hooks/useFetchBlogs';
+import { useBlogsContext } from '../context/BlogsContext';
+import { useBlogOperatorContext } from '../context/BlogOperatorContext';
+import SearchBlog from './SearchBlog';
+import TableSkelton from '../../skelton/TableSkelton';
+import { useDeleteBlog } from '../hooks/useDeleteBlog';
+import ActionDropdown from '../../common/ActionDropDown';
 
 function BlogTable() {
-    const { setBlogs, setOriginalBlogs, blogs } = useBlogsContext()
-    const { isModalOpen, setIsModalOpen } = useBlogOperatorContext()
-    const navigate = useNavigate()
-    const [selectedblog, setSelectedblog] = useState(null)
-    const { data, isLoading, error } = useFetchBlogs()
-    const { mutate, isPending } = useDeleteBlog()
+    const { setBlogs, setOriginalBlogs, blogs } = useBlogsContext();
+    const { isModalOpen, setIsModalOpen } = useBlogOperatorContext();
+    const navigate = useNavigate();
+    const [selectedblog, setSelectedblog] = useState(null);
+    const { data, isLoading, error } = useFetchBlogs();
+    const { mutate, isPending } = useDeleteBlog();
 
     const handleAction = (action, id) => {
-        console.log(id)
+        console.log(id);
 
         switch (action) {
             case 'view':
-                alert(`View details for blog ${id}`)
-                break
+                alert(`View details for blog ${id}`);
+                break;
             case 'edit':
-                navigate(`/blog/${id}`)
-                break
+                navigate(`/blog/${id}`);
+                break;
             case 'delete':
-                setIsModalOpen(true)
-                setSelectedblog(id)
-                break
+                setIsModalOpen(true);
+                setSelectedblog(id);
+                break;
             default:
-                break
+                break;
         }
-    }
+    };
 
     useEffect(() => {
-        if (!data) return
-        setOriginalBlogs(data?.blogs)
-        setBlogs(data?.blogs)
-    }, [data])
+        if (!data) return;
+        setOriginalBlogs(data?.blogs);
+        setBlogs(data?.blogs);
+    }, [data]);
 
     if (isLoading) {
-        return <TableSkelton />
+        return <TableSkelton />;
     }
 
     return (
@@ -177,7 +177,7 @@ function BlogTable() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default BlogTable
+export default BlogTable;

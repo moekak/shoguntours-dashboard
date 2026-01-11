@@ -1,50 +1,52 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
-import { Breadcrumbs, Link, Typography } from '@mui/material'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import Label from '../../form/Label'
-import Input from '../../form/input/InputField'
-import ErrorMessage from '../../ui/error/ErrorMessage'
-import Select from '../../form/Select'
-import Radio from '../../form/input/Radio'
-import TextArea from '../../form/input/TextArea'
-import { useCommonContext } from '../../../context/CommonContext'
-import { useFetchData } from '../../../hooks/useFetchData'
-import { API_ENDPOINTS } from '../../../config/config'
-import { useCreateBooking } from '../hooks/useCreateBooking'
-import Alert from '../../ui/alert/Alert'
-import ManualTourEntryModal from './ManualTourEntryModal'
-import { useBookingContext } from '../context/BookingContext'
-import DatePicker from '../../form/date-picker'
-import { usePostMutation } from '../../../hooks/usePostMutation'
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Label from '../../form/Label';
+import Input from '../../form/input/InputField';
+import ErrorMessage from '../../ui/error/ErrorMessage';
+import Select from '../../form/Select';
+import Radio from '../../form/input/Radio';
+import TextArea from '../../form/input/TextArea';
+import { useCommonContext } from '../../../context/CommonContext';
+import { useFetchData } from '../../../hooks/useFetchData';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useCreateBooking } from '../hooks/useCreateBooking';
+import Alert from '../../ui/alert/Alert';
+import ManualTourEntryModal from './ManualTourEntryModal';
+import { useBookingContext } from '../context/BookingContext';
+import DatePicker from '../../form/date-picker';
+import { usePostMutation } from '../../../hooks/usePostMutation';
 
 function BookingOperator() {
-    const [tourId, setTourId] = useState(null)
+    const [tourId, setTourId] = useState(null);
 
     const onSuccess = (data) => {
         // setTourType(data.data.tourData ?? [])
         // setNewTour([])
-    }
+    };
     const { mutate } = usePostMutation(API_ENDPOINTS.API.CREATE_TOUR_BOOKING, {
         onSuccess: onSuccess,
         redirect: true,
         url: '/bookings',
-    })
+    });
 
     // 全ツアー名を取得
     const { data: tour } = useFetchData(
         API_ENDPOINTS.API.FETCH_REGISTRATION_DATA,
         'booking'
-    )
+    );
     // ツアーを選択後毎回、そのツアーIDに紐づいたItineraryを取得
     const { data: itinerary, isLoading: isItineraryLoading } = useFetchData(
         `${API_ENDPOINTS.API.FETCH_TOUR_ITINERARY_DATA}/${tourId}`,
         'itineraryData',
-        tourId,
-        { enabled: !!tourId }
-    )
+        {
+            enabled: !!tourId,
+            id: tourId,
+        }
+    );
 
-    const [bookingData, setBookingData] = useState({})
+    const [bookingData, setBookingData] = useState({});
     const {
         errorFields,
         errors,
@@ -52,28 +54,28 @@ function BookingOperator() {
         setOpenModal,
         successMessage,
         isSuccess,
-    } = useCommonContext()
-    const { setTourType, tourType } = useBookingContext()
+    } = useCommonContext();
+    const { setTourType, tourType } = useBookingContext();
 
     // 入力処理
     const handleChange = (name, value) => {
-        setBookingData({ ...bookingData, [name]: value })
-    }
+        setBookingData({ ...bookingData, [name]: value });
+    };
 
     // 複数フィールド一度更新用
     const handleMultipleChange = (updates) => {
-        setBookingData((prev) => ({ ...prev, ...updates }))
-    }
+        setBookingData((prev) => ({ ...prev, ...updates }));
+    };
 
     // 予約作成処理
     const handleSubmit = () => {
-        mutate(bookingData)
-    }
+        mutate(bookingData);
+    };
 
     useEffect(() => {
-        if (!tour) return
-        setTourType(tour)
-    }, [tour])
+        if (!tour) return;
+        setTourType(tour);
+    }, [tour]);
 
     return (
         <div className="bg-gray-50">
@@ -282,9 +284,9 @@ function BookingOperator() {
                                                     tour_type: value,
                                                     tour_source: option.type,
                                                     itinerary_id: '',
-                                                })
+                                                });
 
-                                                setTourId(value)
+                                                setTourId(value);
                                             }}
                                         />
                                     </div>
@@ -299,15 +301,15 @@ function BookingOperator() {
                                                 isItineraryLoading
                                                     ? 'Loading...'
                                                     : itinerary
-                                                    ? 'Select tour type'
-                                                    : ''
+                                                      ? 'Select tour type'
+                                                      : ''
                                             }
                                             className="dark:bg-dark-900"
                                             onChange={(value) => {
                                                 handleChange(
                                                     'itinerary_id',
                                                     value
-                                                )
+                                                );
                                             }}
                                             disabled={
                                                 itinerary == undefined ||
@@ -515,14 +517,14 @@ function BookingOperator() {
                                             onChange={(dates) => {
                                                 const validDate = new Date(
                                                     dates
-                                                )
+                                                );
                                                 if (
                                                     !isNaN(validDate.getTime())
                                                 ) {
                                                     handleChange(
                                                         'tour_date',
                                                         validDate
-                                                    )
+                                                    );
                                                 }
                                             }}
                                             error={errorFields?.has(
@@ -566,7 +568,7 @@ function BookingOperator() {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default BookingOperator
+export default BookingOperator;

@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { useTourOperatorContext } from '../../context/TourOperatorContext'
-import ErrorMessage from '../../../ui/error/ErrorMessage'
-import { API_ENDPOINTS } from '../../../../config/config'
-import { useCommonContext } from '../../../../context/CommonContext'
+import React, { useEffect, useState } from 'react';
+import { useTourOperatorContext } from '../../context/TourOperatorContext';
+import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { API_ENDPOINTS } from '../../../../config/config';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function GalleryImageComponent({ index, height }) {
-    const [isOpen, setIsOpen] = useState(false)
-    const [previews, setPreviews] = useState([])
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
+    const [isOpen, setIsOpen] = useState(false);
+    const [previews, setPreviews] = useState([]);
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
     const handleImageChange = (e) => {
-        const file = e.target.files[0]
-        const previewUrl = URL.createObjectURL(file)
-        setPreviews({ ...previews, [index]: previewUrl })
-        setIsOpen(!isOpen)
+        const file = e.target.files[0];
+        const previewUrl = URL.createObjectURL(file);
+        setPreviews({ ...previews, [index]: previewUrl });
+        setIsOpen(!isOpen);
         setTour({
             ...tour,
             gallery_image: (() => {
-                const newArray = [...tour.gallery_image]
-                newArray[index] = file // 存在しないindexでも自動的に配列が拡張される
-                return newArray
+                const newArray = [...tour.gallery_image];
+                newArray[index] = file; // 存在しないindexでも自動的に配列が拡張される
+                return newArray;
             })(),
-        })
-    }
+        });
+    };
 
     return (
         <div className="relative">
@@ -65,7 +65,7 @@ function GalleryImageComponent({ index, height }) {
             </button>
             <ErrorMessage type={`gallery_image.${index}`} />
         </div>
-    )
+    );
 }
 
-export default GalleryImageComponent
+export default GalleryImageComponent;

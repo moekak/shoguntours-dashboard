@@ -1,48 +1,49 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router'
+import { BrowserRouter as Router, Routes, Route } from 'react-router';
 
-import SignUp from './pages/AuthPages/SignUp'
-import NotFound from './pages/OtherPage/NotFound'
-import UserProfiles from './pages/UserProfiles'
-import Videos from './pages/UiElements/Videos'
-import Images from './pages/UiElements/Images'
-import Alerts from './pages/UiElements/Alerts'
-import Badges from './pages/UiElements/Badges'
-import Avatars from './pages/UiElements/Avatars'
-import Buttons from './pages/UiElements/Buttons'
-import LineChart from './pages/Charts/LineChart'
-import BarChart from './pages/Charts/BarChart'
-import Calendar from './pages/Calendar'
-import BasicTables from './pages/Tables/BasicTables'
-import FormElements from './pages/Forms/FormElements'
-import Blank from './pages/Blank'
-import AppLayout from './layout/AppLayout'
-import { ScrollToTop } from './components/common/ScrollToTop'
-import Home from './pages/Dashboard/Home'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import SignUp from './pages/AuthPages/SignUp';
+import NotFound from './pages/OtherPage/NotFound';
+import UserProfiles from './pages/UserProfiles';
+import Videos from './pages/UiElements/Videos';
+import Images from './pages/UiElements/Images';
+import Alerts from './pages/UiElements/Alerts';
+import Badges from './pages/UiElements/Badges';
+import Avatars from './pages/UiElements/Avatars';
+import Buttons from './pages/UiElements/Buttons';
+import LineChart from './pages/Charts/LineChart';
+import BarChart from './pages/Charts/BarChart';
+import Calendar from './pages/Calendar';
+import BasicTables from './pages/Tables/BasicTables';
+import FormElements from './pages/Forms/FormElements';
+import Blank from './pages/Blank';
+import AppLayout from './layout/AppLayout';
+import { ScrollToTop } from './components/common/ScrollToTop';
+import Home from './pages/Dashboard/Home';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { TourOperatorProvider } from './components/tour/context/TourOperatorContext'
-import { ToursProvider } from './components/tour/context/ToursContext'
-import TourOperator from './components/tour/operator/TourOperator'
-import Tours from './components/tour/list/Tours'
-import TourEdit from './components/tour/edit/TourEdit'
-import TourCreate from './components/tour/create/TourCreate'
-import { BlogCreateProvider } from './components/blog/context/BlogOperatorContext'
-import BlogCreate from './components/blog/create/BlogCreate'
-import { CommonProvider } from './context/CommonContext'
-import Blogs from './components/blog/list/Blogs'
-import { BlogsProvider } from './components/blog/context/BlogsContext'
-import BlogEdit from './components/blog/edit/BlogEdit'
-import SignIn from './pages/AuthPages/SignIn'
-import axios from 'axios'
-import PrivateRoute from './components/services/PrivateRoute'
-import Reset from './components/common/Reset'
-import Chat from './components/chat/Chat'
-import BookingOperator from './components/book/operator/BookingOperator'
-import { BookingProvider } from './components/book/context/BookingContext'
-import Bookings from './components/book/list/Bookings'
-import { SearchBookingProvider } from './components/book/search/context/SearchBookingContext'
+import { TourOperatorProvider } from './components/tour/context/TourOperatorContext';
+import { ToursProvider } from './components/tour/context/ToursContext';
+import TourOperator from './components/tour/operator/TourOperator';
+import Tours from './components/tour/list/Tours';
+import TourEdit from './components/tour/edit/TourEdit';
+import TourCreate from './components/tour/create/TourCreate';
+import { BlogCreateProvider } from './components/blog/context/BlogOperatorContext';
+import BlogCreate from './components/blog/create/BlogCreate';
+import { CommonProvider } from './context/CommonContext';
+import Blogs from './components/blog/list/Blogs';
+import { BlogsProvider } from './components/blog/context/BlogsContext';
+import BlogEdit from './components/blog/edit/BlogEdit';
+import SignIn from './pages/AuthPages/SignIn';
+import axios from 'axios';
+import PrivateRoute from './components/services/PrivateRoute';
+import Reset from './components/common/Reset';
+import Chat from './components/chat/Chat';
+import BookingOperator from './components/book/operator/BookingOperator';
+import { BookingProvider } from './components/book/context/BookingContext';
+import Bookings from './components/book/list/Bookings';
+import { SearchBookingProvider } from './components/book/search/context/SearchBookingContext';
+import Booking from './components/book/show/Booking';
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 export default function App() {
     return (
         <>
@@ -232,7 +233,23 @@ export default function App() {
                                                                 </PrivateRoute>
                                                             }
                                                         />
+                                                        <Route
+                                                            path="/bookings"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <Bookings />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
                                                     </Route>
+                                                    <Route
+                                                        path="/booking/:bookingId"
+                                                        element={
+                                                            <PrivateRoute redirectTo="/signin">
+                                                                <Booking />
+                                                            </PrivateRoute>
+                                                        }
+                                                    />
 
                                                     {/* Auth Layout */}
                                                     <Route
@@ -260,5 +277,5 @@ export default function App() {
                 </Router>
             </QueryClientProvider>
         </>
-    )
+    );
 }

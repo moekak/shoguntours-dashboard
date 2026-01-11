@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import IconSelector from './IconSelector'
-import CloseIcon from '@mui/icons-material/Close'
-import Label from '../../../form/Label'
-import Input from '../../../form/input/InputField'
-import TextArea from '../../../form/input/TextArea'
-import { useTourOperatorContext } from '../../context/TourOperatorContext'
-import ErrorMessage from '../../../ui/error/ErrorMessage'
-import { useCommonContext } from '../../../../context/CommonContext'
+import React, { useState } from 'react';
+import IconSelector from './IconSelector';
+import CloseIcon from '@mui/icons-material/Close';
+import Label from '../../../form/Label';
+import Input from '../../../form/input/InputField';
+import TextArea from '../../../form/input/TextArea';
+import { useTourOperatorContext } from '../../context/TourOperatorContext';
+import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function ActivityItem({ activityIndex, itineraryIndex }) {
-    const { setTour, tour } = useTourOperatorContext()
-    const { errorFields } = useCommonContext()
+    const { setTour, tour } = useTourOperatorContext();
+    const { errorFields } = useCommonContext();
 
     const removeActivity = (itineraryIndex, activityIndex) => {
-        console.log(tour.itinerary[itineraryIndex].activity)
+        console.log(tour.itinerary[itineraryIndex].activity);
 
         setTour({
             ...tour,
@@ -27,8 +27,8 @@ function ActivityItem({ activityIndex, itineraryIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, itineraryIndex, activityIndex, field) => {
         setTour({
@@ -45,8 +45,8 @@ function ActivityItem({ activityIndex, itineraryIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     return (
         <div className="activity-item">
@@ -128,7 +128,7 @@ function ActivityItem({ activityIndex, itineraryIndex }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default ActivityItem
+export default ActivityItem;

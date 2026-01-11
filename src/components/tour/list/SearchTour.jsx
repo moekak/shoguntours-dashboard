@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useToursContext } from '../context/ToursContext'
+import React, { useEffect } from 'react';
+import { useToursContext } from '../context/ToursContext';
 
 function SearchTour({ categories, regions }) {
     const {
@@ -12,11 +12,11 @@ function SearchTour({ categories, regions }) {
         setSelectedRegions,
         setSelectedStatus,
         selectedStatus,
-    } = useToursContext()
+    } = useToursContext();
 
     useEffect(() => {
-        filter()
-    }, [searchTerm, selectedCategory, selectedRegions, selectedStatus])
+        filter();
+    }, [searchTerm, selectedCategory, selectedRegions, selectedStatus]);
 
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-6 dark:border-white/[0.05] dark:bg-white/[0.03]">
@@ -126,7 +126,7 @@ function SearchTour({ categories, regions }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default SearchTour
+export default SearchTour;

@@ -1,25 +1,34 @@
-import { Breadcrumbs, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
-import { Link } from 'react-router'
-import { API_ENDPOINTS } from '../../../config/config'
-import { useFetchData } from '../../../hooks/useFetchData'
-import { useCommonContext } from '../../../context/CommonContext'
-import Alert from '../../ui/alert/Alert'
-import BookingsSkeleton from '../../skelton/BookingListSkelton'
-import BookingList from './BookingList'
-import DatePicker from '../../form/date-picker'
-import Label from '../../form/Label'
-import Input from '../../form/input/InputField'
-import Select from '../../form/Select'
-import SearchBookings from '../search/SearchBookings'
-import { useSearchBookingContext } from '../search/context/SearchBookingContext'
+import { Breadcrumbs, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useFetchData } from '../../../hooks/useFetchData';
+import { useCommonContext } from '../../../context/CommonContext';
+import Alert from '../../ui/alert/Alert';
+import BookingsSkeleton from '../../skelton/BookingListSkelton';
+import BookingList from './BookingList';
+import SearchBookings from '../search/SearchBookings';
+import { useSearchBookingContext } from '../search/context/SearchBookingContext';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableRow,
+    TableCell,
+} from '../../ui/table';
+import { useBookingContext } from '../context/BookingContext';
+import Pagination from '../../common/Pagination';
 
 function Bookings() {
-    const { data: bookings, isLoading } = useFetchData(
-        API_ENDPOINTS.API.FETCH_TOUR_BOOKINGS,
-        'tourBookings'
-    )
-    const { filteredBookingData } = useSearchBookingContext()
+    const [page, setPage] = useState(1); // ページ番号
+    const {
+        setBookingData,
+        bookingData,
+        setTourCounts,
+        tourCounts,
+        setTotalPages,
+    } = useBookingContext();
+    const { appliedFilters } = useSearchBookingContext();
     const {
         errorFields,
         errors,
@@ -27,46 +36,66 @@ function Bookings() {
         setOpenModal,
         successMessage,
         isSuccess,
-    } = useCommonContext()
+    } = useCommonContext();
 
-    useEffect(() => {
-        console.log(bookings)
-    }, [bookings])
+    const onSuccess = (data) => {
+        setBookingData(data.bookings.data);
+        setTourCounts(data.counts);
+    };
+
+    const buildParams = (filtersToUse) => {
+        const params = new URLSearchParams();
+
+        Object.entries(filtersToUse).forEach(([key, value]) => {
+            if (value) {
+                params.append(key, value);
+            }
+        });
+
+        return params.toString();
+    };
+    const buildUrl = () => {
+        const paramsString = buildParams(appliedFilters);
+        return paramsString
+            ? `${API_ENDPOINTS.API.FETCH_TOUR_BOOKINGS}?page=${page}&${paramsString}`
+            : `${API_ENDPOINTS.API.FETCH_TOUR_BOOKINGS}?page=${page}`;
+    };
+
+    const { data: bookings, isLoading } = useFetchData(
+        buildUrl(),
+        ['tourBookings', page, appliedFilters],
+        {
+            onSuccess,
+        }
+    );
+
+    const onPageChange = (page) => {
+        console.log(page);
+        setPage(page);
+    };
+
     if (isLoading) {
-        return <BookingsSkeleton />
+        return <BookingsSkeleton />;
     }
 
+    // useEffect(() => {
+    //     console.log(bookings);
+    // }, [bookings]);
     return (
         <>
             <div className="bg-gray-50 min-h-screen">
                 {/* Main Content */}
                 <main className="pb-10">
                     <div className="container">
-                        {/* Page Header */}
-                        <div className="mb-4 sticky">
-                            <Breadcrumbs
-                                aria-label="breadcrumb"
-                                className="text-xs"
-                                sx={{ fontSize: '0.75rem' }}
-                            >
-                                <Link
-                                    underline="hover"
-                                    color="inherit"
-                                    href="/"
-                                >
-                                    Tour
-                                </Link>
-
-                                <Typography
-                                    sx={{
-                                        color: 'text.primary',
-                                        fontSize: '0.8rem',
-                                    }}
-                                >
-                                    Tour List
-                                </Typography>
-                            </Breadcrumbs>
-                        </div>
+                        {isSuccess && (
+                            <div className="mb-4">
+                                <Alert
+                                    variant="success"
+                                    title={successMessage?.title}
+                                    message={successMessage?.message}
+                                />
+                            </div>
+                        )}
                         {errors?.length > 0 && (
                             <div className="mb-3">
                                 <Alert
@@ -102,10 +131,9 @@ function Bookings() {
                                     Total Bookings
                                 </p>
                                 <p className="text-2xl font-semibold text-gray-900">
-                                    {Number(bookings?.counts['upcomingTour']) +
-                                        Number(
-                                            bookings?.counts['completedTour']
-                                        )}
+                                    {Number(tourCounts['upcomingTour']) +
+                                        Number(tourCounts['completedTour']) +
+                                        Number(tourCounts['cancelledTour'])}
                                 </p>
                             </div>
 
@@ -131,7 +159,7 @@ function Bookings() {
                                     Upcoming
                                 </p>
                                 <p className="text-2xl font-semibold text-gray-900">
-                                    {bookings?.counts['upcomingTour']}
+                                    {tourCounts['upcomingTour']}
                                 </p>
                             </div>
 
@@ -157,7 +185,7 @@ function Bookings() {
                                     Completed
                                 </p>
                                 <p className="text-2xl font-semibold text-gray-900">
-                                    {bookings?.counts['completedTour']}
+                                    {tourCounts['completedTour']}
                                 </p>
                             </div>
 
@@ -183,120 +211,121 @@ function Bookings() {
                                     Cancelled
                                 </p>
                                 <p className="text-2xl font-semibold text-gray-900">
-                                    {bookings?.counts['cancelledTour']}
+                                    {tourCounts['cancelledTour']}
                                 </p>
                             </div>
                         </div>
 
                         {/* Filter Section */}
                         <SearchBookings
-                            bookings={bookings?.bookings}
+                            bookings={bookingData}
                             allTours={bookings?.allTours}
                         />
 
                         {/* Booking List Table */}
-                        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                            {/* Table Header */}
-                            <div className="px-6 py-4 border-b border-gray-200">
-                                <h2 className="text-lg font-semibold text-gray-900">
-                                    Booking List
-                                </h2>
-                            </div>
-
-                            {/* Table */}
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
-                                    <thead className="bg-gray-50 border-b border-gray-200">
-                                        <tr>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Booking ID
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Customer
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Tour Name
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Date
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Guests
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Price
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Actions
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="divide-y divide-gray-100">
-                                        {filteredBookingData.length > 0
-                                            ? filteredBookingData.map(
-                                                  (booking) => {
-                                                      return (
-                                                          <BookingList
-                                                              key={booking.id}
-                                                              booking={booking}
-                                                          />
-                                                      )
-                                                  }
-                                              )
-                                            : bookings?.bookings.map(
-                                                  (booking) => {
-                                                      return (
-                                                          <BookingList
-                                                              key={booking.id}
-                                                              booking={booking}
-                                                          />
-                                                      )
-                                                  }
-                                              )}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            {/* Pagination */}
-                            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
-                                <div className="flex items-center justify-between">
-                                    <div className="text-sm text-gray-600">
-                                        Showing{' '}
-                                        <span className="font-medium">1</span>{' '}
-                                        to{' '}
-                                        <span className="font-medium">5</span>{' '}
-                                        of{' '}
-                                        <span className="font-medium">156</span>{' '}
-                                        bookings
-                                    </div>
-                                    <div className="flex space-x-2">
-                                        <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-                                            Previous
-                                        </button>
-                                        <button className="px-3 py-2 border border-[#465fff] bg-[#465fff] rounded-lg text-sm font-medium text-white hover:bg-[#7592ff]">
-                                            1
-                                        </button>
-                                        <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                            2
-                                        </button>
-                                        <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                            3
-                                        </button>
-                                        <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                            Next
-                                        </button>
-                                    </div>
+                        <div className="container">
+                            <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
+                                <div className="max-w-full overflow-x-auto">
+                                    <Table>
+                                        <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
+                                            <TableRow>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Booking ID
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Customer
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Tour Name
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Date
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Guests
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Price
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Status
+                                                </TableCell>
+                                                <TableCell
+                                                    isHeader
+                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                                                >
+                                                    Actions
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
+                                            {bookingData.map((booking) => {
+                                                return (
+                                                    <BookingList
+                                                        key={booking.id}
+                                                        booking={booking}
+                                                    />
+                                                );
+                                            })}
+                                        </TableBody>
+                                    </Table>
                                 </div>
+                            </div>
+                        </div>
+
+                        {/* Pagination */}
+                        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                            <div className="flex items-center justify-between">
+                                <div className="text-sm text-gray-600">
+                                    Showing{' '}
+                                    <span className="font-medium">
+                                        {bookings.bookings.from}
+                                    </span>{' '}
+                                    to{' '}
+                                    <span className="font-medium">
+                                        {bookings.bookings.to}
+                                    </span>{' '}
+                                    of{' '}
+                                    <span className="font-medium">
+                                        {bookings.bookings.total}
+                                    </span>{' '}
+                                    bookings
+                                </div>
+                                <Pagination
+                                    lastPage={Number(
+                                        bookings.bookings.last_page
+                                    )}
+                                    onPageChange={onPageChange}
+                                    currentPage={bookings.bookings.current_page}
+                                />
                             </div>
                         </div>
                     </div>
                 </main>
             </div>
         </>
-    )
+    );
 }
 
-export default Bookings
+export default Bookings;

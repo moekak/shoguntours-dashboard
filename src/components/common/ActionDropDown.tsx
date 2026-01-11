@@ -1,34 +1,44 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
+type ActionType = 'tour' | 'blog' | 'booking';
+interface ActionDropDownProps {
+    id: string;
+    onAction: (action: string, id: string) => void;
+    type: ActionType;
+    cancel?: (id: string) => void;
+}
 
-const ActionDropdown = ({ id, onAction, type }) => {
-    const [isOpen, setIsOpen] = useState(false)
-    const dropdownRef = useRef(null)
+const ActionDropDown = (args: ActionDropDownProps) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const { id, onAction, type, cancel } = args;
 
     // Handle outside click
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = (event: MouseEvent) => {
             if (
                 dropdownRef.current &&
-                !dropdownRef.current.contains(event.target)
+                !dropdownRef.current.contains(event.target as Node)
             ) {
-                setIsOpen(false)
+                setIsOpen(false);
             }
-        }
+        };
 
-        document.addEventListener('mousedown', handleClickOutside)
+        document.addEventListener('mousedown', handleClickOutside);
         return () =>
-            document.removeEventListener('mousedown', handleClickOutside)
-    }, [])
+            document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
-    const handleActionClick = (action) => {
-        setIsOpen(false)
-        onAction(action, id)
-    }
+    const handleActionClick = (action: string): void => {
+        setIsOpen(false);
+        onAction(action, id);
+    };
 
     return (
         <div className="relative" ref={dropdownRef}>
             {/* Three dots button */}
             <button
+                type="button"
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 aria-label="Actions"
@@ -93,11 +103,34 @@ const ActionDropdown = ({ id, onAction, type }) => {
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                             />
                         </svg>
-                        {type == 'tour' ? 'Edit Tour' : 'Edit Blog'}
+                        {`Edit ${type}`}
                     </button>
 
                     {/* Separator */}
                     <hr className="my-1 border-gray-200 dark:border-gray-600" />
+
+                    {/* cancel Booking */}
+                    {type === 'booking' && (
+                        <button
+                            onClick={() => cancel?.(id)}
+                            className="w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 dark:text-red-400 dark:hover:bg-red-900/20 transition-colors"
+                        >
+                            <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                            Cancel booking
+                        </button>
+                    )}
 
                     {/* Delete Tour */}
                     <button
@@ -117,11 +150,11 @@ const ActionDropdown = ({ id, onAction, type }) => {
                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                             />
                         </svg>
-                        {type == 'tour' ? 'Delete Tour' : 'Delete Blog'}
+                        {`Delete ${type}`}
                     </button>
                 </div>
             )}
         </div>
-    )
-}
-export default ActionDropdown
+    );
+};
+export default ActionDropDown;

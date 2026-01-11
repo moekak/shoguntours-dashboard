@@ -1,13 +1,13 @@
-import React from 'react'
-import CloseIcon from '@mui/icons-material/Close'
-import Input from '../../../form/input/InputField'
-import { useTourOperatorContext } from '../../context/TourOperatorContext'
-import ErrorMessage from '../../../ui/error/ErrorMessage'
-import { useCommonContext } from '../../../../context/CommonContext'
+import React from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import Input from '../../../form/input/InputField';
+import { useTourOperatorContext } from '../../context/TourOperatorContext';
+import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function HighlightItem({ itineraryIndex, highlightIndex }) {
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
     const removeHighlight = (itineraryIndex, highlightIndex) => {
         setTour({
             ...tour,
@@ -21,8 +21,8 @@ function HighlightItem({ itineraryIndex, highlightIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, itineraryIndex, highlightIndex) => {
         setTour({
@@ -38,8 +38,8 @@ function HighlightItem({ itineraryIndex, highlightIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
     return (
         <div className="flex items-center gap-2">
             <div className="w-full">
@@ -75,7 +75,7 @@ function HighlightItem({ itineraryIndex, highlightIndex }) {
                 <CloseIcon fontSize="small" />
             </button>
         </div>
-    )
+    );
 }
 
-export default HighlightItem
+export default HighlightItem;

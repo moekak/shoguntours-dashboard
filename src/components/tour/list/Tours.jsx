@@ -1,14 +1,14 @@
-import { Breadcrumbs, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router'
-import TourTable from './TourTable'
-import { useTourOperatorContext } from '../context/TourOperatorContext'
-import Alert from '../../ui/alert/Alert'
-import { useCommonContext } from '../../../context/CommonContext'
+import { Breadcrumbs, Typography } from '@mui/material';
+import React from 'react';
+import { Link } from 'react-router';
+import TourTable from './TourTable';
+import { useTourOperatorContext } from '../context/TourOperatorContext';
+import Alert from '../../ui/alert/Alert';
+import { useCommonContext } from '../../../context/CommonContext';
 
 function Tours() {
     const { isTourOperationSuccess, tourSuccessMessage } =
-        useTourOperatorContext()
+        useTourOperatorContext();
     return (
         <div className="bg-gray-50 min-h-screen">
             {/* Main Content */}
@@ -48,7 +48,7 @@ function Tours() {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default Tours
+export default Tours;

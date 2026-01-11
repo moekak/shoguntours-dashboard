@@ -1,15 +1,8 @@
 {
-    "editor.tabSize": 4,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
-
-    // Rainbow Bracketsの設定
-    "bracketPairColorizer.depreciation-notice": false,
-
-    // VSCode組み込みのBracket Pair Colorizationを使用
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": "active",
-
-    // または、拡張機能のRainbow Bracketsを使っている場合
-    "rainbow_brackets.ignoreIndentError": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "prettier.singleQuote": true
 }

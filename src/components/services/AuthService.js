@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { API_ENDPOINTS } from '../../config/config'
+import axios from 'axios';
+import { API_ENDPOINTS } from '../../config/config';
 
 export const checkAuth = async (token) => {
     try {
@@ -7,11 +7,11 @@ export const checkAuth = async (token) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        })
-        return response.data
+        });
+        return response.data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
 
-        return null
+        return null;
     }
-}
+};

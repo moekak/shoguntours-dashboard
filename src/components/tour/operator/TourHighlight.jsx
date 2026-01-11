@@ -1,37 +1,37 @@
-import Input from '../../form/input/InputField.tsx'
-import TextArea from '../../form/input/TextArea.tsx'
-import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined'
-import { useTourOperatorContext } from '../context/TourOperatorContext.jsx'
-import ErrorMessage from '../../ui/error/ErrorMessage.jsx'
-import { useCommonContext } from '../../../context/CommonContext.jsx'
+import Input from '../../form/input/InputField.tsx';
+import TextArea from '../../form/input/TextArea.tsx';
+import TipsAndUpdatesOutlinedIcon from '@mui/icons-material/TipsAndUpdatesOutlined';
+import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
+import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
+import { useCommonContext } from '../../../context/CommonContext.jsx';
 
 function TourHighlight() {
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
 
     const addHighlight = () => {
         setTour({
             ...tour,
             highlights: [...tour.highlights, { title: '', description: '' }],
-        })
-    }
+        });
+    };
 
     const removeHighlight = (index) => {
         setTour({
             ...tour,
             highlights: tour.highlights.filter((_, i) => i !== index),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, index, field) => {
-        const updatedHighlights = [...tour.highlights]
-        updatedHighlights[index][field] = value
+        const updatedHighlights = [...tour.highlights];
+        updatedHighlights[index][field] = value;
 
         setTour({
             ...tour,
             highlights: updatedHighlights,
-        })
-    }
+        });
+    };
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
@@ -121,7 +121,7 @@ function TourHighlight() {
                 <span className="font-medium">Add Highlight</span>
             </button>
         </div>
-    )
+    );
 }
 
-export default TourHighlight
+export default TourHighlight;

@@ -1,10 +1,16 @@
-import { Skeleton } from '@mui/material'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '../ui/table'
-import SearchTour from '../tour/list/SearchTour'
+import { Skeleton } from '@mui/material';
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHeader,
+    TableRow,
+} from '../ui/table';
+import SearchTour from '../tour/list/SearchTour';
 
 const TourTableSkeleton = ({ rows = 5 }) => {
     // Create array for skeleton rows
-    const skeletonRows = Array.from({ length: rows }, (_, index) => index)
+    const skeletonRows = Array.from({ length: rows }, (_, index) => index);
 
     return (
         <div className="space-y-6">
@@ -138,7 +144,7 @@ const TourTableSkeleton = ({ rows = 5 }) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default TourTableSkeleton
+export default TourTableSkeleton;

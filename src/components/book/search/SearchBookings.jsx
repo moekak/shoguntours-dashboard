@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import Label from '../../form/Label'
-import Select from '../../form/Select'
-import Input from '../../form/input/InputField'
-import DatePicker from '../../form/date-picker'
-import { useSearchBookingContext } from './context/SearchBookingContext'
+import React, { useState } from 'react';
+import Label from '../../form/Label';
+import Select from '../../form/Select';
+import Input from '../../form/input/InputField';
+import DatePicker from '../../form/date-picker';
+import { useSearchBookingContext } from './context/SearchBookingContext';
 
 function SearchBookings({ allTours }) {
     const {
@@ -15,8 +15,22 @@ function SearchBookings({ allTours }) {
         resetSearch,
         setMinPrice,
         setMaxPrice,
-    } = useSearchBookingContext()
-    const [isAdvancedFilterOpen, setIsAdvancedFilterOpen] = useState(false)
+        setFilters,
+        filters,
+    } = useSearchBookingContext();
+    const [isAdvancedFilterOpen, setIsAdvancedFilterOpen] = useState(false);
+
+    // DateオブジェクトをYYYY-MM-DD形式に変換
+    const convertDateObjToString = (dates, key) => {
+        const dateObj = dates instanceof Date ? dates : new Date(dates);
+
+        // ローカルの年月日を取得
+        const year = dateObj.getFullYear();
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const convertedDate = `${year}-${month}-${day}`;
+        setFilters({ ...filters, [key]: convertedDate });
+    };
 
     return (
         <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
@@ -56,109 +70,128 @@ function SearchBookings({ allTours }) {
             </div>
 
             {/* 高機能フィルタパネル（折りたたみ可能） */}
-            {isAdvancedFilterOpen && (
-                <div className="border-t border-gray-200 pt-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                        {/* Status Filter */}
-                        <div>
-                            <Label required={true}>Status</Label>
-                            <Select
-                                options={statusOptions}
-                                placeholder="Status"
-                                className="dark:bg-dark-900"
-                                onChange={(selectedOption) =>
-                                    setSearchByStatus(selectedOption)
-                                }
-                            />
-                        </div>
-
-                        {/* Tour Filter */}
-                        <div>
-                            <Label required={true}>Tour</Label>
-                            <Select
-                                options={allTours}
-                                placeholder="Tour"
-                                className="dark:bg-dark-900"
-                                onChange={(selectedOption) =>
-                                    setSearchByTour(selectedOption)
-                                }
-                            />
-                        </div>
-
-                        {/* Date Range */}
-                        <div>
-                            {/* <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                                            From Date
-                                        </label> */}
-                            <DatePicker
-                                // defaultDate={bookingData?.tour_date}
-                                id="date-picker"
-                                label="From Date"
-                                placeholder="Select a date"
-                            />
-                        </div>
-
-                        <div>
-                            <DatePicker
-                                // defaultDate={bookingData?.tour_date}
-                                id="date-picker"
-                                label="To Date"
-                                placeholder="Select a date"
-                            />
-                        </div>
+            {/* {isAdvancedFilterOpen && ( */}
+            <div className="border-t border-gray-200 pt-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    {/* Status Filter */}
+                    <div>
+                        <Label required={true}>Status</Label>
+                        <Select
+                            options={statusOptions}
+                            placeholder="Status"
+                            value={filters.status}
+                            className="dark:bg-dark-900"
+                            onChange={(selectedOption) =>
+                                setFilters({
+                                    ...filters,
+                                    status: selectedOption,
+                                })
+                            }
+                        />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        {/* Price Range */}
-                        <div>
-                            <Label>Min Price</Label>
-                            <Input
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                                onChange={(e) => {
-                                    setMinPrice(e.target.value)
-                                }}
-                            />
-                        </div>
+                    {/* Tour Filter */}
+                    <div>
+                        <Label required={true}>Tour</Label>
+                        <Select
+                            options={allTours}
+                            placeholder="Tour"
+                            className="dark:bg-dark-900"
+                            value={filters.tour ?? ''}
+                            onChange={(selectedOption) =>
+                                setFilters({
+                                    ...filters,
+                                    tour: selectedOption,
+                                })
+                            }
+                        />
+                    </div>
 
-                        <div>
-                            <Label>Max Price</Label>
-                            <Input
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                                onChange={(e) => {
-                                    setMaxPrice(e.target.value)
-                                }}
-                            />
-                        </div>
+                    {/* Date Range */}
+                    <div>
+                        <DatePicker
+                            defaultDate={filters?.fromDate ?? ''}
+                            id="fromDate"
+                            label="From Date"
+                            placeholder="Select a date"
+                            onChange={(dates) => {
+                                convertDateObjToString(dates, 'fromDate');
+                            }}
+                        />
+                    </div>
 
-                        {/* Sort */}
-                        <div>
-                            <Label required={true}>Sort By</Label>
-                            <Select
-                                options={sortOptions}
-                                placeholder="Tour"
-                                className="dark:bg-dark-900"
-                            />
-                        </div>
+                    <div>
+                        <DatePicker
+                            defaultDate={filters?.toDate ?? ''}
+                            id="toDate"
+                            label="To Date"
+                            placeholder="Select a date"
+                            onChange={(dates) => {
+                                convertDateObjToString(dates, 'toDate');
+                            }}
+                        />
+                    </div>
+                </div>
 
-                        {/* Participants */}
-                        <div>
-                            <Label required={true}>Participants</Label>
-                            <Select
-                                options={[
-                                    'All Status',
-                                    'Upcoming',
-                                    'Completed',
-                                    'Cancelled',
-                                    'Pending',
-                                ]}
-                                placeholder="Tour"
-                                className="dark:bg-dark-900"
-                            />
-                            {/* <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {/* Price Range */}
+                    <div>
+                        <Label>Min Price</Label>
+                        <Input
+                            type="number"
+                            placeholder="0"
+                            min="0"
+                            value={filters.minPrice ?? ''}
+                            onChange={(e) => {
+                                setFilters({
+                                    ...filters,
+                                    minPrice: e.target.value,
+                                });
+                            }}
+                        />
+                    </div>
+
+                    <div>
+                        <Label>Max Price</Label>
+                        <Input
+                            type="number"
+                            placeholder="0"
+                            min="0"
+                            value={filters.maxPrice ?? ''}
+                            onChange={(e) => {
+                                setFilters({
+                                    ...filters,
+                                    maxPrice: e.target.value,
+                                });
+                            }}
+                        />
+                    </div>
+
+                    {/* Sort */}
+                    <div>
+                        <Label required={true}>Sort By</Label>
+                        <Select
+                            options={sortOptions}
+                            placeholder="Tour"
+                            className="dark:bg-dark-900"
+                        />
+                    </div>
+
+                    {/* Participants */}
+                    <div>
+                        <Label required={true}>Participants</Label>
+                        <Select
+                            options={[
+                                'All Status',
+                                'Upcoming',
+                                'Completed',
+                                'Cancelled',
+                                'Pending',
+                            ]}
+                            placeholder="Tour"
+                            className="dark:bg-dark-900"
+                        />
+                        {/* <label className="block text-sm font-medium text-gray-700 mb-1.5">
                                             Participants
                                         </label>
                                         <select className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9cb9ff] focus:border-[#465fff] bg-white text-gray-600">
@@ -168,34 +201,33 @@ function SearchBookings({ allTours }) {
                                             <option>4-5 people</option>
                                             <option>6+ people</option>
                                         </select> */}
-                        </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
-                        <div className="text-sm text-gray-500">
-                            <span className="font-medium">3 filters</span>{' '}
-                            applied
-                        </div>
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => resetSearch()}
-                                className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
-                            >
-                                Clear All
-                            </button>
-                            <button
-                                onClick={() => filter()}
-                                className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors"
-                            >
-                                Apply Filters
-                            </button>
-                        </div>
                     </div>
                 </div>
-            )}
+
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-200">
+                    <div className="text-sm text-gray-500">
+                        <span className="font-medium">3 filters</span> applied
+                    </div>
+                    <div className="flex gap-3">
+                        <button
+                            onClick={() => resetSearch()}
+                            className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+                        >
+                            Clear All
+                        </button>
+                        <button
+                            onClick={() => filter()}
+                            className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors"
+                        >
+                            Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {/* )} */}
         </div>
-    )
+    );
 }
 
-export default SearchBookings
+export default SearchBookings;

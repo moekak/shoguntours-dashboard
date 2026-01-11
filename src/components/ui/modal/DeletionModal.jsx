@@ -5,7 +5,7 @@ function DeletionModal({
     mutate,
     isPending,
 }) {
-    console.log(selectedData)
+    console.log(selectedData);
 
     return (
         <div className="fixed w-full h-full inset-0 bg-[#0000008c]  flex items-center justify-center p-4 z-50">
@@ -121,7 +121,7 @@ function DeletionModal({
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default DeletionModal
+export default DeletionModal;

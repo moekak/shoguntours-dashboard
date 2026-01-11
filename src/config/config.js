@@ -1,4 +1,4 @@
-const BASE_URL = 'https://shoguntoursjapan.com/api'
+const BASE_URL = 'https://shoguntoursjapan.com/api';
 
 export const API_ENDPOINTS = {
     // TOUR: {
@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
         CREATE_TOUR_BOOKING: `${BASE_URL}/dashboard/create/booking`,
         CREATE_EXTERNAL_TOURS: `${BASE_URL}/dashboard/create/external/tour`,
         FETCH_TOUR_BOOKINGS: `${BASE_URL}/dashboard/get/bookings`,
+        CANCEL_BOKIKING: `${BASE_URL}/dashboard/cancel/booking`
     },
 
     // IMAGE: {
@@ -53,7 +54,7 @@ export const API_ENDPOINTS = {
     //       FIRST_NAME: "First name is required.",
     //       LAST_NAME: "Last name is required.",
     // }
-}
+};
 
 export const MESSAGES = {
     ERROR: {
@@ -62,4 +63,4 @@ export const MESSAGES = {
         SYSTEM_ERROR_TITLE: 'System Errors',
         VALIDATION_ERROR_TITLE: 'Validation Errors',
     },
-}
+};

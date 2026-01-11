@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function Loading({ type }) {
     return (
@@ -31,7 +31,7 @@ function Loading({ type }) {
                 </p>
             </div>
         </div>
-    )
+    );
 }
 
-export default Loading
+export default Loading;

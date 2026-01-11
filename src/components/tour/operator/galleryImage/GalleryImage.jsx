@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import GalleryImageComponent from './GalleryImageComponent'
-import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined'
+import React, { useState } from 'react';
+import GalleryImageComponent from './GalleryImageComponent';
+import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
 
 function GalleryImage() {
     return (
@@ -44,7 +44,7 @@ function GalleryImage() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default GalleryImage
+export default GalleryImage;

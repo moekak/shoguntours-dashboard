@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '../../icons'
-import Label from '../form/Label'
-import Input from '../form/input/InputField'
-import Checkbox from '../form/input/Checkbox'
-import Button from '../ui/button/Button'
-import axios from 'axios'
-import { API_ENDPOINTS } from '../../config/config'
-import { useCommonContext } from '../../context/CommonContext'
-import Alert from '../ui/alert/Alert'
-import ErrorMessage from '../ui/error/ErrorMessage'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '../../icons';
+import Label from '../form/Label';
+import Input from '../form/input/InputField';
+import Checkbox from '../form/input/Checkbox';
+import Button from '../ui/button/Button';
+import axios from 'axios';
+import { API_ENDPOINTS } from '../../config/config';
+import { useCommonContext } from '../../context/CommonContext';
+import Alert from '../ui/alert/Alert';
+import ErrorMessage from '../ui/error/ErrorMessage';
 
 export default function SignInForm() {
-    const navigate = useNavigate()
-    const [loginInfo, setLoginInfo] = useState({})
-    const [invalidError, setInvalidError] = useState(null)
-    const [showPassword, setShowPassword] = useState(false)
-    const [isChecked, setIsChecked] = useState(false)
-    const [isLoading, setIsloading] = useState(false)
+    const navigate = useNavigate();
+    const [loginInfo, setLoginInfo] = useState({});
+    const [invalidError, setInvalidError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [isLoading, setIsloading] = useState(false);
     const {
         errors,
         errorFields,
@@ -29,51 +29,51 @@ export default function SignInForm() {
         setAccount,
         account,
         isSuccess,
-    } = useCommonContext()
+    } = useCommonContext();
 
     useEffect(() => {
-        resetError()
-    }, [])
+        resetError();
+    }, []);
 
     const handleSubmit = async () => {
-        setIsloading(true)
+        setIsloading(true);
         try {
             const response = await axios.post(
                 API_ENDPOINTS.API.LOGIN,
                 loginInfo
-            )
-            const data = response.data
+            );
+            const data = response.data;
 
             if (data?.status == 'ok' && data?.token) {
-                localStorage.setItem('token', data?.token)
+                localStorage.setItem('token', data?.token);
                 setAccount({
                     ...account,
                     name: data?.user?.username,
                     id: data?.user?.id,
-                })
-                setIsSuccess(true)
-                navigate('/')
+                });
+                setIsSuccess(true);
+                navigate('/');
             }
-            console.log(data)
+            console.log(data);
         } catch (error) {
-            console.log(error)
-            const validationErrors = error?.response?.data?.error?.details
-            const code = error?.response?.data?.error?.code
+            console.log(error);
+            const validationErrors = error?.response?.data?.error?.details;
+            const code = error?.response?.data?.error?.code;
 
-            console.log(validationErrors)
+            console.log(validationErrors);
             // 認証エラー
             if (code === 'INVALID_CREDENTIALS') {
-                setInvalidError(validationErrors[0])
+                setInvalidError(validationErrors[0]);
             }
             // ユーザーネームとパスワード空の時のエラー
             if (validationErrors) {
-                setErrorFieldsFn(validationErrors)
-                setErrorsMessages(validationErrors)
+                setErrorFieldsFn(validationErrors);
+                setErrorsMessages(validationErrors);
             }
         } finally {
-            setIsloading(false)
+            setIsloading(false);
         }
-    }
+    };
     return (
         <div className="flex flex-col flex-1">
             <div className="w-full max-w-md pt-10 mx-auto">
@@ -227,5 +227,5 @@ export default function SignInForm() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

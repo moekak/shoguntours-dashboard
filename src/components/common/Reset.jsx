@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react'
-import { useCommonContext } from '../../context/CommonContext'
-import { useLocation } from 'react-router'
+import React, { useEffect } from 'react';
+import { useCommonContext } from '../../context/CommonContext';
+import { useLocation } from 'react-router';
 
 function Reset() {
-    const { resetAll } = useCommonContext()
-    const { pathname } = useLocation()
+    const { resetAll } = useCommonContext();
+    const { pathname } = useLocation();
     useEffect(() => {
-        resetAll()
-    }, [pathname])
-    return null
+        resetAll();
+    }, [pathname]);
+    return null;
 }
 
-export default Reset
+export default Reset;

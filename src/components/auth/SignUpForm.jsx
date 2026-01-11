@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '../../icons'
-import Label from '../form/Label'
-import Input from '../form/input/InputField'
-import Checkbox from '../form/input/Checkbox'
-import { useCommonContext } from '../../context/CommonContext'
-import { API_ENDPOINTS } from '../../config/config'
-import axios from 'axios'
-import Alert from '../ui/alert/Alert'
-import ErrorMessage from '../ui/error/ErrorMessage'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from '../../icons';
+import Label from '../form/Label';
+import Input from '../form/input/InputField';
+import Checkbox from '../form/input/Checkbox';
+import { useCommonContext } from '../../context/CommonContext';
+import { API_ENDPOINTS } from '../../config/config';
+import axios from 'axios';
+import Alert from '../ui/alert/Alert';
+import ErrorMessage from '../ui/error/ErrorMessage';
 
 export default function SignUpForm() {
-    const navigate = useNavigate()
-    const [showPassword, setShowPassword] = useState(false)
-    const [signupInfo, setSignupInfo] = useState({})
-    const [isLoading, setIsloading] = useState(false)
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [signupInfo, setSignupInfo] = useState({});
+    const [isLoading, setIsloading] = useState(false);
     const {
         setErrors,
         errors,
@@ -24,19 +24,19 @@ export default function SignUpForm() {
         resetError,
         setSuccessMessage,
         setIsSuccess,
-    } = useCommonContext()
+    } = useCommonContext();
 
     useEffect(() => {
-        resetError()
-    }, [])
+        resetError();
+    }, []);
 
     useEffect(() => {
-        console.log(signupInfo)
-    }, [signupInfo])
+        console.log(signupInfo);
+    }, [signupInfo]);
 
     const handleSubmit = async () => {
-        setErrors([])
-        setIsloading(true)
+        setErrors([]);
+        setIsloading(true);
         try {
             const response = await axios.post(
                 API_ENDPOINTS.API.SIGNUP,
@@ -46,29 +46,29 @@ export default function SignUpForm() {
                         'Content-Type': 'multipart/form-data',
                     },
                 }
-            )
+            );
 
-            const data = response.data
+            const data = response.data;
             if (data?.status == 'ok') {
-                setSuccessMessage(data?.message)
-                setIsSuccess(true)
+                setSuccessMessage(data?.message);
+                setIsSuccess(true);
 
                 setTimeout(() => {
-                    setSuccessMessage('')
-                    setIsSuccess(false)
-                }, 4000)
-                navigate('/signin')
+                    setSuccessMessage('');
+                    setIsSuccess(false);
+                }, 4000);
+                navigate('/signin');
             }
-            console.log(data)
+            console.log(data);
         } catch (error) {
-            const validationErrors = error?.response?.data?.error?.details
-            setErrorFieldsFn(validationErrors)
-            setErrorsMessages(validationErrors)
-            console.log(error)
+            const validationErrors = error?.response?.data?.error?.details;
+            setErrorFieldsFn(validationErrors);
+            setErrorsMessages(validationErrors);
+            console.log(error);
         } finally {
-            setIsloading(false)
+            setIsloading(false);
         }
-    }
+    };
 
     return (
         <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2 no-scrollbar">
@@ -213,5 +213,5 @@ export default function SignUpForm() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

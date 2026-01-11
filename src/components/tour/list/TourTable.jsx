@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import {
     Table,
     TableBody,
     TableCell,
     TableHeader,
     TableRow,
-} from '../../ui/table'
-import { useFetchTour } from '../hooks/useFetchTour'
-import { API_ENDPOINTS } from '../../../config/config'
-import ActionDropdown from './ActionDropDown'
-import { useToursContext } from '../context/ToursContext'
-import SearchTour from './SearchTour'
-import TourTableSkeleton from '../../skelton/TourTableSkeleton'
-import { useNavigate } from 'react-router'
-import DeletionModal from '../../ui/modal/DeletionModal'
-import { useTourOperatorContext } from '../context/TourOperatorContext'
-import { useDeleteTour } from '../hooks/useDeleteTour'
+} from '../../ui/table';
+import { useFetchTour } from '../hooks/useFetchTour';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useToursContext } from '../context/ToursContext';
+import SearchTour from './SearchTour';
+import TourTableSkeleton from '../../skelton/TourTableSkeleton';
+import { useNavigate } from 'react-router';
+import DeletionModal from '../../ui/modal/DeletionModal';
+import { useTourOperatorContext } from '../context/TourOperatorContext';
+import { useDeleteTour } from '../hooks/useDeleteTour';
+import ActionDropDown from '../../common/ActionDropDown';
 
 export default function TourTable() {
-    const { data, isLoading, error } = useFetchTour()
-    const { setTours, setOriginalTours, tours } = useToursContext()
-    const { isModalOpen, setIsModalOpen } = useTourOperatorContext()
-    const navigate = useNavigate()
-    const [selectedTour, setSelectedTour] = useState(null)
-    const { mutate, isPending } = useDeleteTour()
+    const { data, isLoading, error } = useFetchTour();
+    const { setTours, setOriginalTours, tours } = useToursContext();
+    const { isModalOpen, setIsModalOpen } = useTourOperatorContext();
+    const navigate = useNavigate();
+    const [selectedTour, setSelectedTour] = useState(null);
+    const { mutate, isPending } = useDeleteTour();
 
     const handleAction = (action, tourId) => {
         switch (action) {
             case 'view':
-                alert(`View details for tour ${tourId}`)
-                break
+                alert(`View details for tour ${tourId}`);
+                break;
             case 'edit':
-                navigate(`/tour/${tourId}`)
-                break
+                navigate(`/tour/${tourId}`);
+                break;
             case 'delete':
-                setIsModalOpen(true)
-                setSelectedTour(tourId)
-                break
+                setIsModalOpen(true);
+                setSelectedTour(tourId);
+                break;
             default:
-                break
+                break;
         }
-    }
+    };
 
     useEffect(() => {
-        console.log(data)
+        console.log(data);
 
         if (data !== undefined) {
-            setOriginalTours(data?.tours)
-            setTours(data?.tours)
+            setOriginalTours(data?.tours);
+            setTours(data?.tours);
         }
-    }, [data])
+    }, [data]);
 
     if (isLoading) {
-        return <TourTableSkeleton />
+        return <TourTableSkeleton />;
     }
 
     return (
@@ -164,7 +164,7 @@ export default function TourTable() {
                                             </div>
                                         </TableCell>
                                         <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                                            <ActionDropdown
+                                            <ActionDropDown
                                                 id={tour?.id}
                                                 onAction={handleAction}
                                                 type="tour"
@@ -177,5 +177,5 @@ export default function TourTable() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

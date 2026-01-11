@@ -1,18 +1,18 @@
-import EcommerceMetrics from '../../components/ecommerce/EcommerceMetrics'
-import MonthlySalesChart from '../../components/ecommerce/MonthlySalesChart'
-import StatisticsChart from '../../components/ecommerce/StatisticsChart'
-import MonthlyTarget from '../../components/ecommerce/MonthlyTarget'
-import RecentOrders from '../../components/ecommerce/RecentOrders'
-import DemographicCard from '../../components/ecommerce/DemographicCard'
-import PageMeta from '../../components/common/PageMeta'
-import { useDashboard } from '../../hooks/useDashboard'
-import { useEffect } from 'react'
+import EcommerceMetrics from '../../components/ecommerce/EcommerceMetrics';
+import MonthlySalesChart from '../../components/ecommerce/MonthlySalesChart';
+import StatisticsChart from '../../components/ecommerce/StatisticsChart';
+import MonthlyTarget from '../../components/ecommerce/MonthlyTarget';
+import RecentOrders from '../../components/ecommerce/RecentOrders';
+import DemographicCard from '../../components/ecommerce/DemographicCard';
+import PageMeta from '../../components/common/PageMeta';
+import { useDashboard } from '../../hooks/useDashboard';
+import { useEffect } from 'react';
 
 export default function Home() {
-    const { data } = useDashboard()
+    const { data } = useDashboard();
     useEffect(() => {
-        console.log(data)
-    }, [data])
+        console.log(data);
+    }, [data]);
     return (
         <>
             <PageMeta
@@ -42,5 +42,5 @@ export default function Home() {
                 </div>
             </div>
         </>
-    )
+    );
 }

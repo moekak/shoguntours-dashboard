@@ -1,12 +1,54 @@
+import { useNavigate } from 'react-router';
+
+import { TableCell, TableRow } from '../../ui/table';
+import ActionDropDown from '../../common/ActionDropDown';
+import { usePostMutation } from '../../../hooks/usePostMutation';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useBookingContext } from '../context/BookingContext';
+
 function BookingList({ booking }) {
+    const navigate = useNavigate();
+    const { setBookingData, setTourCounts } = useBookingContext();
+    const onSuccess = (data) => {
+        console.log(data.data.ounts);
+        setBookingData(data.data.bookings);
+        setTourCounts(data.data.counts);
+    };
+    const { mutate } = usePostMutation(API_ENDPOINTS.API.CANCEL_BOKIKING, {
+        onSuccess,
+    });
+
+    const handleAction = (action, id) => {
+        console.log(id);
+
+        switch (action) {
+            case 'view':
+                alert(`View details for booking ${id}`);
+                break;
+            case 'edit':
+                navigate(`/booking/${id}`);
+                break;
+            case 'delete':
+                setIsModalOpen(true);
+                setSelectedblog(id);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const cancel = (id) => {
+        mutate({ id: id });
+    };
+
     return (
-        <tr className="hover:bg-gray-50 transition-colors">
-            <td className="px-6 py-4 whitespace-nowrap">
+        <TableRow className="hover:bg-gray-50 transition-colors">
+            <TableCell className="px-6 py-4 whitespace-nowrap">
                 <span className="text-sm font-medium text-gray-900">
                     {booking?.bookingId}
                 </span>
-            </td>
-            <td className="px-6 py-4">
+            </TableCell>
+            <TableCell className="px-6 py-4">
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-9 w-9 bg-gradient-to-br from-[#9cb9ff] to-[#465fff] rounded-full flex items-center justify-center text-white font-medium text-sm">
                         {booking?.customer?.first_name[0].toUpperCase() +
@@ -22,8 +64,8 @@ function BookingList({ booking }) {
                         </p>
                     </div>
                 </div>
-            </td>
-            <td className="px-6 py-4">
+            </TableCell>
+            <TableCell className="px-6 py-4">
                 <div className="flex items-center">
                     <div className="ml-3">
                         <p className="text-sm font-medium text-gray-900">
@@ -32,13 +74,13 @@ function BookingList({ booking }) {
                         </p>
                     </div>
                 </div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
+            </TableCell>
+            <TableCell className="px-6 py-4 whitespace-nowrap">
                 <p className="text-sm text-gray-900">
                     {booking?.tour_date_formatted}
                 </p>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
+            </TableCell>
+            <TableCell className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center text-sm text-gray-600">
                     <svg
                         className="w-4 h-4 text-gray-400 mr-1"
@@ -56,38 +98,35 @@ function BookingList({ booking }) {
                     {Number(booking?.adult_number) +
                         Number(booking?.youth_number)}
                 </div>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
+            </TableCell>
+            <TableCell className="px-6 py-4 whitespace-nowrap">
                 <p className="text-sm font-medium text-gray-900">
                     ¥{booking?.total.toLocaleString()}
                 </p>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap">
+            </TableCell>
+            <TableCell className="px-6 py-4 whitespace-nowrap">
                 <span
                     className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
                         booking?.status === 'Upcoming'
                             ? 'bg-[#9cb9ff]/20 text-[#465fff]'
                             : booking?.status === 'Completed'
-                            ? 'bg-emerald-50 text-emerald-700'
-                            : 'bg-red-50 text-red-700'
+                              ? 'bg-emerald-50 text-emerald-700'
+                              : 'bg-red-50 text-red-700'
                     } `}
                 >
                     {booking?.status}
                 </span>
-            </td>
-            <td className="px-6 py-4 whitespace-nowrap text-sm">
-                <button className="text-gray-400 hover:text-gray-600">
-                    <svg
-                        className="w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                    >
-                        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                    </svg>
-                </button>
-            </td>
-        </tr>
-    )
+            </TableCell>
+            <TableCell className="px-6 py-4 whitespace-nowrap text-sm">
+                <ActionDropDown
+                    id={booking?.id}
+                    onAction={handleAction}
+                    type="booking"
+                    cancel={cancel}
+                />
+            </TableCell>
+        </TableRow>
+    );
 }
 
-export default BookingList
+export default BookingList;

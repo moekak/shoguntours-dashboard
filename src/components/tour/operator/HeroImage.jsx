@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { useTourOperatorContext } from '../context/TourOperatorContext'
-import { API_ENDPOINTS } from '../../../config/config'
-import { FILE } from 'react-dnd-html5-backend/dist/NativeTypes'
-import { useCommonContext } from '../../../context/CommonContext'
+import React, { useEffect, useState } from 'react';
+import { useTourOperatorContext } from '../context/TourOperatorContext';
+import { API_ENDPOINTS } from '../../../config/config';
+import { FILE } from 'react-dnd-html5-backend/dist/NativeTypes';
+import { useCommonContext } from '../../../context/CommonContext';
 
 function HeroImage() {
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
-    const [preview, setPreview] = useState('')
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
+    const [preview, setPreview] = useState('');
     const handleImageChange = (e) => {
-        const file = e.target.files[0]
-        const previewUrl = URL.createObjectURL(file)
-        setTour({ ...tour, hero_image: file })
-        setPreview(previewUrl)
-    }
+        const file = e.target.files[0];
+        const previewUrl = URL.createObjectURL(file);
+        setTour({ ...tour, hero_image: file });
+        setPreview(previewUrl);
+    };
 
     useEffect(() => {
-        console.log(tour)
-    }, [tour])
+        console.log(tour);
+    }, [tour]);
     return (
         <>
             <div
@@ -73,7 +73,7 @@ function HeroImage() {
                 </label>
             </div>
         </>
-    )
+    );
 }
 
-export default HeroImage
+export default HeroImage;

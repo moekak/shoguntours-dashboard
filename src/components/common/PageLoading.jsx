@@ -12,7 +12,7 @@ export function PageLoading() {
                 </p>
             </div>
         </div>
-    )
+    );
 }
 
-export default PageLoading
+export default PageLoading;

@@ -1,12 +1,12 @@
-import Chart from 'react-apexcharts'
-import { ApexOptions } from 'apexcharts'
-import { useState } from 'react'
-import { Dropdown } from '../ui/dropdown/Dropdown'
-import { DropdownItem } from '../ui/dropdown/DropdownItem'
-import { MoreDotIcon } from '../../icons'
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import { useState } from 'react';
+import { Dropdown } from '../ui/dropdown/Dropdown';
+import { DropdownItem } from '../ui/dropdown/DropdownItem';
+import { MoreDotIcon } from '../../icons';
 
 export default function MonthlyTarget({ data }: { data: any }) {
-    const series = [data?.bookings?.targetPercentage.toFixed(2)]
+    const series = [data?.bookings?.targetPercentage.toFixed(2)];
     const options: ApexOptions = {
         colors: ['#465FFF'],
         chart: {
@@ -39,7 +39,7 @@ export default function MonthlyTarget({ data }: { data: any }) {
                         offsetY: -40,
                         color: '#1D2939',
                         formatter: function (val) {
-                            return val + '%'
+                            return val + '%';
                         },
                     },
                 },
@@ -53,15 +53,15 @@ export default function MonthlyTarget({ data }: { data: any }) {
             lineCap: 'round',
         },
         labels: ['Progress'],
-    }
-    const [isOpen, setIsOpen] = useState(false)
+    };
+    const [isOpen, setIsOpen] = useState(false);
 
     function toggleDropdown() {
-        setIsOpen(!isOpen)
+        setIsOpen(!isOpen);
     }
 
     function closeDropdown() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
     return (
         <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/[0.03]">
@@ -126,7 +126,7 @@ export default function MonthlyTarget({ data }: { data: any }) {
                     You earn ￥
                     {data?.bookings?.currentMonthBookings
                         .reduce((acc: number, cur: any) => {
-                            return acc + cur['revenue']
+                            return acc + cur['revenue'];
                         }, 0)
                         .toLocaleString()}{' '}
                     today, it's higher than last month. Keep up your good work!
@@ -208,5 +208,5 @@ export default function MonthlyTarget({ data }: { data: any }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

@@ -1,18 +1,18 @@
-import Label from '../../form/Label.tsx'
-import Select from '../../form/Select.tsx'
-import Input from '../../form/input/InputField.tsx'
-import TextArea from '../../form/input/TextArea.tsx'
-import DatePicker from '../../form/date-picker'
+import Label from '../../form/Label.tsx';
+import Select from '../../form/Select.tsx';
+import Input from '../../form/input/InputField.tsx';
+import TextArea from '../../form/input/TextArea.tsx';
+import DatePicker from '../../form/date-picker';
 
-import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined'
-import { useTourOperatorContext } from '../context/TourOperatorContext.jsx'
-import ErrorMessage from '../../ui/error/ErrorMessage.jsx'
-import { useCommonContext } from '../../../context/CommonContext.jsx'
-import { useEffect } from 'react'
+import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
+import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
+import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
+import { useCommonContext } from '../../../context/CommonContext.jsx';
+import { useEffect } from 'react';
 
 function Review() {
-    const { errorFields } = useCommonContext()
-    const { setTour, ratingOptions, tour } = useTourOperatorContext()
+    const { errorFields } = useCommonContext();
+    const { setTour, ratingOptions, tour } = useTourOperatorContext();
 
     const addReview = () => {
         setTour({
@@ -21,28 +21,28 @@ function Review() {
                 ...tour.reviews,
                 { name: '', rating: '', content: '', date: '' },
             ],
-        })
-    }
+        });
+    };
 
     const removeReview = (index) => {
         setTour({
             ...tour,
             reviews: tour.reviews.filter((_, i) => i !== index),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, index, field) => {
-        const updatedReviews = [...tour.reviews]
-        updatedReviews[index][field] = value
+        const updatedReviews = [...tour.reviews];
+        updatedReviews[index][field] = value;
 
         setTour({
             ...tour,
             reviews: updatedReviews,
-        })
-    }
+        });
+    };
     useEffect(() => {
-        console.log(tour)
-    }, [tour])
+        console.log(tour);
+    }, [tour]);
 
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
@@ -168,9 +168,9 @@ function Review() {
                                 label="Review Date"
                                 placeholder="Select a date"
                                 onChange={(dates) => {
-                                    const validDate = new Date(dates)
+                                    const validDate = new Date(dates);
                                     if (!isNaN(validDate.getTime())) {
-                                        handleInput(validDate, index, 'date')
+                                        handleInput(validDate, index, 'date');
                                     }
                                 }}
                                 error={errorFields?.has(
@@ -192,7 +192,7 @@ function Review() {
                 </button>
             </div>
         </div>
-    )
+    );
 }
 
-export default Review
+export default Review;

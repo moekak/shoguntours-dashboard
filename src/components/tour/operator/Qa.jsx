@@ -1,37 +1,37 @@
-import Input from '../../form/input/InputField.tsx'
-import TextArea from '../../form/input/TextArea.tsx'
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
-import { useTourOperatorContext } from '../context/TourOperatorContext.jsx'
-import ErrorMessage from '../../ui/error/ErrorMessage.jsx'
-import { useCommonContext } from '../../../context/CommonContext.jsx'
+import Input from '../../form/input/InputField.tsx';
+import TextArea from '../../form/input/TextArea.tsx';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
+import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
+import { useCommonContext } from '../../../context/CommonContext.jsx';
 
 function Qa() {
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
 
     const addQA = () => {
         setTour({
             ...tour,
             questions: [...tour.questions, { question: '', answer: '' }],
-        })
-    }
+        });
+    };
 
     const removeQA = (index) => {
         setTour({
             ...tour,
             questions: tour.questions.filter((_, i) => i !== index),
-        })
-    }
+        });
+    };
 
     const handleInput = (value, index, field) => {
-        const updatedQuestions = [...tour.questions]
-        updatedQuestions[index][field] = value
+        const updatedQuestions = [...tour.questions];
+        updatedQuestions[index][field] = value;
 
         setTour({
             ...tour,
             questions: updatedQuestions,
-        })
-    }
+        });
+    };
 
     return (
         <div className="bg-white rounded-xl shadow-sm p-6">
@@ -118,7 +118,7 @@ function Qa() {
                 <span className="font-medium">Add QA</span>
             </button>
         </div>
-    )
+    );
 }
 
-export default Qa
+export default Qa;

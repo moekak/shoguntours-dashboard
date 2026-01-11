@@ -13,49 +13,17 @@ export const useSearchBookingContext = () => {
 };
 
 export const SearchBookingProvider = ({ children }) => {
-    const { bookingData } = useBookingContext();
-    const [filteredBookingData, setFilteredBookingData] = useState([]);
-    const [searchByStatus, setSearchByStatus] = useState(null);
-    const [searchByTour, setSearchByTour] = useState(null);
-    const [minPrice, setMinPrice] = useState(null);
-    const [maxPrice, setMaxPrice] = useState(null);
+    const [filters, setFilters] = useState({});
+    const [appliedFilters, setAppliedFilters] = useState({}); //filters複製用;
 
     const filter = () => {
-        console.log(bookingData?.bookings);
-        // 元データから直接フィルタする
-        let filterdData = bookingData?.bookings || [];
-
-        // statusでフィルター
-        if (searchByStatus) {
-            filterdData = filterdData.filter(
-                (booking) => booking.status === searchByStatus
-            );
-        }
-
-        if (searchByTour) {
-            console.log(searchByTour);
-            filterdData = filterdData.filter(
-                (booking) => booking.external_tour_id == searchByTour
-            );
-        }
-        if (minPrice) {
-            filterdData = filterdData.filter(
-                (booking) => booking.total >= minPrice
-            );
-        }
-        if (maxPrice) {
-            filterdData = filterdData.filter(
-                (booking) => booking.total <= maxPrice
-            );
-        }
-
-        setFilteredBookingData(filterdData);
-        console.log(filterdData);
+        setAppliedFilters(filters);
     };
 
     const resetSearch = () => {
-        setSearchByStatus(null);
-        setFilteredBookingData([]);
+        console.log('reset!');
+        setFilters({});
+        setAppliedFilters({});
     };
     const statusOptions = [
         { value: 'Upcoming', label: 'Upcoming' },
@@ -76,13 +44,11 @@ export const SearchBookingProvider = ({ children }) => {
         statusOptions,
         sortOptions,
         filter,
-        setSearchByStatus,
-        searchByTour,
-        setSearchByTour,
-        setMinPrice,
-        setMaxPrice,
-        filteredBookingData,
         resetSearch,
+        filters,
+        setFilters,
+        appliedFilters,
+        setAppliedFilters,
     };
 
     return (

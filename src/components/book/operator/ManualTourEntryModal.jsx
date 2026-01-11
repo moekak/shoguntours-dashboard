@@ -1,15 +1,15 @@
-import { Modal, Box, IconButton } from '@mui/material'
-import { useBookingContext } from '../context/BookingContext'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import CloseIcon from '@mui/icons-material/Close'
-import { useEffect, useState } from 'react'
-import Label from '../../form/Label'
-import Input from '../../form/input/InputField'
-import Select from '../../form/Select'
-import { usePostMutation } from '../../../hooks/usePostMutation'
-import { API_ENDPOINTS } from '../../../config/config'
-import { useCommonContext } from '../../../context/CommonContext'
-import Alert from '../../ui/alert/Alert'
+import { Modal, Box, IconButton } from '@mui/material';
+import { useBookingContext } from '../context/BookingContext';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import CloseIcon from '@mui/icons-material/Close';
+import { useEffect, useState } from 'react';
+import Label from '../../form/Label';
+import Input from '../../form/input/InputField';
+import Select from '../../form/Select';
+import { usePostMutation } from '../../../hooks/usePostMutation';
+import { API_ENDPOINTS } from '../../../config/config';
+import { useCommonContext } from '../../../context/CommonContext';
+import Alert from '../../ui/alert/Alert';
 
 function ManualTourEntryModal() {
     const modalStyle = {
@@ -26,42 +26,43 @@ function ManualTourEntryModal() {
         overflow: 'hidden',
         display: 'flex',
         flexDirection: 'column',
-    }
+    };
     const {
         openModal,
         setOpenModal,
         modalErrors,
         modalErrorTitle,
         errorFields,
-    } = useCommonContext()
-    const [newTour, setNewTour] = useState([])
+    } = useCommonContext();
+    const [newTour, setNewTour] = useState([]);
 
     //外部ツアー登録成功処理
     const onSuccess = (data) => {
-        setTourType(data.data.tourData ?? [])
-        setNewTour([])
-    }
+        setTourType(data.data.tourData ?? []);
+        setNewTour([]);
+    };
 
-    const { serviceProviders, commissionFee, setTourType } = useBookingContext()
+    const { serviceProviders, commissionFee, setTourType } =
+        useBookingContext();
     const { mutate, isPending } = usePostMutation(
         API_ENDPOINTS.API.CREATE_EXTERNAL_TOURS,
         { onSuccess: onSuccess, isModal: true }
-    )
+    );
 
     // 入力処理
     const handleChange = (name, value) => {
-        setNewTour({ ...newTour, [name]: value })
-    }
+        setNewTour({ ...newTour, [name]: value });
+    };
 
     // モーダル閉じる
     const handleClose = () => {
-        setOpenModal(false)
-    }
+        setOpenModal(false);
+    };
 
     // 外部ツアー作成処理
     const handleSubmit = () => {
-        mutate(newTour)
-    }
+        mutate(newTour);
+    };
 
     return (
         <Modal
@@ -129,7 +130,7 @@ function ManualTourEntryModal() {
                                 placeholder="e.g.,Tokyo Full Day Tour"
                                 error={errorFields?.has('tour_name')}
                                 onChange={(e) => {
-                                    handleChange('tour_name', e.target.value)
+                                    handleChange('tour_name', e.target.value);
                                 }}
                             />
                         </div>
@@ -150,7 +151,7 @@ function ManualTourEntryModal() {
                                     className="dark:bg-dark-900"
                                     error={errorFields?.has('service_provider')}
                                     onChange={(value) => {
-                                        handleChange('service_provider', value)
+                                        handleChange('service_provider', value);
                                     }}
                                 />
                             </div>
@@ -168,7 +169,7 @@ function ManualTourEntryModal() {
                                     className="dark:bg-dark-900"
                                     error={errorFields?.has('commission_fee')}
                                     onChange={(value) => {
-                                        handleChange('commission_fee', value)
+                                        handleChange('commission_fee', value);
                                     }}
                                 />
                             </div>
@@ -200,7 +201,7 @@ function ManualTourEntryModal() {
                 </div>
             </Box>
         </Modal>
-    )
+    );
 }
 
-export default ManualTourEntryModal
+export default ManualTourEntryModal;

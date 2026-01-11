@@ -1,6 +1,6 @@
-import Chart from 'react-apexcharts'
-import { ApexOptions } from 'apexcharts'
-import ChartTab from '../common/ChartTab'
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import ChartTab from '../common/ChartTab';
 
 export default function StatisticsChart({ data }: { data: any }) {
     const options: ApexOptions = {
@@ -99,7 +99,7 @@ export default function StatisticsChart({ data }: { data: any }) {
                 },
             },
         },
-    }
+    };
 
     const series = [
         {
@@ -110,7 +110,7 @@ export default function StatisticsChart({ data }: { data: any }) {
             name: 'Revenue',
             data: data?.monthlyRevenue,
         },
-    ]
+    ];
     return (
         <div className="rounded-2xl border border-gray-200 bg-white px-5 pb-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
             <div className="flex flex-col gap-5 mb-6 sm:flex-row sm:justify-between">
@@ -138,5 +138,5 @@ export default function StatisticsChart({ data }: { data: any }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

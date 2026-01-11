@@ -1,34 +1,34 @@
-import { Breadcrumbs, Link, Typography } from '@mui/material'
-import Label from '../../form/Label.tsx'
-import Select from '../../form/Select.tsx'
-import Input from '../../form/input/InputField.tsx'
-import TextArea from '../../form/input/TextArea.tsx'
-import Radio from '../../form/input/Radio.tsx'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
-import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined'
-import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined'
-import TourItinerarySection from './TourItinerarySection.jsx'
-import { useTourOperatorContext } from '../context/TourOperatorContext.jsx'
-import Qa from './QA.jsx'
-import TourHighlight from './TourHighlight.jsx'
-import Review from './Review.jsx'
-import HeroImage from './HeroImage.jsx'
-import GalleryImage from './galleryImage/GalleryImage.jsx'
-import Alert from '../../ui/alert/Alert.tsx'
-import Loading from '../../ui/loading/Loading.jsx'
-import ErrorMessage from '../../ui/error/ErrorMessage.jsx'
-import { useCommonContext } from '../../../context/CommonContext.jsx'
+import { Breadcrumbs, Link, Typography } from '@mui/material';
+import Label from '../../form/Label.tsx';
+import Select from '../../form/Select.tsx';
+import Input from '../../form/input/InputField.tsx';
+import TextArea from '../../form/input/TextArea.tsx';
+import Radio from '../../form/input/Radio.tsx';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import BrokenImageOutlinedIcon from '@mui/icons-material/BrokenImageOutlined';
+import FormatAlignLeftOutlinedIcon from '@mui/icons-material/FormatAlignLeftOutlined';
+import TourItinerarySection from './TourItinerarySection.jsx';
+import { useTourOperatorContext } from '../context/TourOperatorContext.jsx';
+import Qa from './QA.jsx';
+import TourHighlight from './TourHighlight.jsx';
+import Review from './Review.jsx';
+import HeroImage from './HeroImage.jsx';
+import GalleryImage from './galleryImage/GalleryImage.jsx';
+import Alert from '../../ui/alert/Alert.tsx';
+import Loading from '../../ui/loading/Loading.jsx';
+import ErrorMessage from '../../ui/error/ErrorMessage.jsx';
+import { useCommonContext } from '../../../context/CommonContext.jsx';
 
 function TourOperator({ isPending, handleSubmit, type }) {
-    const { errorTitle, errors, errorFields } = useCommonContext()
-    const { tour, setTour, regions, categories } = useTourOperatorContext()
+    const { errorTitle, errors, errorFields } = useCommonContext();
+    const { tour, setTour, regions, categories } = useTourOperatorContext();
     const handleInput = (e) => {
-        setTour({ ...tour, [e.target.name]: e.target.value })
-    }
+        setTour({ ...tour, [e.target.name]: e.target.value });
+    };
 
     const handleSelect = (selectedOption, actionName) => {
-        setTour({ ...tour, [actionName]: selectedOption })
-    }
+        setTour({ ...tour, [actionName]: selectedOption });
+    };
 
     return (
         <div className="bg-gray-50 min-h-screen">
@@ -389,7 +389,7 @@ function TourOperator({ isPending, handleSubmit, type }) {
                 </div>
             </main>
         </div>
-    )
+    );
 }
 
-export default TourOperator
+export default TourOperator;

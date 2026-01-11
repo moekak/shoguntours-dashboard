@@ -1,9 +1,9 @@
-import Chart from 'react-apexcharts'
-import { ApexOptions } from 'apexcharts'
-import { Dropdown } from '../ui/dropdown/Dropdown'
-import { DropdownItem } from '../ui/dropdown/DropdownItem'
-import { MoreDotIcon } from '../../icons'
-import { useState } from 'react'
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import { Dropdown } from '../ui/dropdown/Dropdown';
+import { DropdownItem } from '../ui/dropdown/DropdownItem';
+import { MoreDotIcon } from '../../icons';
+import { useState } from 'react';
 
 export default function MonthlySalesChart({ data }: { data: any }) {
     const options: ApexOptions = {
@@ -84,21 +84,21 @@ export default function MonthlySalesChart({ data }: { data: any }) {
                 formatter: (val: number) => `${val}`,
             },
         },
-    }
+    };
     const series = [
         {
             name: 'Revenue',
             data: data?.monthlyRevenue,
         },
-    ]
-    const [isOpen, setIsOpen] = useState(false)
+    ];
+    const [isOpen, setIsOpen] = useState(false);
 
     function toggleDropdown() {
-        setIsOpen(!isOpen)
+        setIsOpen(!isOpen);
     }
 
     function closeDropdown() {
-        setIsOpen(false)
+        setIsOpen(false);
     }
     return (
         <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white px-5 pt-5 dark:border-gray-800 dark:bg-white/[0.03] sm:px-6 sm:pt-6">
@@ -146,5 +146,5 @@ export default function MonthlySalesChart({ data }: { data: any }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

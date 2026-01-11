@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { useTourOperatorContext } from '../../context/TourOperatorContext'
-import ErrorMessage from '../../../ui/error/ErrorMessage'
-import { API_ENDPOINTS } from '../../../../config/config'
-import { useCommonContext } from '../../../../context/CommonContext'
+import React, { useEffect, useState } from 'react';
+import { useTourOperatorContext } from '../../context/TourOperatorContext';
+import ErrorMessage from '../../../ui/error/ErrorMessage';
+import { API_ENDPOINTS } from '../../../../config/config';
+import { useCommonContext } from '../../../../context/CommonContext';
 
 function ItineraryImage({ itineraryIndex }) {
-    const { errorFields } = useCommonContext()
-    const { setTour, tour } = useTourOperatorContext()
-    const [preview, setPreview] = useState({})
+    const { errorFields } = useCommonContext();
+    const { setTour, tour } = useTourOperatorContext();
+    const [preview, setPreview] = useState({});
     const handleImageChange = (e) => {
-        const file = e.target.files[0]
-        const previewUrl = URL.createObjectURL(file)
+        const file = e.target.files[0];
+        const previewUrl = URL.createObjectURL(file);
         setPreview((prev) => ({
             ...prev,
             [itineraryIndex]: previewUrl,
-        }))
-        handleInput(file, itineraryIndex)
-    }
+        }));
+        handleInput(file, itineraryIndex);
+    };
 
     const handleInput = (value, itineraryIndex) => {
         setTour({
@@ -29,12 +29,12 @@ function ItineraryImage({ itineraryIndex }) {
                       }
                     : item
             ),
-        })
-    }
+        });
+    };
 
     useEffect(() => {
-        console.log(preview)
-    }, [preview])
+        console.log(preview);
+    }, [preview]);
     return (
         <div className="p-3">
             <div
@@ -95,7 +95,7 @@ function ItineraryImage({ itineraryIndex }) {
 
             <ErrorMessage type={`itinerary.${itineraryIndex}.image`} />
         </div>
-    )
+    );
 }
 
-export default ItineraryImage
+export default ItineraryImage;
