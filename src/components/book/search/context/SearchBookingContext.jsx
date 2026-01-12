@@ -36,8 +36,6 @@ export const SearchBookingProvider = ({ children }) => {
         { value: 'date-oldest', label: 'Date (Oldest)' },
         { value: 'price-high', label: 'Price (High to Low)' },
         { value: 'price-low', label: 'Price (Low to High)' },
-        { value: 'name-asc', label: 'Customer Name (A-Z)' },
-        { value: 'name-desc', label: 'Customer Name (Z-A)' },
     ];
 
     const value = {

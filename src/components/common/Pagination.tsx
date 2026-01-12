@@ -5,15 +5,21 @@ interface PaginationProps {
     lastPage: number;
     onPageChange: (page: number) => void;
     currentPage: number;
+    setPage: (num: number) => void;
+    page: number;
 }
 
 function Pagination(args: PaginationProps) {
-    const { lastPage, onPageChange, currentPage } = args;
+    const { lastPage, onPageChange, currentPage, setPage, page } = args;
 
     return (
         <>
             <div className="flex space-x-2">
-                <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                <button
+                    disabled={page == 1}
+                    onClick={() => setPage(page - 1)}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     Previous
                 </button>
                 {Array.from({ length: lastPage }, (_, i) => i + 1).map(
@@ -28,7 +34,11 @@ function Pagination(args: PaginationProps) {
                         </button>
                     )
                 )}
-                <button className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
+                <button
+                    onClick={() => setPage(page + 1)}
+                    disabled={page == lastPage}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
                     Next
                 </button>
             </div>

@@ -318,6 +318,8 @@ function Bookings() {
                                     )}
                                     onPageChange={onPageChange}
                                     currentPage={bookings.bookings.current_page}
+                                    setPage={setPage}
+                                    page={page}
                                 />
                             </div>
                         </div>

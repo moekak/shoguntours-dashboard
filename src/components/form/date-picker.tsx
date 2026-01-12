@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 import Label from './Label';
@@ -25,6 +25,10 @@ export default function DatePicker({
     placeholder,
     error = false,
 }: PropsType) {
+    const flatpickrRef = useRef<
+        flatpickr.Instance | flatpickr.Instance[] | null
+    >(null);
+
     useEffect(() => {
         const flatPickr = flatpickr(`#${id}`, {
             mode: mode || 'single',
@@ -35,12 +39,25 @@ export default function DatePicker({
             onChange,
         });
 
+        flatpickrRef.current = flatPickr;
+
         return () => {
             if (!Array.isArray(flatPickr)) {
                 flatPickr.destroy();
             }
         };
-    }, [mode, onChange, id, defaultDate]);
+    }, [mode, onChange, id]);
+
+    // defaultDateが変更されたときに日付をクリア/更新
+    useEffect(() => {
+        if (flatpickrRef.current && !Array.isArray(flatpickrRef.current)) {
+            if (defaultDate) {
+                flatpickrRef.current.setDate(defaultDate, false);
+            } else {
+                flatpickrRef.current.clear();
+            }
+        }
+    }, [defaultDate]);
 
     return (
         <div>
