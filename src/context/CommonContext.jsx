@@ -107,6 +107,7 @@ export const CommonProvider = ({ children }) => {
     // postでfetchした際の共通成功処理
     const fetchPostSuccess = (data, options = {}) => {
         resetError();
+        console.log(data?.message);
         setSuccessMessage(data?.message);
         setIsSuccess(true);
         setOpenModal(false);

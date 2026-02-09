@@ -6,12 +6,10 @@ import Label from '../../form/Label';
 import Input from '../../form/input/InputField';
 import ErrorMessage from '../../ui/error/ErrorMessage';
 import Select from '../../form/Select';
-import Radio from '../../form/input/Radio';
 import TextArea from '../../form/input/TextArea';
 import { useCommonContext } from '../../../context/CommonContext';
 import { useFetchData } from '../../../hooks/useFetchData';
 import { API_ENDPOINTS } from '../../../config/config';
-import { useCreateBooking } from '../hooks/useCreateBooking';
 import Alert from '../../ui/alert/Alert';
 import ManualTourEntryModal from './ManualTourEntryModal';
 import { useBookingContext } from '../context/BookingContext';
@@ -21,12 +19,7 @@ import { usePostMutation } from '../../../hooks/usePostMutation';
 function BookingOperator() {
     const [tourId, setTourId] = useState(null);
 
-    const onSuccess = (data) => {
-        // setTourType(data.data.tourData ?? [])
-        // setNewTour([])
-    };
     const { mutate } = usePostMutation(API_ENDPOINTS.API.CREATE_TOUR_BOOKING, {
-        onSuccess: onSuccess,
         redirect: true,
         url: '/bookings',
     });

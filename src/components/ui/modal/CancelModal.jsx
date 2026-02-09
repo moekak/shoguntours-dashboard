@@ -1,10 +1,6 @@
-function DeletionModal({
-    selectedData,
-    setIsModalOpen,
-    type,
-    mutate,
-    isPending,
-}) {
+import React from 'react';
+
+function CancelModal({ selectedData, setIsModalOpen, mutate, isPending }) {
     return (
         <div className="fixed w-full h-full inset-0 bg-[#0000008c]  flex items-center justify-center p-4 z-53">
             <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
@@ -12,7 +8,7 @@ function DeletionModal({
                 <div className="px-6 py-4 border-b border-gray-200">
                     <div className="flex items-center justify-between">
                         <h2 className="text-lg font-semibold text-gray-900">
-                            Delete Confirmation
+                            Cancel Confirmation
                         </h2>
                         <button
                             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -60,11 +56,11 @@ function DeletionModal({
                         {/* Message */}
                         <div className="flex-1">
                             <h3 className="text-base font-medium text-gray-900 mb-2">
-                                Are you sure you want to delete this {type}
+                                Are you sure you want to cancel this tour?
                             </h3>
                             <p className="text-sm text-gray-600">
-                                This action cannot be undone. The {type} will be
-                                permanently deleted.
+                                This action cannot be undone. The tour will be
+                                permanently canceled.
                             </p>
                         </div>
                     </div>
@@ -106,10 +102,10 @@ function DeletionModal({
                                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                         ></path>
                                     </svg>
-                                    Deleting...
+                                    Canceling...
                                 </div>
                             ) : (
-                                'Delete'
+                                'Confirm'
                             )}
                         </button>
                     </div>
@@ -119,4 +115,4 @@ function DeletionModal({
     );
 }
 
-export default DeletionModal;
+export default CancelModal;

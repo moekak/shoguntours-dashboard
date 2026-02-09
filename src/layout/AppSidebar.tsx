@@ -53,6 +53,16 @@ const navItems: NavItem[] = [
         subItems: [
             { name: 'New booking', path: '/book/registration', pro: false },
             { name: 'Bookings', path: '/bookings', pro: false },
+            { name: 'Calendar', path: '/calendar', pro: false },
+        ],
+    },
+    {
+        icon: <GridIcon />,
+        name: 'Employee',
+        subItems: [
+            { name: 'employee', path: '/employee', pro: false },
+            // { name: 'Bookings', path: '/bookings', pro: false },
+            // { name: 'Calendar', path: '/calendar', pro: false },
         ],
     },
 

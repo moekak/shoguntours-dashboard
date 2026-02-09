@@ -18,6 +18,7 @@ export const BookingProvider = ({ children }) => {
     const [tour, setTour] = useState([]);
     const [tourItinerary, setTourItinerary] = useState([]);
     const [tourType, setTourType] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const serviceProviders = [
         { value: 'GetYourGuide', label: 'GetYourGuide' },
         { value: 'ViaTor', label: 'ViaTor' },
@@ -50,6 +51,8 @@ export const BookingProvider = ({ children }) => {
         setBookingData,
         tourCounts,
         setTourCounts,
+        isModalOpen,
+        setIsModalOpen,
     };
 
     return (

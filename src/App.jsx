@@ -42,6 +42,7 @@ import { BookingProvider } from './components/book/context/BookingContext';
 import Bookings from './components/book/list/Bookings';
 import { SearchBookingProvider } from './components/book/search/context/SearchBookingContext';
 import Booking from './components/book/show/Booking';
+import Employee from './components/employee/list/Employee';
 
 const queryClient = new QueryClient();
 export default function App() {
@@ -234,22 +235,22 @@ export default function App() {
                                                             }
                                                         />
                                                         <Route
-                                                            path="/bookings"
+                                                            path="/booking/:bookingId"
                                                             element={
                                                                 <PrivateRoute redirectTo="/signin">
-                                                                    <Bookings />
+                                                                    <Booking />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/employee"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <Employee />
                                                                 </PrivateRoute>
                                                             }
                                                         />
                                                     </Route>
-                                                    <Route
-                                                        path="/booking/:bookingId"
-                                                        element={
-                                                            <PrivateRoute redirectTo="/signin">
-                                                                <Booking />
-                                                            </PrivateRoute>
-                                                        }
-                                                    />
 
                                                     {/* Auth Layout */}
                                                     <Route

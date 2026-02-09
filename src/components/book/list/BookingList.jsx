@@ -5,18 +5,25 @@ import ActionDropDown from '../../common/ActionDropDown';
 import { usePostMutation } from '../../../hooks/usePostMutation';
 import { API_ENDPOINTS } from '../../../config/config';
 import { useBookingContext } from '../context/BookingContext';
+import CancelModal from '../../ui/modal/CancelModal';
 
 function BookingList({ booking }) {
     const navigate = useNavigate();
-    const { setBookingData, setTourCounts } = useBookingContext();
+    const { setBookingData, setTourCounts, isModalOpen, setIsModalOpen } =
+        useBookingContext();
+
     const onSuccess = (data) => {
-        console.log(data.data.ounts);
         setBookingData(data.data.bookings);
         setTourCounts(data.data.counts);
+        setIsModalOpen(false);
     };
-    const { mutate } = usePostMutation(API_ENDPOINTS.API.CANCEL_BOKIKING, {
-        onSuccess,
-    });
+
+    const { mutate, isPending } = usePostMutation(
+        API_ENDPOINTS.API.CANCEL_BOKIKING,
+        {
+            onSuccess,
+        }
+    );
 
     const handleAction = (action, id) => {
         console.log(id);
@@ -38,11 +45,19 @@ function BookingList({ booking }) {
     };
 
     const cancel = (id) => {
-        mutate({ id: id });
+        setIsModalOpen(true);
     };
 
     return (
         <TableRow className="hover:bg-gray-50 transition-colors">
+            {isModalOpen && (
+                <CancelModal
+                    selectedData={{ id: booking.id }}
+                    setIsModalOpen={setIsModalOpen}
+                    mutate={mutate}
+                    isPending={isPending}
+                />
+            )}
             <TableCell className="px-6 py-4 whitespace-nowrap">
                 <span className="text-sm font-medium text-gray-900">
                     {booking?.bookingId}
@@ -123,6 +138,7 @@ function BookingList({ booking }) {
                     onAction={handleAction}
                     type="booking"
                     cancel={cancel}
+                    isCanceleld={booking?.is_cancelled}
                 />
             </TableCell>
         </TableRow>

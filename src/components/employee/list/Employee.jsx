@@ -6,9 +6,7 @@ import { useFetchData } from '../../../hooks/useFetchData';
 import { useCommonContext } from '../../../context/CommonContext';
 import Alert from '../../ui/alert/Alert';
 import BookingsSkeleton from '../../skelton/BookingListSkelton';
-import BookingList from './BookingList';
-import SearchBookings from '../search/SearchBookings';
-import { useSearchBookingContext } from '../search/context/SearchBookingContext';
+
 import {
     Table,
     TableBody,
@@ -16,10 +14,13 @@ import {
     TableRow,
     TableCell,
 } from '../../ui/table';
-import { useBookingContext } from '../context/BookingContext';
-import Pagination from '../../common/Pagination';
 
-function Bookings() {
+import Pagination from '../../common/Pagination';
+import BookingList from '../../book/list/BookingList';
+import { useSearchBookingContext } from '../../book/search/context/SearchBookingContext';
+import { useBookingContext } from '../../book/context/BookingContext';
+
+function Employee() {
     const [page, setPage] = useState(1); // ページ番号
     const { setBookingData, bookingData, setTourCounts, tourCounts } =
         useBookingContext();
@@ -93,13 +94,18 @@ function Bookings() {
                             </div>
                         )}
 
-                        {/* Stats Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                            <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-blue-200 transition-all">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+                        <div className="flex justify-between mb-8">
+                            {/* Search */}
+                            <div className="w-full lg:w-80">
+                                <div className="relative">
+                                    <input
+                                        type="text"
+                                        placeholder="Search employees..."
+                                        className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-300 bg-white text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 dark:bg-gray-900 dark:border-gray-700 dark:text-white dark:placeholder:text-gray-500"
+                                    />
+                                    <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                                         <svg
-                                            className="w-5 h-5 text-[#465fff]"
+                                            className="w-4 h-4 text-gray-400"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -108,105 +114,16 @@ function Bookings() {
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
                                                 strokeWidth={2}
-                                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                                             />
                                         </svg>
                                     </div>
                                 </div>
-                                <p className="text-gray-500 text-sm mb-1">
-                                    Total Bookings
-                                </p>
-                                <p className="text-2xl font-semibold text-gray-900">
-                                    {Number(tourCounts['upcomingTour']) +
-                                        Number(tourCounts['completedTour']) +
-                                        Number(tourCounts['cancelledTour'])}
-                                </p>
                             </div>
-
-                            <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-blue-200 transition-all">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                                        <svg
-                                            className="w-5 h-5 text-[#465fff]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                            />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p className="text-gray-500 text-sm mb-1">
-                                    Upcoming
-                                </p>
-                                <p className="text-2xl font-semibold text-gray-900">
-                                    {tourCounts['upcomingTour']}
-                                </p>
-                            </div>
-
-                            <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-blue-200 transition-all">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                                        <svg
-                                            className="w-5 h-5 text-[#465fff]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                            />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p className="text-gray-500 text-sm mb-1">
-                                    Completed
-                                </p>
-                                <p className="text-2xl font-semibold text-gray-900">
-                                    {tourCounts['completedTour']}
-                                </p>
-                            </div>
-
-                            <div className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-blue-200 transition-all">
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
-                                        <svg
-                                            className="w-5 h-5 text-[#465fff]"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M6 18L18 6M6 6l12 12"
-                                            />
-                                        </svg>
-                                    </div>
-                                </div>
-                                <p className="text-gray-500 text-sm mb-1">
-                                    Cancelled
-                                </p>
-                                <p className="text-2xl font-semibold text-gray-900">
-                                    {tourCounts['cancelledTour']}
-                                </p>
-                            </div>
+                            <button className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors">
+                                Apply Employee
+                            </button>
                         </div>
-
-                        {/* Filter Section */}
-                        <SearchBookings
-                            bookings={bookingData}
-                            allTours={bookings?.allTours}
-                        />
 
                         {/* Booking List Table */}
                         <div className="container">
@@ -219,7 +136,7 @@ function Bookings() {
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Booking ID
+                                                    Name
                                                 </TableCell>
                                                 <TableCell
                                                     isHeader
@@ -317,4 +234,4 @@ function Bookings() {
     );
 }
 
-export default Bookings;
+export default Employee;
