@@ -56,8 +56,6 @@ export const CommonProvider = ({ children }) => {
     };
 
     const internalServerError = () => {
-        console.log('22');
-
         setErrors(MESSAGES.ERROR.SYSTEM_ERROR);
         setErrorTitle(MESSAGES.ERROR.SYSTEM_ERROR_TITLE);
         setOpenModal(false);

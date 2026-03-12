@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Breadcrumbs, Link, Typography } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -12,34 +12,22 @@ import { useFetchData } from '../../../hooks/useFetchData';
 import { API_ENDPOINTS } from '../../../config/config';
 import Alert from '../../ui/alert/Alert';
 import ManualTourEntryModal from './ManualTourEntryModal';
-import { useBookingContext } from '../context/BookingContext';
 import DatePicker from '../../form/date-picker';
-import { usePostMutation } from '../../../hooks/usePostMutation';
+import BookingOperatorSkeleton from '@/components/skelton/BookingOperatorSkelton';
 
-function BookingOperator() {
+function BookingOperator({
+    handleSubmit,
+    initialData,
+    type,
+    handleChange,
+    handleMultipleChange,
+    options = {},
+}) {
+    const { customer, external_tour, itinerary, ...bookingFields } =
+        options?.booking?.booking ?? {};
+
     const [tourId, setTourId] = useState(null);
 
-    const { mutate } = usePostMutation(API_ENDPOINTS.API.CREATE_TOUR_BOOKING, {
-        redirect: true,
-        url: '/bookings',
-    });
-
-    // 全ツアー名を取得
-    const { data: tour } = useFetchData(
-        API_ENDPOINTS.API.FETCH_REGISTRATION_DATA,
-        'booking'
-    );
-    // ツアーを選択後毎回、そのツアーIDに紐づいたItineraryを取得
-    const { data: itinerary, isLoading: isItineraryLoading } = useFetchData(
-        `${API_ENDPOINTS.API.FETCH_TOUR_ITINERARY_DATA}/${tourId}`,
-        'itineraryData',
-        {
-            enabled: !!tourId,
-            id: tourId,
-        }
-    );
-
-    const [bookingData, setBookingData] = useState({});
     const {
         errorFields,
         errors,
@@ -48,27 +36,38 @@ function BookingOperator() {
         successMessage,
         isSuccess,
     } = useCommonContext();
-    const { setTourType, tourType } = useBookingContext();
+    // 全ツアー名を取得
+    const { data: tour } = useFetchData(
+        API_ENDPOINTS.API.FETCH_REGISTRATION_DATA,
+        'booking'
+    );
+    // ツアーを選択後毎回、そのツアーIDに紐づいたItineraryを取得
+    const { data: itineraryData, isLoading: isItineraryLoading } = useFetchData(
+        `${API_ENDPOINTS.API.FETCH_TOUR_ITINERARY_DATA}/${tourId}`,
+        'itineraryData',
+        {
+            enabled: !!tourId,
+            id: tourId,
+        }
+    );
 
-    // 入力処理
-    const handleChange = (name, value) => {
-        setBookingData({ ...bookingData, [name]: value });
-    };
+    // 全ガイドを取得
+    const { data: employees, isLoading } = useFetchData(
+        API_ENDPOINTS.API.FETCH_TOUR_GUIDE,
+        'employee'
+    );
 
-    // 複数フィールド一度更新用
-    const handleMultipleChange = (updates) => {
-        setBookingData((prev) => ({ ...prev, ...updates }));
-    };
+    // 取得したガイド情報から名前のみ抽出し、配列に保存
+    const guideNameArr = useMemo(
+        () =>
+            employees?.guides?.map((e) => ({
+                value: e.id,
+                label: e.first_name,
+            })) ?? [],
+        [employees]
+    );
 
-    // 予約作成処理
-    const handleSubmit = () => {
-        mutate(bookingData);
-    };
-
-    useEffect(() => {
-        if (!tour) return;
-        setTourType(tour);
-    }, [tour]);
+    if (isLoading || options?.isLoading) return <BookingOperatorSkeleton />;
 
     return (
         <div className="bg-gray-50">
@@ -91,16 +90,16 @@ function BookingOperator() {
                                     fontSize: '0.8rem',
                                 }}
                             >
-                                Register New Booking
+                                {type === 'create'
+                                    ? 'Register New Booking'
+                                    : 'Edit Booking'}
                             </Typography>
                         </Breadcrumbs>
                         <h1 className="text-2xl font-bold text-gray-800 mt-3">
-                            Register New Booking
+                            {type === 'create'
+                                ? 'Register New Booking'
+                                : 'Edit Booking'}
                         </h1>
-                        <p className="text-gray-600 my-2">
-                            Share your travel insights and stories with the
-                            world
-                        </p>
                         {errors?.length > 0 && (
                             <Alert
                                 variant="error"
@@ -145,7 +144,7 @@ function BookingOperator() {
                                             First Name
                                         </Label>
                                         <Input
-                                            value={bookingData?.first_name}
+                                            value={initialData.first_name}
                                             name="first_name"
                                             type="text"
                                             id="first_name"
@@ -174,7 +173,7 @@ function BookingOperator() {
                                             Last Name
                                         </Label>
                                         <Input
-                                            value={bookingData?.last_name}
+                                            value={initialData.last_name}
                                             name="last_name"
                                             id="last_name"
                                             placeholder="Smith"
@@ -203,7 +202,7 @@ function BookingOperator() {
                                             Email
                                         </Label>
                                         <Input
-                                            value={bookingData?.email}
+                                            value={initialData.email}
                                             name="email"
                                             type="text"
                                             id="email"
@@ -229,7 +228,7 @@ function BookingOperator() {
                                             Phone Number
                                         </Label>
                                         <Input
-                                            value={bookingData?.phone_number}
+                                            value={initialData.phone_number}
                                             name="phone_number"
                                             type="text"
                                             id="phone_number"
@@ -268,8 +267,8 @@ function BookingOperator() {
                                     <div>
                                         <Label required={true}>Tour Type</Label>
                                         <Select
-                                            value={bookingData?.tour_type}
-                                            options={tourType ?? []}
+                                            value={initialData.tour_type}
+                                            options={tour ?? []}
                                             placeholder="Select tour type"
                                             className="dark:bg-dark-900"
                                             onChange={(value, option) => {
@@ -288,8 +287,8 @@ function BookingOperator() {
                                             Tour Itinerary
                                         </Label>
                                         <Select
-                                            value={bookingData?.itinerary_id}
-                                            options={itinerary ?? []}
+                                            value={initialData.itinerary_id}
+                                            options={itineraryData ?? []}
                                             placeholder={
                                                 isItineraryLoading
                                                     ? 'Loading...'
@@ -305,8 +304,8 @@ function BookingOperator() {
                                                 );
                                             }}
                                             disabled={
-                                                itinerary == undefined ||
-                                                itinerary.length <= 0
+                                                itineraryData == undefined ||
+                                                itineraryData.length <= 0
                                             }
                                         />
                                     </div>
@@ -336,7 +335,7 @@ function BookingOperator() {
                                             Number of youth
                                         </Label>
                                         <Input
-                                            value={bookingData?.youth_number}
+                                            value={initialData.youth_number}
                                             type="number"
                                             id="youth_number"
                                             placeholder="e.g., 3"
@@ -366,7 +365,7 @@ function BookingOperator() {
                                             Number of adults
                                         </Label>
                                         <Input
-                                            value={bookingData?.adult_number}
+                                            value={initialData.adult_number}
                                             type="number"
                                             id="adult_number"
                                             placeholder="e.g., 3"
@@ -396,7 +395,7 @@ function BookingOperator() {
                                             Youth price
                                         </Label>
                                         <Input
-                                            value={bookingData?.youth_price}
+                                            value={initialData.youth_price}
                                             type="number"
                                             id="youth_price"
                                             placeholder="e.g., 12,000"
@@ -427,7 +426,7 @@ function BookingOperator() {
                                             Adult price
                                         </Label>
                                         <Input
-                                            value={bookingData?.adult_price}
+                                            value={initialData.adult_price}
                                             type="number"
                                             id="adult_price"
                                             placeholder="e.g., 12,000"
@@ -456,7 +455,9 @@ function BookingOperator() {
                                             Logistics Fee
                                         </Label>
                                         <Input
-                                            value={bookingData?.logistics_fee}
+                                            value={
+                                                initialData.logistics_fee ?? 0
+                                            }
                                             type="number"
                                             id="logistics_fee"
                                             placeholder="e.g., 12,000"
@@ -484,7 +485,7 @@ function BookingOperator() {
                                             Other Fees
                                         </Label>
                                         <Input
-                                            value={bookingData?.other_fee ?? 0}
+                                            value={initialData.other_fee ?? 0}
                                             type="number"
                                             id="other_fee"
                                             placeholder="e.g., 12,000"
@@ -501,9 +502,9 @@ function BookingOperator() {
                                         />
                                         <ErrorMessage type="other_fee" />
                                     </div>
-                                    <div className="mt-6">
+                                    <div className="mt-2">
                                         <DatePicker
-                                            defaultDate={bookingData?.tour_date}
+                                            defaultDate={initialData?.tour_date}
                                             id="date-picker"
                                             label="Tour Date"
                                             placeholder="Select a date"
@@ -526,21 +527,70 @@ function BookingOperator() {
                                         />
                                         <ErrorMessage type="tour_date" />
                                     </div>
+                                    <div className="mt-2">
+                                        <Label
+                                            htmlFor="duration"
+                                            error={errorFields?.has('duration')}
+                                        >
+                                            Duration
+                                        </Label>
+                                        <Input
+                                            value={initialData?.duration ?? ''}
+                                            type="number"
+                                            id="duration"
+                                            placeholder="e.g., 8"
+                                            name="duration"
+                                            onChange={(e) =>
+                                                handleChange(
+                                                    e.target.name,
+                                                    e.target.value
+                                                )
+                                            }
+                                            error={errorFields?.has('duration')}
+                                        />
+                                        <ErrorMessage type="duration" />
+                                    </div>
+                                    <div className="mt-2">
+                                        <Label
+                                            required={false}
+                                            htmlFor="guide_id"
+                                            error={errorFields?.has('guide_id')}
+                                        >
+                                            Guide
+                                        </Label>
+                                        <Select
+                                            defaultValue={
+                                                initialData.guide_id ?? ''
+                                            }
+                                            name="guide_id"
+                                            options={guideNameArr}
+                                            placeholder="Choose a category"
+                                            className="dark:bg-dark-900"
+                                            onChange={(selectedOption) =>
+                                                handleChange(
+                                                    'guide_id',
+                                                    selectedOption
+                                                )
+                                            }
+                                            error={errorFields?.has('guide_id')}
+                                        />
+                                        <ErrorMessage type="guide_id" />
+                                    </div>
                                 </div>
                                 {/* Notes */}
                                 <div className="mt-6">
                                     <div>
                                         <Label>Notes</Label>
                                         <TextArea
-                                            // error={errorFields?.has(`itinerary.${itineraryIndex}.overview_description`)}
+                                            error={errorFields?.has('request')}
                                             onChange={(value) =>
                                                 handleChange('request', value)
                                             }
-                                            value={bookingData?.request}
+                                            value={initialData?.request}
                                             rows={4}
                                             placeholder="Any special requirements or notes about this tour..."
                                         />
-                                        {/* <ErrorMessage type={`itinerary.${itineraryIndex}.overview_description`}/> */}
+                                        <ErrorMessage type="request" />
                                     </div>
                                 </div>
                             </div>

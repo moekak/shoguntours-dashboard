@@ -4,7 +4,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventInput, DateSelectArg, EventClickArg } from '@fullcalendar/core';
-import { Modal } from '../components/ui/modal';
+import { Modal } from '@components/ui/modal';
 import { useModal } from '../hooks/useModal';
 import PageMeta from '../components/common/PageMeta';
 
@@ -14,7 +14,22 @@ interface CalendarEvent extends EventInput {
     };
 }
 
-const Calendar: React.FC = () => {
+interface Booking {
+    id: number;
+    title: string;
+    start: Date;
+}
+
+interface Props {
+    data: Booking[];
+    setCurrentMonth: React.Dispatch<React.SetStateAction<number>>;
+    setCurrentYear: React.Dispatch<React.SetStateAction<number>>;
+}
+const Calendar: React.FC<Props> = ({
+    data,
+    setCurrentMonth,
+    setCurrentYear,
+}) => {
     const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
         null
     );
@@ -34,35 +49,16 @@ const Calendar: React.FC = () => {
     };
 
     useEffect(() => {
-        // Initialize with some events
-        setEvents([
-            {
-                id: '1',
-                title: 'Event Conf.',
-                start: new Date().toISOString().split('T')[0],
+        if (data) {
+            const formattedEvents = data.map((item: Booking) => ({
+                id: item.id,
+                title: item.title,
+                start: item.start,
                 extendedProps: { calendar: 'Danger' },
-            },
-            {
-                id: '2',
-                title: 'Meeting',
-                start: new Date(Date.now() + 86400000)
-                    .toISOString()
-                    .split('T')[0],
-                extendedProps: { calendar: 'Success' },
-            },
-            {
-                id: '3',
-                title: 'Workshop',
-                start: new Date(Date.now() + 172800000)
-                    .toISOString()
-                    .split('T')[0],
-                end: new Date(Date.now() + 259200000)
-                    .toISOString()
-                    .split('T')[0],
-                extendedProps: { calendar: 'Primary' },
-            },
-        ]);
-    }, []);
+            }));
+            setEvents(formattedEvents);
+        }
+    }, [data]);
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
         resetModalFields();
@@ -152,6 +148,13 @@ const Calendar: React.FC = () => {
                                 text: 'Add Event +',
                                 click: openModal,
                             },
+                        }}
+                        datesSet={(dateInfo) => {
+                            const date = dateInfo.start;
+                            const month = date.getMonth() + 1;
+                            const year = date.getFullYear();
+                            setCurrentMonth(month);
+                            setCurrentYear(year);
                         }}
                     />
                 </div>

@@ -22,27 +22,15 @@ function BlogEdit() {
 
     useEffect(() => {
         if (!data) return;
-        console.log(data);
         const blog = data?.blog;
-        setBlog({
-            title: blog?.title,
-            subtitle: blog?.subtitle,
-            blog_category_id: blog?.blog_category_id,
-            meta_description: blog?.meta_description,
-            content: blog?.content,
-            tags: blog?.tags,
-            reading_time: blog?.reading_time,
-            featured_image: blog?.featured_image,
-            is_featured: blog?.is_featured,
-            is_published: blog?.is_published,
-        });
+        setBlog({ ...blog });
 
-        setCategories(() => {
-            return data?.categories.reduce((acc, current) => {
-                acc.push({ value: current.id, label: current.category_name });
-                return acc;
-            }, []);
-        });
+        setCategories(
+            data?.categories.map((c) => ({
+                value: c.id,
+                label: c.category_name,
+            })) ?? []
+        );
         setTimeout(() => setIsItitialized(true), 0);
     }, [data]);
 

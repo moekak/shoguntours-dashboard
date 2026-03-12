@@ -19,50 +19,27 @@ import Pagination from '../../common/Pagination';
 import BookingList from '../../book/list/BookingList';
 import { useSearchBookingContext } from '../../book/search/context/SearchBookingContext';
 import { useBookingContext } from '../../book/context/BookingContext';
+import CreateEmployee from '@components/employee/create/CreateEmployee';
+import EmployeeList from './EmployeeList';
 
 function Employee() {
     const [page, setPage] = useState(1); // ページ番号
     const { setBookingData, bookingData, setTourCounts, tourCounts } =
         useBookingContext();
     const { appliedFilters } = useSearchBookingContext();
-    const { errors, errorTitle, successMessage, isSuccess } =
+    const { errors, errorTitle, successMessage, isSuccess, setOpenModal } =
         useCommonContext();
 
-    const onSuccess = (data) => {
-        if (!data) return;
-        setBookingData(data.bookings.data);
-        setTourCounts(data.counts);
-    };
-
-    const buildParams = (filtersToUse) => {
-        const params = new URLSearchParams();
-
-        Object.entries(filtersToUse).forEach(([key, value]) => {
-            if (value) {
-                params.append(key, value);
-            }
-        });
-
-        return params.toString();
-    };
-    const buildUrl = () => {
-        const paramsString = buildParams(appliedFilters);
-        return paramsString
-            ? `${API_ENDPOINTS.API.FETCH_TOUR_BOOKINGS}?page=${page}&${paramsString}`
-            : `${API_ENDPOINTS.API.FETCH_TOUR_BOOKINGS}?page=${page}`;
-    };
-
-    const { data: bookings, isLoading } = useFetchData(
-        buildUrl(),
-        ['tourBookings', page, appliedFilters],
-        {
-            onSuccess,
-        }
+    // 全ガイドを取得
+    const { data: employees, isLoading } = useFetchData(
+        API_ENDPOINTS.API.FETCH_TOUR_GUIDE,
+        'employee'
     );
 
-    const onPageChange = (page) => {
-        setPage(page);
-    };
+    useEffect(() => {
+        if (!employees) return;
+        console.log(employees);
+    }, [employees]);
 
     if (isLoading) {
         return <BookingsSkeleton />;
@@ -71,6 +48,7 @@ function Employee() {
     return (
         <>
             <div className="bg-gray-50 min-h-screen">
+                <CreateEmployee />
                 {/* Main Content */}
                 <main className="pb-10">
                     <div className="container">
@@ -120,8 +98,11 @@ function Employee() {
                                     </div>
                                 </div>
                             </div>
-                            <button className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors">
-                                Apply Employee
+                            <button
+                                onClick={() => setOpenModal(true)}
+                                className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors"
+                            >
+                                Add Guide
                             </button>
                         </div>
 
@@ -136,62 +117,45 @@ function Employee() {
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Name
+                                                    Employee Name
                                                 </TableCell>
                                                 <TableCell
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Customer
+                                                    Phone Number
                                                 </TableCell>
                                                 <TableCell
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Tour Name
+                                                    Upcoming Tours
                                                 </TableCell>
                                                 <TableCell
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Date
-                                                </TableCell>
-                                                <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
-                                                    Guests
-                                                </TableCell>
-                                                <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
-                                                    Price
-                                                </TableCell>
-                                                <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
-                                                    Status
-                                                </TableCell>
-                                                <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
-                                                    Actions
+                                                    Tour History
                                                 </TableCell>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                                            {Array.isArray(bookingData) &&
-                                                bookingData.map((booking) => {
-                                                    return (
-                                                        <BookingList
-                                                            key={booking.id}
-                                                            booking={booking}
-                                                        />
-                                                    );
-                                                })}
+                                            {Array.isArray(employees.guides) &&
+                                                employees.guides.map(
+                                                    (employee) => {
+                                                        console.log(employee);
+                                                        return (
+                                                            <EmployeeList
+                                                                key={
+                                                                    employee.id
+                                                                }
+                                                                employee={
+                                                                    employee
+                                                                }
+                                                            />
+                                                        );
+                                                    }
+                                                )}
                                         </TableBody>
                                     </Table>
                                 </div>
@@ -199,7 +163,7 @@ function Employee() {
                         </div>
 
                         {/* Pagination */}
-                        <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                        {/* <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
                             <div className="flex items-center justify-between">
                                 <div className="text-sm text-gray-600">
                                     Showing{' '}
@@ -226,7 +190,7 @@ function Employee() {
                                     page={page}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </main>
             </div>

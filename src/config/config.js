@@ -40,9 +40,15 @@ export const API_ENDPOINTS = {
         FETCH_REGISTRATION_DATA: `${BASE_URL}/dashboard/get/registration/info`,
         FETCH_TOUR_ITINERARY_DATA: `${BASE_URL}/dashboard/get/tourItinerary/info`,
         CREATE_TOUR_BOOKING: `${BASE_URL}/dashboard/create/booking`,
+        EDIT_TOUR_BOOKING: `${BASE_URL}/dashboard/edit/booking`,
         CREATE_EXTERNAL_TOURS: `${BASE_URL}/dashboard/create/external/tour`,
         FETCH_TOUR_BOOKINGS: `${BASE_URL}/dashboard/get/bookings`,
-        CANCEL_BOKIKING: `${BASE_URL}/dashboard/cancel/booking`
+        FETCH_TOUR_BOOKING: `${BASE_URL}/dashboard/get/booking`,
+        CANCEL_BOKIKING: `${BASE_URL}/dashboard/cancel/booking`,
+        FETCH_BOOKING_FOR_CALENDER: `${BASE_URL}/dashboard/get/calender/booking`,
+        // Tour Guideのエンドポイント
+        CREATE_TOUR_GUIDE: `${BASE_URL}/dashboard/create/guide`,
+        FETCH_TOUR_GUIDE: `${BASE_URL}/dashboard/get/employee`
     },
 
     // IMAGE: {
