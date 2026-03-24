@@ -219,12 +219,6 @@ function Bookings() {
                                                     isHeader
                                                     className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                                                 >
-                                                    Booking ID
-                                                </TableCell>
-                                                <TableCell
-                                                    isHeader
-                                                    className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
-                                                >
                                                     Customer
                                                 </TableCell>
                                                 <TableCell

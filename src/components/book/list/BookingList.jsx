@@ -58,11 +58,6 @@ function BookingList({ booking }) {
                     isPending={isPending}
                 />
             )}
-            <TableCell className="px-6 py-4 whitespace-nowrap">
-                <span className="text-sm font-medium text-gray-900">
-                    {booking?.bookingId}
-                </span>
-            </TableCell>
             <TableCell className="px-6 py-4">
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-9 w-9 bg-gradient-to-br from-[#9cb9ff] to-[#465fff] rounded-full flex items-center justify-center text-white font-medium text-sm">
