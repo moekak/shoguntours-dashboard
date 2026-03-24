@@ -24,8 +24,10 @@ function EditBooking() {
     );
 
     useEffect(() => {
-        const { customer, external_tour, itinerary, ...bookingFields } =
+        const { customer, external_tour, itinerary, guide, ...bookingFields } =
             booking?.booking ?? {};
+
+        console.log(booking?.booking);
         setBookingData({
             // customer情報
             customer_id: customer?.id,

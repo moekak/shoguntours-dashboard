@@ -51,7 +51,6 @@ export default function SignInForm() {
                     name: data?.user?.username,
                     id: data?.user?.id,
                 });
-                setIsSuccess(true);
                 navigate('/');
             }
             console.log(data);
@@ -60,7 +59,6 @@ export default function SignInForm() {
             const validationErrors = error?.response?.data?.error?.details;
             const code = error?.response?.data?.error?.code;
 
-            console.log(validationErrors);
             // 認証エラー
             if (code === 'INVALID_CREDENTIALS') {
                 setInvalidError(validationErrors[0]);

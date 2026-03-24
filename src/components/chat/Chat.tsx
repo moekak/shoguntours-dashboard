@@ -14,7 +14,7 @@ import {
 
 function Chat() {
     return (
-        <div className="flex h-screen bg-white">
+        <div className="flex  bg-white">
             {/* Sidebar */}
             <div className="w-80 bg-gray-50 border-r border-gray-200 flex flex-col">
                 {/* Sidebar Header */}

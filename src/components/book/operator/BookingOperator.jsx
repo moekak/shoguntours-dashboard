@@ -559,9 +559,7 @@ function BookingOperator({
                                             Guide
                                         </Label>
                                         <Select
-                                            defaultValue={
-                                                initialData.guide_id ?? ''
-                                            }
+                                            value={initialData.guide_id ?? ''}
                                             name="guide_id"
                                             options={guideNameArr}
                                             placeholder="Choose a category"

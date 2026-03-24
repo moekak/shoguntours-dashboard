@@ -36,16 +36,24 @@ import SignIn from './pages/AuthPages/SignIn';
 import axios from 'axios';
 import PrivateRoute from './components/services/PrivateRoute';
 import Reset from './components/common/Reset';
-import Chat from './components/chat/Chat';
+
 import BookingOperator from './components/book/operator/BookingOperator';
 import { BookingProvider } from './components/book/context/BookingContext';
 import Bookings from './components/book/list/Bookings';
 import { SearchBookingProvider } from './components/book/search/context/SearchBookingContext';
 import Booking from './components/book/show/Booking';
-import Employee from './components/employee/list/Employee';
+import Employee from './employee/Employee';
+import ShiftCalendar from './employee/ShiftCalendar';
+import ExpenseRequests from './employee/ExpenseRequests';
 import CreateBooking from './components/book/create/CreateBooking';
 import EditBooking from './components/book/edit/EditBooking';
 import BookingCalender from './components/book/list/BookingCalender';
+import Chat from './components/chat/Chat';
+import AccountingDashboard from './accounting/pages/AccountingDashboard';
+import Expenses from './accounting/pages/Expenses';
+import Payroll from './accounting/pages/Payroll';
+import Revenue from './accounting/pages/Revenue';
+import TourPnL from './accounting/pages/TourPnL';
 
 const queryClient = new QueryClient();
 export default function App() {
@@ -250,6 +258,64 @@ export default function App() {
                                                             element={
                                                                 <PrivateRoute redirectTo="/signin">
                                                                     <Employee />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/employee/shifts"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <ShiftCalendar />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/employee/expense-requests"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <ExpenseRequests />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+
+                                                        {/* Accounting */}
+                                                        <Route
+                                                            path="/accounting"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <AccountingDashboard />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/accounting/expenses"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <Expenses />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/accounting/payroll"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <Payroll />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/accounting/revenue"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <Revenue />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/accounting/pnl"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <TourPnL />
                                                                 </PrivateRoute>
                                                             }
                                                         />

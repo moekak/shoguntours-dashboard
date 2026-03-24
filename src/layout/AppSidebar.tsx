@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router';
+import {
+    BiNews,
+    BiMap,
+    BiCalendarCheck,
+    BiSolidDashboard,
+    BiGroup,
+    BiWallet,
+} from 'react-icons/bi';
 
 // Assume these icons are imported from an icon library
 import {
@@ -27,12 +35,12 @@ type NavItem = {
 
 const navItems: NavItem[] = [
     {
-        icon: <GridIcon />,
+        icon: <BiSolidDashboard size={20} />,
         name: 'Dashboard',
         subItems: [{ name: 'Ecommerce', path: '/', pro: false }],
     },
     {
-        icon: <GridIcon />,
+        icon: <BiMap size={20} />,
         name: 'Tour',
         subItems: [
             { name: 'New tour', path: '/tour/create', pro: false },
@@ -40,7 +48,7 @@ const navItems: NavItem[] = [
         ],
     },
     {
-        icon: <GridIcon />,
+        icon: <BiNews size={20} />,
         name: 'Blog',
         subItems: [
             { name: 'New blog', path: '/blog/create', pro: false },
@@ -48,7 +56,7 @@ const navItems: NavItem[] = [
         ],
     },
     {
-        icon: <GridIcon />,
+        icon: <BiCalendarCheck size={20} />,
         name: 'Booking',
         subItems: [
             { name: 'New booking', path: '/book/registration', pro: false },
@@ -57,77 +65,57 @@ const navItems: NavItem[] = [
         ],
     },
     {
-        icon: <GridIcon />,
+        icon: <BiGroup size={20} />,
         name: 'Employee',
         subItems: [
-            { name: 'employee', path: '/employee', pro: false },
-            // { name: 'Bookings', path: '/bookings', pro: false },
-            // { name: 'Calendar', path: '/calendar', pro: false },
+            { name: 'Guides',            path: '/employee',                  pro: false },
+            { name: 'Shift Schedule',    path: '/employee/shifts',           pro: false },
+            { name: 'Expense Requests',  path: '/employee/expense-requests', pro: false },
+        ],
+    },
+    {
+        icon: <BiWallet size={20} />,
+        name: 'Accounting',
+        subItems: [
+            { name: 'Overview', path: '/accounting', pro: false },
+            { name: 'Expenses', path: '/accounting/expenses', pro: false },
+            { name: 'Payroll', path: '/accounting/payroll', pro: false },
+            { name: 'Revenue', path: '/accounting/revenue', pro: false },
+            { name: 'Tour P&L', path: '/accounting/pnl', pro: false },
         ],
     },
 
-    {
-        icon: <CalenderIcon />,
-        name: 'Calendar',
-        path: '/calendar',
-    },
-    {
-        icon: <UserCircleIcon />,
-        name: 'User Profile',
-        path: '/profile',
-    },
-    {
-        name: 'Forms',
-        icon: <ListIcon />,
-        subItems: [
-            { name: 'Form Elements', path: '/form-elements', pro: false },
-        ],
-    },
-    {
-        name: 'Tables',
-        icon: <TableIcon />,
-        subItems: [{ name: 'Basic Tables', path: '/basic-tables', pro: false }],
-    },
-    {
-        name: 'Pages',
-        icon: <PageIcon />,
-        subItems: [
-            { name: 'Blank Page', path: '/blank', pro: false },
-            { name: '404 Error', path: '/error-404', pro: false },
-        ],
-    },
+    // {
+    //     icon: <CalenderIcon />,
+    //     name: 'Calendar',
+    //     path: '/calendar',
+    // },
+    // {
+    //     icon: <UserCircleIcon />,
+    //     name: 'User Profile',
+    //     path: '/profile',
+    // },
+    // {
+    //     name: 'Forms',
+    //     icon: <ListIcon />,
+    //     subItems: [
+    //         { name: 'Form Elements', path: '/form-elements', pro: false },
+    //     ],
+    // },
+    // {
+    //     name: 'Tables',
+    //     icon: <TableIcon />,
+    //     subItems: [{ name: 'Basic Tables', path: '/basic-tables', pro: false }],
+    // },
+    // {
+    //     name: 'Pages',
+    //     icon: <PageIcon />,
+    //     subItems: [
+    //         { name: 'Blank Page', path: '/blank', pro: false },
+    //         { name: '404 Error', path: '/error-404', pro: false },
+    //     ],
+    // },
 ];
-
-// const othersItems: NavItem[] = [
-//   {
-//     icon: <PieChartIcon />,
-//     name: "Charts",
-//     subItems: [
-//       { name: "Line Chart", path: "/line-chart", pro: false },
-//       { name: "Bar Chart", path: "/bar-chart", pro: false },
-//     ],
-//   },
-//   {
-//     icon: <BoxCubeIcon />,
-//     name: "UI Elements",
-//     subItems: [
-//       { name: "Alerts", path: "/alerts", pro: false },
-//       { name: "Avatar", path: "/avatars", pro: false },
-//       { name: "Badge", path: "/badge", pro: false },
-//       { name: "Buttons", path: "/buttons", pro: false },
-//       { name: "Images", path: "/images", pro: false },
-//       { name: "Videos", path: "/videos", pro: false },
-//     ],
-//   },
-//   {
-//     icon: <PlugInIcon />,
-//     name: "Authentication",
-//     subItems: [
-//       { name: "Sign In", path: "/signin", pro: false },
-//       { name: "Sign Up", path: "/signup", pro: false },
-//     ],
-//   },
-// ];
 
 const AppSidebar: React.FC = () => {
     const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
