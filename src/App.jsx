@@ -48,6 +48,7 @@ import ExpenseRequests from './employee/ExpenseRequests';
 import CreateBooking from './components/book/create/CreateBooking';
 import EditBooking from './components/book/edit/EditBooking';
 import BookingCalender from './components/book/list/BookingCalender';
+import DirectBookings from './components/book/direct/DirectBookings';
 import Chat from './components/chat/Chat';
 import AccountingDashboard from './accounting/pages/AccountingDashboard';
 import Expenses from './accounting/pages/Expenses';
@@ -250,6 +251,14 @@ export default function App() {
                                                             element={
                                                                 <PrivateRoute redirectTo="/signin">
                                                                     <EditBooking />
+                                                                </PrivateRoute>
+                                                            }
+                                                        />
+                                                        <Route
+                                                            path="/bookings/direct"
+                                                            element={
+                                                                <PrivateRoute redirectTo="/signin">
+                                                                    <DirectBookings />
                                                                 </PrivateRoute>
                                                             }
                                                         />

@@ -61,6 +61,7 @@ const navItems: NavItem[] = [
         subItems: [
             { name: 'New booking', path: '/book/registration', pro: false },
             { name: 'Bookings', path: '/bookings', pro: false },
+            { name: 'Direct Bookings', path: '/bookings/direct', pro: false },
             { name: 'Calendar', path: '/calendar', pro: false },
         ],
     },

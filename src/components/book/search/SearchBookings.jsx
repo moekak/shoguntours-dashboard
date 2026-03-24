@@ -14,6 +14,7 @@ function SearchBookings({ allTours }) {
         setFilters,
         filters,
     } = useSearchBookingContext();
+    const [isOpen, setIsOpen] = useState(true);
 
     // DateオブジェクトをYYYY-MM-DD形式に変換
     const convertDateObjToString = (dates, key) => {
@@ -28,155 +29,175 @@ function SearchBookings({ allTours }) {
     };
 
     return (
-        <div className="bg-white rounded-xl p-6 mb-6">
-            <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-                    {/* Status Filter */}
-                    <div>
-                        <Label required={true}>Status</Label>
-                        <Select
-                            options={statusOptions}
-                            placeholder="Status"
-                            value={filters.status}
-                            className="dark:bg-dark-900"
-                            onChange={(selectedOption) =>
-                                setFilters({
-                                    ...filters,
-                                    status: selectedOption,
-                                })
-                            }
-                        />
+        <div className="bg-white rounded-xl mb-6 border border-gray-200">
+            <button
+                onClick={() => setIsOpen((prev) => !prev)}
+                className="w-full flex items-center justify-between px-6 py-4 text-left"
+            >
+                <span className="font-medium text-gray-700">Filters</span>
+                <svg
+                    className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                    />
+                </svg>
+            </button>
+            {isOpen && (
+                <div className="px-6 pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        {/* Status Filter */}
+                        <div>
+                            <Label required={true}>Status</Label>
+                            <Select
+                                options={statusOptions}
+                                placeholder="Status"
+                                value={filters.status}
+                                className="dark:bg-dark-900"
+                                onChange={(selectedOption) =>
+                                    setFilters({
+                                        ...filters,
+                                        status: selectedOption,
+                                    })
+                                }
+                            />
+                        </div>
+
+                        {/* Tour Filter */}
+                        <div>
+                            <Label required={true}>Tour</Label>
+                            <Select
+                                options={allTours}
+                                placeholder="Tour"
+                                className="dark:bg-dark-900"
+                                value={filters.tour ?? ''}
+                                onChange={(selectedOption) =>
+                                    setFilters({
+                                        ...filters,
+                                        tour: selectedOption,
+                                    })
+                                }
+                            />
+                        </div>
+
+                        {/* Date Range */}
+                        <div>
+                            <DatePicker
+                                defaultDate={filters?.fromDate ?? ''}
+                                id="fromDate"
+                                label="From Date"
+                                placeholder="Select a date"
+                                onChange={(dates) => {
+                                    convertDateObjToString(dates, 'fromDate');
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <DatePicker
+                                defaultDate={filters?.toDate ?? ''}
+                                id="toDate"
+                                label="To Date"
+                                placeholder="Select a date"
+                                onChange={(dates) => {
+                                    convertDateObjToString(dates, 'toDate');
+                                }}
+                            />
+                        </div>
                     </div>
 
-                    {/* Tour Filter */}
-                    <div>
-                        <Label required={true}>Tour</Label>
-                        <Select
-                            options={allTours}
-                            placeholder="Tour"
-                            className="dark:bg-dark-900"
-                            value={filters.tour ?? ''}
-                            onChange={(selectedOption) =>
-                                setFilters({
-                                    ...filters,
-                                    tour: selectedOption,
-                                })
-                            }
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {/* Price Range */}
+                        <div>
+                            <Label>Min Price</Label>
+                            <Input
+                                type="number"
+                                placeholder="0"
+                                min="0"
+                                value={filters.minPrice ?? ''}
+                                onChange={(e) => {
+                                    setFilters({
+                                        ...filters,
+                                        minPrice: e.target.value,
+                                    });
+                                }}
+                            />
+                        </div>
+
+                        <div>
+                            <Label>Max Price</Label>
+                            <Input
+                                type="number"
+                                placeholder="0"
+                                min="0"
+                                value={filters.maxPrice ?? ''}
+                                onChange={(e) => {
+                                    setFilters({
+                                        ...filters,
+                                        maxPrice: e.target.value,
+                                    });
+                                }}
+                            />
+                        </div>
+
+                        {/* Sort */}
+                        <div>
+                            <Label required={true}>Sort By</Label>
+                            <Select
+                                value={filters.sort ?? ''}
+                                options={sortOptions}
+                                placeholder="Tour"
+                                className="dark:bg-dark-900"
+                                onChange={(selectedOption) =>
+                                    setFilters({
+                                        ...filters,
+                                        sort: selectedOption,
+                                    })
+                                }
+                            />
+                        </div>
+
+                        {/* Customer Name */}
+                        <div>
+                            <Label>Customer Name</Label>
+                            <Input
+                                onChange={(e) => {
+                                    setFilters({
+                                        ...filters,
+                                        customer_name: e.target.value,
+                                    });
+                                }}
+                                value={filters.customer_name ?? ''}
+                                placeholder="search by customer name..."
+                            />
+                        </div>
                     </div>
 
-                    {/* Date Range */}
-                    <div>
-                        <DatePicker
-                            defaultDate={filters?.fromDate ?? ''}
-                            id="fromDate"
-                            label="From Date"
-                            placeholder="Select a date"
-                            onChange={(dates) => {
-                                convertDateObjToString(dates, 'fromDate');
-                            }}
-                        />
-                    </div>
-
-                    <div>
-                        <DatePicker
-                            defaultDate={filters?.toDate ?? ''}
-                            id="toDate"
-                            label="To Date"
-                            placeholder="Select a date"
-                            onChange={(dates) => {
-                                convertDateObjToString(dates, 'toDate');
-                            }}
-                        />
+                    {/* Action Buttons */}
+                    <div className="flex items-center justify-end mt-4 pt-4 border-t border-gray-200">
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => resetSearch()}
+                                className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+                            >
+                                Clear All
+                            </button>
+                            <button
+                                onClick={() => filter()}
+                                className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors"
+                            >
+                                Apply Filters
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Price Range */}
-                    <div>
-                        <Label>Min Price</Label>
-                        <Input
-                            type="number"
-                            placeholder="0"
-                            min="0"
-                            value={filters.minPrice ?? ''}
-                            onChange={(e) => {
-                                setFilters({
-                                    ...filters,
-                                    minPrice: e.target.value,
-                                });
-                            }}
-                        />
-                    </div>
-
-                    <div>
-                        <Label>Max Price</Label>
-                        <Input
-                            type="number"
-                            placeholder="0"
-                            min="0"
-                            value={filters.maxPrice ?? ''}
-                            onChange={(e) => {
-                                setFilters({
-                                    ...filters,
-                                    maxPrice: e.target.value,
-                                });
-                            }}
-                        />
-                    </div>
-
-                    {/* Sort */}
-                    <div>
-                        <Label required={true}>Sort By</Label>
-                        <Select
-                            value={filters.sort ?? ''}
-                            options={sortOptions}
-                            placeholder="Tour"
-                            className="dark:bg-dark-900"
-                            onChange={(selectedOption) =>
-                                setFilters({
-                                    ...filters,
-                                    sort: selectedOption,
-                                })
-                            }
-                        />
-                    </div>
-
-                    {/* Customer Name */}
-                    <div>
-                        <Label>Customer Name</Label>
-                        <Input
-                            onChange={(e) => {
-                                setFilters({
-                                    ...filters,
-                                    customer_name: e.target.value,
-                                });
-                            }}
-                            value={filters.customer_name ?? ''}
-                            placeholder="search by customer name..."
-                        />
-                    </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex items-center justify-end mt-4 pt-4 border-t border-gray-200">
-                    <div className="flex gap-3">
-                        <button
-                            onClick={() => resetSearch()}
-                            className="px-4 py-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
-                        >
-                            Clear All
-                        </button>
-                        <button
-                            onClick={() => filter()}
-                            className="px-6 py-2 bg-[#465fff] text-white rounded-lg hover:bg-[#3d51e8] font-medium transition-colors"
-                        >
-                            Apply Filters
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {/* )} */}
+            )}
         </div>
     );
 }

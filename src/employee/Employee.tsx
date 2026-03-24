@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from '../config/config';
 import { useFetchData } from '../hooks/useFetchData';
 import { useCommonContext } from '../context/CommonContext';
 import Alert from '../components/ui/alert/Alert';
-import BookingsSkeleton from '../components/skelton/BookingListSkelton';
+import BookingsSkeleton from '../components/skelton/EmployeeSkelton';
 import PageMeta from '../components/common/PageMeta';
 import {
     Table,

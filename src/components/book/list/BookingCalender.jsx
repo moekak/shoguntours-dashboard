@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Calendar from '../../../pages/Calendar';
 import { useFetchData } from '@/hooks/useFetchData';
 import { API_ENDPOINTS } from '@/config/config';
+import BookingCalenderSkelton from '../../skelton/BookingCalenderSkelton';
 
 function BookingCalender() {
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
@@ -16,6 +17,11 @@ function BookingCalender() {
     useEffect(() => {
         console.log(data);
     }, [data]);
+
+    if (isLoading) {
+        return <BookingCalenderSkelton />;
+    }
+
     return (
         <div>
             <Calendar

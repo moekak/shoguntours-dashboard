@@ -6,16 +6,30 @@ import {
     TableHeader,
     TableRow,
 } from '../ui/table';
-import SearchTour from '../tour/list/SearchTour';
 
 const TourTableSkeleton = ({ rows = 5 }) => {
-    // Create array for skeleton rows
     const skeletonRows = Array.from({ length: rows }, (_, index) => index);
 
     return (
         <div className="space-y-6">
             {/* Filter Section Skeleton */}
-            <SearchTour />
+            <div className="bg-white rounded-xl border border-gray-200 mb-6">
+                <div className="flex items-center justify-between px-6 py-4">
+                    <div className="h-5 w-16 bg-gray-200 rounded animate-pulse" />
+                    <div className="h-5 w-5 bg-gray-200 rounded animate-pulse" />
+                </div>
+                <div className="px-6 pb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                        {[1, 2, 3, 4].map((i) => (
+                            <div key={i} className="h-10 bg-gray-200 rounded-lg animate-pulse" />
+                        ))}
+                    </div>
+                    <div className="flex justify-end pt-4 border-t border-gray-200 gap-3">
+                        <div className="h-9 w-20 bg-gray-200 rounded-lg animate-pulse" />
+                        <div className="h-9 w-28 bg-gray-200 rounded-lg animate-pulse" />
+                    </div>
+                </div>
+            </div>
 
             {/* Table Section Skeleton */}
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">

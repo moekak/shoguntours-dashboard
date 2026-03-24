@@ -7,14 +7,14 @@ import {
     TableRow,
 } from '../ui/table';
 
-function BookingsSkeleton() {
+function DirectBookingsSkeleton() {
     return (
         <div className="bg-gray-50 min-h-screen">
             <main className="pb-10">
                 <div className="container">
-                    {/* Stats Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                        {[1, 2, 3, 4].map((i) => (
+                    {/* Stats Cards — 5 columns */}
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                        {[1, 2, 3, 4, 5].map((i) => (
                             <div
                                 key={i}
                                 className="bg-white rounded-xl border border-gray-200 p-5"
@@ -26,7 +26,7 @@ function BookingsSkeleton() {
                         ))}
                     </div>
 
-                    {/* Filter Section (accordion) */}
+                    {/* Filter Section (accordion skeleton) */}
                     <div className="bg-white rounded-xl border border-gray-200 mb-6">
                         <div className="flex items-center justify-between px-6 py-4">
                             <div className="h-5 w-16 bg-gray-200 rounded animate-pulse"></div>
@@ -35,12 +35,18 @@ function BookingsSkeleton() {
                         <div className="px-6 pb-6">
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                                 {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="h-10 bg-gray-200 rounded-lg animate-pulse"></div>
+                                    <div
+                                        key={i}
+                                        className="h-10 bg-gray-200 rounded-lg animate-pulse"
+                                    ></div>
                                 ))}
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="h-10 bg-gray-200 rounded-lg animate-pulse"></div>
+                                    <div
+                                        key={i}
+                                        className="h-10 bg-gray-200 rounded-lg animate-pulse"
+                                    ></div>
                                 ))}
                             </div>
                             <div className="flex justify-end pt-4 border-t border-gray-200 mt-4 gap-3">
@@ -56,7 +62,17 @@ function BookingsSkeleton() {
                             <Table>
                                 <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                                     <TableRow>
-                                        {['Booking ID', 'Customer', 'Tour Name', 'Date', 'Guests', 'Price', 'Status', 'Actions'].map((col) => (
+                                        {[
+                                            'Booking ID',
+                                            'Customer',
+                                            'Tour Name',
+                                            'Date',
+                                            'Guests',
+                                            'Total',
+                                            'Status',
+                                            'Payment',
+                                            'Actions',
+                                        ].map((col) => (
                                             <TableCell
                                                 key={col}
                                                 isHeader
@@ -101,7 +117,7 @@ function BookingsSkeleton() {
                                                 <div className="h-4 w-8 bg-gray-200 rounded animate-pulse"></div>
                                             </TableCell>
 
-                                            {/* Price */}
+                                            {/* Total */}
                                             <TableCell className="px-5 py-4">
                                                 <div className="h-4 w-20 bg-gray-200 rounded animate-pulse"></div>
                                             </TableCell>
@@ -111,9 +127,17 @@ function BookingsSkeleton() {
                                                 <div className="h-6 w-20 bg-gray-200 rounded-full animate-pulse"></div>
                                             </TableCell>
 
+                                            {/* Payment */}
+                                            <TableCell className="px-5 py-4">
+                                                <div className="h-6 w-16 bg-gray-200 rounded-full animate-pulse"></div>
+                                            </TableCell>
+
                                             {/* Actions */}
                                             <TableCell className="px-5 py-4">
-                                                <div className="h-8 w-8 bg-gray-200 rounded-full animate-pulse"></div>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="h-8 w-36 bg-gray-200 rounded-lg animate-pulse"></div>
+                                                    <div className="h-8 w-8 bg-gray-200 rounded-lg animate-pulse"></div>
+                                                </div>
                                             </TableCell>
                                         </TableRow>
                                     ))}
@@ -127,7 +151,10 @@ function BookingsSkeleton() {
                                 <div className="h-4 w-48 bg-gray-200 rounded animate-pulse"></div>
                                 <div className="flex space-x-2">
                                     {[1, 2, 3, 4, 5].map((i) => (
-                                        <div key={i} className="h-9 w-9 bg-gray-200 rounded-lg animate-pulse"></div>
+                                        <div
+                                            key={i}
+                                            className="h-9 w-9 bg-gray-200 rounded-lg animate-pulse"
+                                        ></div>
                                     ))}
                                 </div>
                             </div>
@@ -139,4 +166,4 @@ function BookingsSkeleton() {
     );
 }
 
-export default BookingsSkeleton;
+export default DirectBookingsSkeleton;

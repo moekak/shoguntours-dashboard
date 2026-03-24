@@ -13,7 +13,7 @@ import { useFetchBlogs } from '../hooks/useFetchBlogs';
 import { useBlogsContext } from '../context/BlogsContext';
 import { useBlogOperatorContext } from '../context/BlogOperatorContext';
 import SearchBlog from './SearchBlog';
-import TableSkelton from '../../skelton/TableSkelton';
+import TableSkelton from '../../skelton/BlogTableSkelton';
 import { useDeleteBlog } from '../hooks/useDeleteBlog';
 import ActionDropdown from '../../common/ActionDropDown';
 

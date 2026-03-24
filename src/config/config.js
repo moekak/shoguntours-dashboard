@@ -48,7 +48,10 @@ export const API_ENDPOINTS = {
         FETCH_BOOKING_FOR_CALENDER: `${BASE_URL}/dashboard/get/calender/booking`,
         // Tour Guideのエンドポイント
         CREATE_TOUR_GUIDE: `${BASE_URL}/dashboard/create/guide`,
-        FETCH_TOUR_GUIDE: `${BASE_URL}/dashboard/get/employee`
+        FETCH_TOUR_GUIDE: `${BASE_URL}/dashboard/get/employee`,
+        // Direct Bookings
+        FETCH_DIRECT_BOOKINGS: `${BASE_URL}/dashboard/get/direct/bookings`,
+        GENERATE_STRIPE_PAYMENT_LINK: `${BASE_URL}/dashboard/stripe/payment-link`,
     },
 
     // IMAGE: {

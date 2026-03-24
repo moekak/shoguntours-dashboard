@@ -5,7 +5,7 @@ import { API_ENDPOINTS } from '../../../config/config';
 import { useFetchData } from '../../../hooks/useFetchData';
 import { useCommonContext } from '../../../context/CommonContext';
 import Alert from '../../ui/alert/Alert';
-import BookingsSkeleton from '../../skelton/BookingListSkelton';
+import BookingsSkeleton from '../../skelton/EmployeeSkelton';
 
 import {
     Table,
